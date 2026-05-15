@@ -29,6 +29,9 @@ CLI
     python -m lile.teach.rlvr_loop --source math --n 1 --dry-run \
         --daemon http://127.0.0.1:8768
 
+    python -m lile.teach.rlvr_loop --source humaneval --n 100 \
+        --daemon http://127.0.0.1:8768
+
 Dry-run logs the spec to stdout WITHOUT calling ``submit_train``, so the
 daemon stays read-only.
 
@@ -93,6 +96,24 @@ class RLVRConfig:
     sampling_temperature: float = 0.8
     sampling_top_p: float = 0.95
     max_new_tokens: int = 512
+    halt_on: dict[str, Any] | None = None
+    """Optional auto-stop rule.
+
+    When set, ``run()`` checks this condition after every step and breaks
+    early if the rule fires. Keys:
+
+    - ``metric`` (str): ``"correct_rate"`` — fraction of correct rollouts
+      per step, averaged over ``window`` consecutive steps.
+    - ``window`` (int): number of recent steps to average over.
+    - ``threshold`` (float): break when the sliding-window average exceeds
+      this value (e.g. 0.95 = 95% of rollots graded "correct" for the last
+      20 steps).
+    - ``min_steps`` (int, optional): never halt before this many steps
+      regardless of grade signal. Default 10.
+
+    If ``halt_on`` is None, the loop runs all ``n`` steps unconditionally
+    (current behavior).
+    """
 
     def __post_init__(self) -> None:
         if self.weights is None:
@@ -147,17 +168,25 @@ def _arc_prompts() -> list[str]:
     return [build_arc_prompt(t) for t in tasks]
 
 
+def _humaneval_prompts() -> list[str]:
+    """Return HumanEval problem descriptions as prompt strings."""
+    from .humaneval import load_tasks, get_split
+    train, _ = get_split(load_tasks())
+    return [t["prompt"] for t in train.values()][:100]
+
+
 def iter_prompts(source: str) -> Iterable[tuple[str, str]]:
     """Yield ``(source_label, prompt)`` forever in round-robin / cycle.
 
-    ``source_label`` is one of ``"math" | "code" | "arc"`` and decides the
-    domain passed to the teacher and the verifier. ``mixed`` round-robins
-    across all three. We cycle indefinitely; the caller bounds the loop
-    via ``--n`` / ``RLVRScheduler.run(n=...)``.
+    ``source_label`` is one of ``"math" | "code" | "arc" | "humaneval"`` and
+    decides the domain passed to the teacher and the verifier. ``mixed``
+    round-robins across math, code, and arc. We cycle indefinitely; the
+    caller bounds the loop via ``--n`` / ``RLVRScheduler.run(n=...)``.
     """
     math_prompts = load_seed_prompts("math") if source in {"math", "mixed"} else []
     code_prompts = load_seed_prompts("code") if source in {"code", "mixed"} else []
     arc_prompts = _arc_prompts() if source in {"arc", "mixed"} else []
+    humaneval_prompts = _humaneval_prompts() if source in {"humaneval", "mixed"} else []
 
     if source == "math":
         if not math_prompts:
@@ -174,6 +203,11 @@ def iter_prompts(source: str) -> Iterable[tuple[str, str]]:
             raise RuntimeError("rlvr_loop: no arc prompts available")
         for p in itertools.cycle(arc_prompts):
             yield ("arc", p)
+    elif source == "humaneval":
+        if not humaneval_prompts:
+            raise RuntimeError("rlvr_loop: no humaneval prompts available")
+        for p in itertools.cycle(humaneval_prompts):
+            yield ("humaneval", p)
     elif source == "mixed":
         groups = [
             ("math", math_prompts),
@@ -419,6 +453,8 @@ class RLVRScheduler:
             "skipped": 0,
             "errors": 0,
         }
+        # Grade history for auto-stop (sliding window).
+        self._grade_window: list[float] = []
 
     async def _sample_rollouts(self, prompt: str) -> list[str]:
         """``k`` sequential ``controller.generate`` calls at sampling temperature.
@@ -455,6 +491,8 @@ class RLVRScheduler:
         # the user explicitly chose this source so we honor that.
         if source_label == "arc":
             domain: str = "arc"
+        elif source_label == "humaneval":
+            domain: str = "humaneval"
         else:
             domain = select_verifier(prompt) or source_label or "general"
 
@@ -525,7 +563,11 @@ class RLVRScheduler:
 
     async def run(self, n: int, *, save_every: int = 0,
                   snapshot_prefix: str = "rlvr") -> list[dict[str, Any]]:
-        """Run ``n`` RLVR steps; return per-step records.
+        """Run up to ``n`` RLVR steps; return per-step records.
+
+        The loop MAY stop earlier than ``n`` if ``cfg.halt_on`` is set and
+        the sliding-window grade fraction satisfies the threshold. The halt
+        reason is recorded in ``self.stats["halt_reason"]``.
 
         Per-step records are also appended to ``cfg.log_path`` as JSONL
         so the run is durable even when the caller forgets to capture
@@ -539,6 +581,13 @@ class RLVRScheduler:
         log_path.parent.mkdir(parents=True, exist_ok=True)
         records: list[dict[str, Any]] = []
         prompt_iter = iter_prompts(self.cfg.source)
+
+        halt = self.cfg.halt_on or {}
+        halt_metric = halt.get("metric")
+        halt_window = int(halt.get("window", 20))
+        halt_threshold = float(halt.get("threshold", 0.95))
+        halt_min_steps = int(halt.get("min_steps", 10))
+
         for _ in range(n):
             self.stats["steps"] += 1
             try:
@@ -551,6 +600,18 @@ class RLVRScheduler:
                 records.append(rec)
                 with log_path.open("a", encoding="utf-8") as f:
                     f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+                # Track correct-rate in sliding window for auto-stop.
+                if halt_metric == "correct_rate":
+                    grades = rec.get("grades", [])
+                    n_rollouts = len(grades)
+                    if n_rollouts > 0:
+                        correct_frac = sum(1 for g in grades if g == "correct") / n_rollouts
+                        self._grade_window.append(correct_frac)
+                        # Trim to window size.
+                        while len(self._grade_window) > halt_window:
+                            self._grade_window.pop(0)
+
             if (save_every > 0
                     and not self.dry_run
                     and outcome.get("step") == "submitted"
@@ -564,6 +625,28 @@ class RLVRScheduler:
                     log.warning(
                         "rlvr progressive save %r failed: %s", snap_name, exc,
                     )
+
+            # Check halt rule after recording grades.
+            if (halt_metric == "correct_rate"
+                    and self.stats["submitted"] >= halt_min_steps
+                    and len(self._grade_window) >= halt_window):
+                avg = sum(self._grade_window) / len(self._grade_window)
+                log.info(
+                    "rlvr halt check: correct_rate=%.3f over last %d steps "
+                    "(threshold=%.3f)",
+                    avg, len(self._grade_window), halt_threshold,
+                )
+                if avg >= halt_threshold:
+                    self.stats["halt_reason"] = (
+                        f"correct_rate={avg:.3f} >= {halt_threshold} "
+                        f"over {len(self._grade_window)} steps"
+                    )
+                    log.info(
+                        "rlvr halting early at step %d: %s",
+                        self.stats["steps"], self.stats["halt_reason"],
+                    )
+                    break
+
         return records
 
     async def _snapshot_save(self, name: str) -> None:
@@ -677,7 +760,7 @@ def _build_argparser() -> argparse.ArgumentParser:
         description="Online RLVR scheduler — Track C of the dreamy-doodling plan.",
     )
     p.add_argument(
-        "--source", choices=("math", "code", "arc", "mixed"), default="mixed",
+        "--source", choices=("math", "code", "arc", "humaneval", "mixed"), default="mixed",
     )
     p.add_argument("--n", type=int, default=1)
     p.add_argument(
