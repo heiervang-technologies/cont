@@ -16,8 +16,8 @@ Statuses: `unclaimed` → `in-progress` → `done` (or `parked` with reason). Se
 
 ## R-001b — `memorize.py` retention with stronger per-call learning
 
-- **Owner:** unclaimed
-- **Status:** unclaimed  *(depends on R-001 methodology fix)*
+- **Owner:** kimi
+- **Status:** in-progress  *(daemon handoff after R-004)*
 - **Hypothesis:** At stronger per-call learning (`plateau_patience=10`, `max_steps=100`, explicit `lr=5e-4`), `memorize.greedy_memorize` will reach threshold on most facts, producing a stronger per-fact weight change. Under these conditions, the pair-0 decay hypothesized in R-001 may emerge — i.e., catastrophic forgetting is a function of insertion strength, not of sequential insertion per se.
 - **Experiment:** Same protocol as R-001 with three changes: (i) `plateau_patience=10`, `max_steps=100`, `lr=5e-4` passed to each memorize call; (ii) also run a `threshold=0.7` arm to separate "plateau detector too aggressive" from "model can't learn this fact at this lr"; (iii) fix the runner to open JSONL header with mode='w' (not 'a') so restarts don't contaminate the data.
 - **Outcome:** Retention curve at higher per-call strength. If decay emerges → R-002 (KL-anchor sweep) directly motivated. If pair0 still grows → the compounding-growth signal is robust and the forgetting hypothesis is falsified at this model scale.
@@ -44,8 +44,8 @@ Statuses: `unclaimed` → `in-progress` → `done` (or `parked` with reason). Se
 
 ## R-004 — snapshot-load determinism after memorize
 
-- **Owner:** unclaimed
-- **Status:** unclaimed
+- **Owner:** glm
+- **Status:** in-progress
 - **Hypothesis:** `snapshot/save` taken mid-memorize, then `snapshot/load`'d, yields *byte-exact* recall on a held-out probe — confirming the "checkpoint as rollback for failed memorize" pattern is safe. Failure here would invalidate R-002's per-sweep reset assumption.
 - **Experiment:** Memorize fact F. Save snapshot `R004_mid`. Run 10 unrelated chats. Memorize fact G (which we expect to *partially* overwrite F under R-001). Save snapshot `R004_after`. Load `R004_mid`. Probe greedy-recall on F and G. Expected: F at the same recall as at save time, G at base-model recall.
 - **Outcome:** snapshot/load byte-exactness verdict for the memorize path. Either invariant 4 (snapshot round-trip) holds for the memorize path or it doesn't — single boolean, but with a recall delta as the proof.
