@@ -5,8 +5,7 @@ Stdlib + pytest only. The HTTP layer is mocked by monkeypatching
 ``lile/tests/test_eval_harness.py`` — torchless and clean.
 
 Run:
-    /home/me/ht/forks/ht-unsloth/.venv/bin/python -m pytest \\
-        lile/teach/teacher_oss120b_test.py -q
+    pytest lile/teach/teacher_oss120b_test.py -q
 """
 from __future__ import annotations
 

@@ -99,8 +99,8 @@ Responses are produced by the **cold Qwen3 base model** — no LoRA adapter, no 
 #    See lile/DESIGN.md for cold-start.
 
 # 2. Build the stream.
-cd /home/me/ht/forks/ht-unsloth
-uv run python -m lile.teach.replay_streams.build_mixed_500 \
+cd "$(git rev-parse --show-toplevel)"
+python -m lile.teach.replay_streams.build_mixed_500 \
     --endpoint http://127.0.0.1:8768/v1 \
     --teacher-model claude-opus-4-7 \
     --out lile/teach/replay_streams/mixed_500.jsonl \
