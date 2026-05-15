@@ -26,8 +26,9 @@ Steps (mirrors BACKLOG.md R-001 Experiment):
 4. ``POST /v1/state/snapshot/load`` ``baseline_name`` to restore.
 5. Print summary + path to the JSONL.
 
-The script is idempotent-ish: if you re-run with the same baseline-name it
-will overwrite the snapshot (step 1) and then overwrite the JSONL (step 3).
+The script is restart-safe: the JSONL header is written with mode='w' (overwrites
+any prior file), and loop records are appended incrementally so a mid-run crash
+preserves data. A clean re-run always starts from a fresh file.
 """
 from __future__ import annotations
 
@@ -82,7 +83,8 @@ def run_experiment(
             "pair0_baseline_fraction": pair0_baseline.get("fraction"),
             "pair_last_baseline_fraction": pair_last_baseline.get("fraction"),
         }
-        with out_p.open("a", encoding="utf-8") as fh:
+        # Write header fresh (mode='w') so restarts don't duplicate it.
+        with out_p.open("w", encoding="utf-8") as fh:
             fh.write(json.dumps(header, ensure_ascii=False) + "\n")
 
         # --- step 1: baseline snapshot (overwrite if exists)
