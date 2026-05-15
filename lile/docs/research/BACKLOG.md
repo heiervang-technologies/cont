@@ -58,3 +58,35 @@ Statuses: `unclaimed` → `in-progress` → `done` (or `parked` with reason). Se
 ---
 
 *New items: append below this line with the next `R-NNN` slug.*
+
+---
+
+## R-006 — memorize semantic conflict (competing responses, same prompt)
+
+- **Owner:** kimi
+- **Status:** in-progress  *(daemon handoff after R-003)*
+- **Hypothesis:** When two memorize calls target the same prompt with conflicting
+  responses (`response_A` at i=0, `response_B` at i=K with K small), the model
+  retains exactly one of them, both partially via interpolation, or neither
+  reliably. Outcome distribution tells us whether memorize is robust under
+  genuine semantic conflict (the steel-man of forgetting).
+- **Experiment:** `collision_facts(seed=42, n_pairs=20)` yields 20 `(prompt,
+  response_A, response_B)` triples where response_A and response_B are disjoint
+  surface forms with similar token length. For each triple:
+  1. Memorize A, eval recall(A) → save baseline.
+  2. Memorize B.
+  3. Eval recall(A) and recall(B) immediately after B (K=0).
+  4. Run K ∈ {1, 5, 10} intervening unrelated (disjoint) facts, then re-eval
+     both recall(A) and recall(B) — tests whether conflict resolves quickly or
+     lingers.
+  
+  Use the daemon-default memorize params from R-001 (max_steps=30,
+  threshold=0.95, plateau_patience=3) and the stronger params from R-001b
+  (max_steps=100, plateau_patience=10, lr=5e-4) in a second arm.
+- **Outcome:** Distribution of post-B recall(A) across 20 pairs × 2 learning
+  regimes. If recall(A) post-B ≤ 0.2 (close to base-model on novel prompt),
+  memorize collapses to last-write-wins — finding. If recall(A) and recall(B)
+  both ≥ 0.7, partial interpolation. If A wins or B wins consistently, that's
+  a recency-bias finding.
+- **Anchor:** Same as R-001: ≥90% retention of A post-B = strong positive
+  (memorize survives direct conflict). ≤50% = genuine interference risk.
