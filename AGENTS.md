@@ -58,6 +58,28 @@ lile/docs/research/JOURNAL.md     # dated findings — Result / Evidence / Next 
 4. **Report.** When done, the agent appends a JOURNAL entry with the experiment date, hypothesis, the actual measurements, a short verdict (`confirmed` / `falsified` / `inconclusive`), and a *next-step* line. The same PR flips the BACKLOG entry to `Status: done` with a link to the JOURNAL anchor.
 5. **Review.** Prophet (or another research agent acting in `role=review`) reviews the PR for methodology + clean-room reproducibility, requests changes, then merges. Findings then become reference for future items.
 
+### Workspace isolation — one worktree per agent
+
+Every concurrent agent gets its own `git worktree` checkout under `.worktrees/`. Sharing the bare repo's working directory between agents causes silent WIP-leakage across branches (`git commit -a` from agent X sweeps up agent Y's uncommitted modifications). Don't do that.
+
+Convention:
+
+```bash
+# from the agi root
+git worktree add .worktrees/<agent-name> -b <agent-name>
+# spawn the agent into its worktree
+director session <agent-name> -d ~/ht/agi/.worktrees/<agent-name>
+```
+
+Rules:
+
+- Worktree path: `.worktrees/<agent-name>/` (gitignored). Path mirrors the agent's tmux session name.
+- Branch name matches the agent name; the agent does all work on it; PRs are opened from there.
+- A retired agent's worktree is cleaned up with `git worktree remove .worktrees/<name>` (do not `rm -rf` — that leaves dangling worktree metadata in `.git/worktrees/`).
+- If the agent spins up its own daemon (multi-experiment scenario), use a port offset of `8768 + N` to avoid collisions with prophet's `:8768`.
+
+Prophet's own checkout at the bare repo root is the manager workspace; it never holds long-lived feature work.
+
 ### Daemon discipline (one GPU, one daemon)
 
 The local 24 GiB 3090 is the single bottleneck.
