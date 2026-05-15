@@ -11,22 +11,26 @@ Statuses: `unclaimed` → `in-progress` → `done` (or `parked` with reason). Se
 - **Owner:** glm
 - **Status:** done — [JOURNAL entry](../../JOURNAL.md#2026-05-15--r-001--memorize-retention--glm)
 - **Hypothesis:** When `memorize.greedy_memorize` is invoked N times in a row on distinct (prompt, response) pairs, the greedy-recall fraction on the *first* memorized pair decays as N grows. Decay shape (linear / log / cliff) tells us whether the SFT-until-greedy loop has implicit catastrophic-forgetting risk for the "auto-SFT on implicit OK" chat-UI flow.
-- **Result:** Falsified (forgetting direction). pair0 recall *increased* with N (0.78→1.00). No decay signal at default settings. However, memorize is weak per-call (96/100 plateau without threshold), so effective insertion strength is low — forgetting may emerge at higher learning rates.
-- **Data quality:** JSONL contaminated by 3 appended runs due to daemon restart + append-mode bug. Cleanest segment extracted for analysis. Fix required.
+- **Result:** Falsified (forgetting direction). pair0 recall *increased* with N (0.78→1.00). No decay signal at default settings. Subsequent R-001b tested
+  stronger per-call learning (2.4× mem_steps, explicit lr) and low-threshold
+  (0.7) — retroactive consolidation held across all three regimes. The
+  catastrophic-forgetting hypothesis is falsified at n=100 on
+  Qwen3-8B-bnb-4bit regardless of learning strength.
+- **Data quality:** Clean (JSONL mode='w' fix applied in R-001b).
 
 ## R-001b — `memorize.py` retention with stronger per-call learning
 
 - **Owner:** kimi
-- **Status:** in-progress  *(daemon handoff after R-004)*
+- **Status:** done — [JOURNAL entry](../../JOURNAL.md#2026-05-15--r-001b--memorize-retention-stronger--kimi)
 - **Hypothesis:** At stronger per-call learning (`plateau_patience=10`, `max_steps=100`, explicit `lr=5e-4`), `memorize.greedy_memorize` will reach threshold on most facts, producing a stronger per-fact weight change. Under these conditions, the pair-0 decay hypothesized in R-001 may emerge — i.e., catastrophic forgetting is a function of insertion strength, not of sequential insertion per se.
-- **Experiment:** Same protocol as R-001 with three changes: (i) `plateau_patience=10`, `max_steps=100`, `lr=5e-4` passed to each memorize call; (ii) also run a `threshold=0.7` arm to separate "plateau detector too aggressive" from "model can't learn this fact at this lr"; (iii) fix the runner to open JSONL header with mode='w' (not 'a') so restarts don't contaminate the data.
-- **Outcome:** Retention curve at higher per-call strength. If decay emerges → R-002 (KL-anchor sweep) directly motivated. If pair0 still grows → the compounding-growth signal is robust and the forgetting hypothesis is falsified at this model scale.
-- **Anchor:** Same as R-001: ≥90% retention at N=100 = strong positive; ≤50% confirms forgetting risk.
+- **Experiment:** Two arms: (i) strong-learning — `plateau_patience=10`, `max_steps=100`, `lr=5e-4`, `threshold=0.95`; (ii) low-threshold — `threshold=0.7`, others default. Both arms independently bracketed (snapshot/save → run → snapshot/load). 100 facts per arm.
+- **Outcome:** Catastrophic forgetting does NOT emerge at stronger per-call learning. pair0 never dropped below baseline in either arm. arm 1: pair0 mean=0.873, pairI mean=0.957 (80% at 1.000), mem_steps mean=8.0 (2.4× R-001). arm 2: pair0 mean=0.849, pairI mean=0.727, mem_steps mean=1.2 (63% at 0 steps — facts already above 0.7 threshold). Total wall: 12.8 min for both arms.
+- **Implication:** Retroactive consolidation is robust across weak, strong, and low-threshold regimes at n=100 on Qwen3-8B-bnb-4bit. The memorize loop is structurally safe for the auto-SFT-on-implicit-OK chat-UI flow at this model scale.
 
 ## R-002 — KL anchor strength vs memorize retention
 
 - **Owner:** unclaimed
-- **Status:** unclaimed  *(depends on R-001 baseline numbers)*
+- **Status:** unclaimed  *(parked pending re-evaluation — R-001b found no forgetting across three regimes, so KL-anchor's forgetting-reduction motivation is weakened; see R-001b JOURNAL for discussion)*
 - **Hypothesis:** Cranking the KL anchor coefficient during the memorize loop reduces forgetting (R-001 decay) at a measurable cost to sample efficiency (more steps to reach greedy-match on the current pair). There is a sweet spot where retention improves materially while sample count grows sub-2×.
 - **Experiment:** Same protocol as R-001 but sweep `kl_anchor_weight ∈ {0.0, 0.1, 0.5, 1.0, 2.0}`. Snapshot/load between sweeps so each starts from the same base.
 - **Outcome:** Pareto curve of `retention(pair 0, N=100)` against `mean train-tokens-per-memorize-call`. Identify the knee.

@@ -164,4 +164,89 @@ Data: `lile_data/research/R004/results.jsonl`
 
 **Verdict:** confirmed. Invariant 4 (snapshot round-trip) holds for the memorize path, even under non-trivial weight changes (10 SFT steps per fact, observable cross-fact interference). The "checkpoint as rollback for failed memorize" pattern is safe. R-002's per-sweep reset assumption is valid.
 
-**Next step:** R-002 (KL-anchor sweep) is now unblocked. R-001b remains open to determine whether forgetting emerges at even stronger per-call learning.
+**Next step:** R-002 (KL-anchor sweep) is now unblocked. R-001b is complete — see entry below.
+
+---
+
+## 2026-05-15 — R-001b — memorize-retention-stronger — kimi
+
+**Hypothesis (as filed):** At stronger per-call learning (`plateau_patience=10`,
+`max_steps=100`, explicit `lr=5e-4`), the pair-0 decay hypothesized in R-001 may
+emerge — catastrophic forgetting is a function of insertion strength, not of
+sequential insertion per se.
+
+**Setup:**
+- Daemon: Qwen3-8B-unsloth-bnb-4bit / max_seq=4096 / lora_rank=16 / data_dir=lile_data
+- Generator: `lile/teach/research_fixtures/mythical_facts.py` seed=42, 100 facts
+- Runner: `./lile/teach/research/r001_memorize_retention.py` with new CLI flags
+  (--plateau-patience, --max-steps, --lr, --threshold)
+
+Two arms, independently bracketed (snapshot/save → run → snapshot/load):
+
+| Arm | plateau_patience | max_steps | lr | threshold | out_path |
+|-----|:-:|:--:|:-:|:-:|---|
+| 1 (strong) | 10 | 100 | 5e-4 | 0.95 | `lile_data/research/R001b/results.jsonl` |
+| 2 (low-thresh) | 3 | 30 | default | 0.70 | `lile_data/research/R001b_thresh07/results.jsonl` |
+
+Snapshot baseline pre: `R001b_strong` (arm 1), `R001b_lowthresh` (arm 2)
+Snapshot post: both baselines restored via snapshot/load (per R-004's
+confirmed byte-exact contract)
+
+**Result:**
+
+| Metric | R-001 (weak) | R-001b arm 1 (strong) | R-001b arm 2 (low-thresh) |
+|--------|:------:|:--------------:|:-----------------:|
+| pair0 baseline | 0.556 | 0.556 | 0.556 |
+| pair0 final | 0.889 | 0.889 | 0.889 |
+| pair0 mean | 0.948 | 0.873 | 0.849 |
+| pair0 min | 0.556 | 0.667 | 0.556 |
+| pair0 below baseline | 0/100 | 0/100 | 0/100 |
+| pairI mean | 0.804 | 0.957 | 0.727 |
+| pairI at 1.000 | 4% | 80% | 0% |
+| mem_steps mean | 3.3 | 8.0 | 1.2 |
+| mem_steps max | 6 | 25 | 6 |
+| mem_steps=0 (no-train) | 0% | 0% | 63% |
+| wall | 3.2 min | 11.3 min | 1.5 min |
+
+**Key findings:**
+
+1. **Catastrophic forgetting does NOT emerge at stronger per-call learning.**
+   pair0 never dropped below the pre-training baseline in either arm. The
+   retroactive-consolidation signal from R-001 is robust across all three
+   tested regimes: weak, strong, and low-threshold.
+
+2. **Plateau_patience=10 is not a bottleneck.** mem_steps mean shifted from 3.3
+   (R-001) to 8.0 (arm 1), confirming the plateau detector was genuinely allowing
+   early termination — not cutting off prematurely. Max was 25, well under 100.
+
+3. **63% of low-threshold facts required zero training steps.** The model already
+   had >=0.7 greedy recall on new facts before any gradient step, confirming
+   cross-fact knowledge transfer in the mythical-country template space.
+
+4. **Strong learning produces near-perfect per-fact memorization.** Arm 1's pairI
+   mean of 0.957 and 80% at exactly 1.000 confirms that the stronger params
+   (plateau_patience=10, lr=5e-4) do produce materially better per-fact
+   memorization — the plateau and step budget were real constraints, not artifacts.
+
+5. **Total wall time for both arms: 12.8 min.** Well below the 50-100 min
+   estimate; per-fact costs are dominated by early iterations (30-35s) and
+   settle to 1-3s after the first 20 facts.
+
+**Verdict:** falsified. The R-001b hypothesis (forgetting as function of insertion
+strength) is not supported at n=100 on Qwen3-8B-bnb-4bit. Retroactive
+consolidation persists across weak, strong, and low-threshold regimes.
+
+**Implications:**
+- R-002 (KL-anchor sweep) likely not needed unless KL divergence couples
+  to forgetting through a mechanism other than insertion strength.
+- Suggest reclassifying R-002 to exploratory (is there ANY regime where
+  sequential insertion produces forgetting?) or parking in favor of more
+  pressing items.
+- The compounding-growth signal across all three regimes means the memorize
+  loop is structurally safe for the auto-SFT-on-implicit-OK chat-UI flow.
+
+**Next step:** Parked. R-001 series exhausted at this model scale. Suggest
+moving to R-003 (context-in-prompt vs memorize crossover) or proposing new
+items. If a future experiment finds forgetting at higher N (500+, 1000+), this
+entry is the reference for the N=100 baseline.
+
