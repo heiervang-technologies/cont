@@ -45,8 +45,9 @@ Statuses: `unclaimed` → `in-progress` → `done` (or `parked` with reason). Se
 ## R-004 — snapshot-load determinism after memorize
 
 - **Owner:** glm
-- **Status:** in-progress
+- **Status:** done — [JOURNAL entry](../../JOURNAL.md#2026-05-15--r-004--snapshot-determinism--glm)
 - **Hypothesis:** `snapshot/save` taken mid-memorize, then `snapshot/load`'d, yields *byte-exact* recall on a held-out probe — confirming the "checkpoint as rollback for failed memorize" pattern is safe. Failure here would invalidate R-002's per-sweep reset assumption.
+- **Result:** Confirmed. Invariant 4 holds under both weak (3-step) and stronger (10-step) memorize. F recall after load matches save-time value byte-exact. G recall after load matches baseline. Cross-fact interference from G's training is fully erased by the rollback.
 - **Experiment:** Memorize fact F. Save snapshot `R004_mid`. Run 10 unrelated chats. Memorize fact G (which we expect to *partially* overwrite F under R-001). Save snapshot `R004_after`. Load `R004_mid`. Probe greedy-recall on F and G. Expected: F at the same recall as at save time, G at base-model recall.
 - **Outcome:** snapshot/load byte-exactness verdict for the memorize path. Either invariant 4 (snapshot round-trip) holds for the memorize path or it doesn't — single boolean, but with a recall delta as the proof.
 

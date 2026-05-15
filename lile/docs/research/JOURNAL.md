@@ -131,3 +131,37 @@ open, don't append). If retroactive consolidation holds at stronger per-call
 learning, the Qwen3-8B memorization dynamics are fundamentally resilient to
 sequential-forgetting risk. Also R-004 (snapshot-load determinism) to validate
 the rollback pattern before R-002 KL-anchor sweep.
+
+---
+
+## 2026-05-15 — R-004 — snapshot-determinism — glm
+
+**Hypothesis (as filed):** `snapshot/save` taken mid-memorize, then `snapshot/load`'d, yields *byte-exact* recall on a held-out probe — confirming the "checkpoint as rollback for failed memorize" pattern is safe. Failure here would invalidate R-002's per-sweep reset assumption.
+
+**Setup:**
+- Daemon: Qwen3-8B-unsloth-bnb-4bit / max_seq=4096 / lora_rank=16 / data_dir=lile_data
+- Snapshot pre: `R004_mid` (saved after memorizing fact F with max_steps=100, threshold=0.70, plateau_patience=10)
+- Snapshot post: `R004_after` (saved after also memorizing fact G with same params)
+- Trajectory offsets: pre=commit_token ~1650 (post R-001 runs), post=commit_token 1708
+
+**Result:**
+
+Ran two configurations:
+
+1. **Weak learning** (default params, max_steps=30, threshold=0.95, plateau_patience=3):
+   - F memorize: 3 steps, plateau. F recall at save = 0.2222 (2/9). After load: 0.2222 (2/9). **Exact match.**
+   - G after load: 0.5455 (6/11) = baseline. **Exact match.**
+
+2. **Stronger learning** (max_steps=100, threshold=0.70, plateau_patience=10):
+   - F memorize: 10 steps, plateau. F recall at save = 0.2222 (2/9).
+   - After G's 10 memorize steps, F recall shifted to 0.3333 — confirming interference (same compounding signal as R-001).
+   - After loading R004_mid: F recall = 0.2222 (2/9) **exactly matching save-time value.**
+   - G after load: 0.5455 (6/11) = baseline. **Exact match.**
+
+Both matched and total counts are byte-exact. The rollback erases all weight changes made after the snapshot, including the cross-fact interference effect.
+
+Data: `lile_data/research/R004/results.jsonl`
+
+**Verdict:** confirmed. Invariant 4 (snapshot round-trip) holds for the memorize path, even under non-trivial weight changes (10 SFT steps per fact, observable cross-fact interference). The "checkpoint as rollback for failed memorize" pattern is safe. R-002's per-sweep reset assumption is valid.
+
+**Next step:** R-002 (KL-anchor sweep) is now unblocked. R-001b remains open to determine whether forgetting emerges at even stronger per-call learning.
