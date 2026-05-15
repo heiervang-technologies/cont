@@ -8,13 +8,13 @@ Statuses: `unclaimed` → `in-progress` → `done` (or `parked` with reason). Se
 
 ## R-001 — `memorize.py` retention under sequential insertion
 
-- **Owner:** unclaimed
-- **Status:** unclaimed
+- **Owner:** kimi
+- **Status:** in-progress
 - **Hypothesis:** When `memorize.greedy_memorize` is invoked N times in a row on distinct (prompt, response) pairs, the greedy-recall fraction on the *first* memorized pair decays as N grows. Decay shape (linear / log / cliff) tells us whether the SFT-until-greedy loop has implicit catastrophic-forgetting risk for the "auto-SFT on implicit OK" chat-UI flow.
 - **Experiment:**
   1. Snapshot the daemon to `R001_baseline`.
-  2. Generate 100 synthetic (prompt, response) pairs with disjoint surface forms (use Brixolia-style mythical-fact templates so the model has zero prior).
-  3. For i in 0..99: call `/v1/train memorize` on pair i, then probe greedy-recall on pair 0 and pair i. Append both to JSONL.
+  2. Generate 100 synthetic (prompt, response) pairs with disjoint surface forms (use `lile/teach/research_fixtures/mythical_facts.py` with seed=42, family=all).
+  3. For i in 0..99: call `/v1/train memorize` on pair i, then probe greedy-recall on pair 0 and pair i via `/v1/eval/greedy_rank`. Append both to JSONL.
   4. Plot recall(pair 0, after N) and recall(pair i-1, after pair i) as functions of N.
   5. Snapshot/load back to R001_baseline at the end.
 - **Outcome:** retention curve for pair 0; instantaneous retention curve for "last fact." Two numbers per N. Decay shape inferred from the curves.
