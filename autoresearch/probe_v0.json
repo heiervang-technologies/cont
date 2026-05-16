@@ -1,0 +1,113 @@
+{
+  "version": "v0",
+  "purpose": "Frozen probe set for the continual-learning non-degradation half of the autoresearch metric. After every training pulse the runner re-evals these prompts and computes degradation = max(0, cold_pass_rate - post_pass_rate). The score is a composite that penalizes regressions on prior competence.",
+  "schema": "Same as lile/teach/logical/tasks_v0.json — each task has task_id, prompt, expected, compare mode. The verifier IS lile.objectives.verifiers._logical, so prompt-hash routing works against the same registry without a new claims() rule (these prompts are deliberately registered in their own corpus file but use the same verification surface; the loader merges them at probe time).",
+  "domain_mix": "Easy-to-medium prompts across the same 10 domains as the train/heldout corpus, but byte-distinct from those. Qwen3-8B-bnb-4bit baseline should cold-pass ≥ 80% of these. If a training pulse drops cold-pass below 80%, the recipe has caused measurable degradation.",
+  "tasks": [
+    {
+      "task_id": "probe/arith/0",
+      "domain": "arith",
+      "prompt": "What is 12 + 8? End your reply with: Answer: <integer>.",
+      "expected": "20",
+      "compare": "numeric"
+    },
+    {
+      "task_id": "probe/arith/1",
+      "domain": "arith",
+      "prompt": "What is 15 * 4? End your reply with: Answer: <integer>.",
+      "expected": "60",
+      "compare": "numeric"
+    },
+    {
+      "task_id": "probe/prop_logic/0",
+      "domain": "prop_logic",
+      "prompt": "Is the statement 'P AND P' equivalent to 'P'? End your reply with: Answer: <yes|no>.",
+      "expected": "yes",
+      "compare": "exact"
+    },
+    {
+      "task_id": "probe/syllogism/0",
+      "domain": "syllogism",
+      "prompt": "Premises: All dogs are animals. Rex is a dog. Does it follow that Rex is an animal? End your reply with: Answer: <yes|no>.",
+      "expected": "yes",
+      "compare": "exact"
+    },
+    {
+      "task_id": "probe/sequence/0",
+      "domain": "sequence",
+      "prompt": "Sequence: 5, 10, 15, 20, ?. What is the next term? End your reply with: Answer: <integer>.",
+      "expected": "25",
+      "compare": "numeric"
+    },
+    {
+      "task_id": "probe/set_ops/0",
+      "domain": "set_ops",
+      "prompt": "Let A = {a, b, c} and B = {b, c, d}. List the elements of A intersect B, sorted ascending and comma-separated. End your reply with: Answer: <list>.",
+      "expected": "b,c",
+      "compare": "set"
+    },
+    {
+      "task_id": "probe/bool_eval/0",
+      "domain": "bool_eval",
+      "prompt": "Given p=true, q=false, evaluate NOT (p AND q). End your reply with: Answer: <true|false>.",
+      "expected": "true",
+      "compare": "bool"
+    },
+    {
+      "task_id": "probe/kinship/0",
+      "domain": "kinship",
+      "prompt": "Facts: John is Mary's father. Mary is Sam's mother. What is John's relationship to Sam? End your reply with: Answer: <one word>.",
+      "expected": "grandfather",
+      "compare": "exact"
+    },
+    {
+      "task_id": "probe/parity/0",
+      "domain": "parity",
+      "prompt": "Is the sum of 4 and 7 even or odd? End your reply with: Answer: <even|odd>.",
+      "expected": "odd",
+      "compare": "exact"
+    },
+    {
+      "task_id": "probe/counting/0",
+      "domain": "counting",
+      "prompt": "How many distinct ways can you arrange 3 books on a shelf? End your reply with: Answer: <integer>.",
+      "expected": "6",
+      "compare": "numeric"
+    },
+    {
+      "task_id": "probe/ordering/0",
+      "domain": "ordering",
+      "prompt": "Constraints: A is taller than B. C is taller than A. List the three names from tallest to shortest, comma-separated. End your reply with: Answer: <names>.",
+      "expected": "C,A,B",
+      "compare": "exact"
+    },
+    {
+      "task_id": "probe/world_knowledge/0",
+      "domain": "world_knowledge",
+      "prompt": "What is the capital city of France? End your reply with: Answer: <one word>.",
+      "expected": "Paris",
+      "compare": "exact"
+    },
+    {
+      "task_id": "probe/world_knowledge/1",
+      "domain": "world_knowledge",
+      "prompt": "Which planet is known as the Red Planet? End your reply with: Answer: <one word>.",
+      "expected": "Mars",
+      "compare": "exact"
+    },
+    {
+      "task_id": "probe/code/0",
+      "domain": "code",
+      "prompt": "What does the Python expression `len('hello')` evaluate to? End your reply with: Answer: <integer>.",
+      "expected": "5",
+      "compare": "numeric"
+    },
+    {
+      "task_id": "probe/code/1",
+      "domain": "code",
+      "prompt": "What does the Python expression `2 ** 10` evaluate to? End your reply with: Answer: <integer>.",
+      "expected": "1024",
+      "compare": "numeric"
+    }
+  ]
+}

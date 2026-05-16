@@ -12,17 +12,32 @@ The loop runs against a **live daemon** at `http://127.0.0.1:8768` (configurable
 
 ## Metric
 
-- **Name**: `score`
+This is a **continual-learning composite**, not a single accuracy number. The session-goal — *solve continual learning for models on consumer-grade hardware* — demands measuring forward learning AND non-degradation together. A recipe that adds 10pp to held-out but loses 10pp on prior competence is not progress.
+
+- **Name**: `score` (logged also as `cl_score` in the TOML; same value)
 - **Direction**: higher is better
-- **Definition**: held-out pass rate on the 10-task logical-reasoning eval set (`lile/teach/logical/tasks_v0.json` → `get_split()` held-out partition) after a fixed `n_steps` training pulse on the 20-task train partition. Range `0.0` to `1.0`.
-- **How to extract**: `grep '^score:' run.log | awk '{print $2}'`
+- **Definition**:
 
-Why this metric:
+  ```
+  forward      = heldout_pass_rate(10 logical held-out tasks, post-training)
+  prior_cold   = probe_pass_rate(15 frozen probe tasks, pre-training baseline)
+  prior_post   = probe_pass_rate(15 frozen probe tasks, post-training)
+  degrade      = max(0, prior_cold - prior_post)   # one-sided: only count regressions
+  score        = forward - 1.0 * degrade
+  ```
 
-1. **Verifiable** — `lile/objectives/verifiers/_logical.py` is deterministic regex (no teacher calls during eval). Zero variance from the eval step.
-2. **Cheap** — 10 chats × ~2s each = ~20s per eval. The training pulse dominates wall.
-3. **Headroom** — Qwen3-8B-bnb-4bit on logical tasks is far from ceiling; both directions are real signals.
-4. **Composable** — once HumanEval cold eval is unblocked, we can extend to a multi-domain composite. Until then, logical-tasks is the cleanest substrate.
+  Range roughly `-1.0` (catastrophic forgetting with zero forward gain) to `+1.0` (perfect held-out, zero degradation). Cold-baseline experiments score ≈ `forward_cold` because degrade ≈ 0 by construction.
+
+- **How to extract**: `grep '^score:' run.log | awk '{print $2}'`. The runner also prints a `components: {...}` line with the three sub-metrics so the agent can debug recipe failures (e.g. "forward up but degrade swallowed it").
+
+The probe set is at [`autoresearch/probe_v0.json`](probe_v0.json) — 15 prompts across the same 10 logical domains plus world-knowledge + code-sanity. Frozen — do NOT edit. Score comparability across the entire autoresearch project depends on the probe set being byte-stable.
+
+Why this composite:
+
+1. **Verifiable** — both forward and prior evals use deterministic regex via [`_logical.py`](../lile/objectives/verifiers/_logical.py) (no LLM judge). Zero variance from the scoring step.
+2. **Continual-learning native** — the composite directly penalizes the failure mode the goal forbids (degrading prior competence). A recipe must improve forward AND preserve prior to score high.
+3. **Cheap** — 10 + 15 chats × ~2s each = ~50s per pair of evals. Training pulse dominates wall.
+4. **Tunable** — `_LAMBDA_DEGRADE` in `experiment.py` (default `1.0`) lets us shift the trade-off if we find we want to permit more degradation in exchange for larger forward gains.
 
 ## Setup
 
@@ -46,12 +61,14 @@ Why this metric:
 
 The runner:
 
-1. Loads `config.json`.
-2. Snapshots the daemon as `autoresearch_baseline`.
-3. Runs `config.training.n_steps` of RLVR with configured weights / k / source. *(v1: stubbed — wiring this is the first experiment.)*
-4. Evals on the 10-task held-out logical set.
-5. Restores the baseline snapshot.
-6. Prints `score: <fraction>`.
+1. Loads `config.json` + `probe_v0.json`.
+2. **Phase 0** — cold probe eval (prior-competence baseline).
+3. Snapshots the daemon as `autoresearch_baseline`.
+4. **Phase 2** — training pulse: `config.training.n_steps` of RLVR with configured weights / k / source. *(v1: stubbed — wiring this is the first experiment.)*
+5. **Phase 3** — held-out logical eval (forward learning).
+6. **Phase 4** — probe re-eval (non-degradation check).
+7. Restores the baseline snapshot.
+8. Prints the three component metrics plus `score: <composite>`.
 
 **What you CAN do (the agent's lever):**
 

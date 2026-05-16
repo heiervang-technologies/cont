@@ -1,43 +1,100 @@
 {
   "$comment": "The agent's lever. Modify this file between experiments and re-run experiment.py. See ./program.md for what's safe to change. The runner reads this file fresh on every invocation; no daemon restart needed.",
-
   "training": {
-    "n_steps": 50,
-    "k_rollouts": 4,
-    "source": "logical",
-    "lr": null,
-    "sampling_temperature": 0.8,
-    "sampling_top_p": 0.95,
-    "max_new_tokens": 512,
-    "weights": {
-      "sft": 0.1,
-      "coh": 1.0,
-      "kto": 1.0,
-      "unlike": 0.5,
-      "kl_anchor": 0.05
+    "_mechanism": "memorize",
+    "_options": [
+      "memorize",
+      "hybrid_presample_unlike",
+      "self_synth",
+      "entity_masked_sft",
+      "rlvr",
+      "stacked"
+    ],
+    "stacked": {
+      "_note": "Run multiple sub-mechanisms back-to-back inside the same snapshot bracket. Each phase reads its own sub-config block above. memorize first to lift forward, entity_masked_sft second to harden probe.",
+      "phases": ["memorize", "entity_masked_sft"]
     },
-    "halt_on": {
-      "metric": "correct_rate",
-      "window": 20,
+    "entity_masked_sft": {
+      "_note": "SOTA track 2 supplement: weighted_sft with span_prefix='Answer: ' so the loss only supervises the trailing answer token(s).",
+      "n_train_samples": 5,
+      "n_passes_per_task": 60,
+      "weight": 1.0
+    },
+    "hybrid_presample_unlike": {
+      "_note": "SOTA track 1 (feedback-guided loss), pre-sample variant \u2014 sample first at cold T=0.8, push unlike on wrong rollouts, THEN memorize on demonstration. The order matters: post-memorize the sampling distribution is too tight to produce wrong rollouts (see exp-009 \u2014 wrong_count=0 for all 5 tasks). K=5 for fair comparison with memorize baseline.",
+      "n_train_samples": 5,
+      "k_rollouts": 4,
+      "memorize_max_steps": 100,
+      "memorize_threshold": 0.95,
+      "memorize_plateau_patience": 10,
+      "memorize_lr": 0.0005,
+      "memorize_weight": 1.0,
+      "sampling_temperature": 0.8,
+      "sampling_top_p": 0.95,
+      "max_new_tokens": 384
+    },
+    "self_synth": {
+      "_note": "SOTA track 3 (self-synthesization / mental modeling) \u2014 for each task, ask the model to paraphrase the question m times. Keep paraphrases the model still answers correctly (semantic preservation check). Memorize on the original + each kept paraphrase. Distributional broadening from the model's own representations.",
+      "n_train_samples": 20,
+      "m_paraphrases": 3,
+      "memorize_max_steps": 100,
+      "memorize_threshold": 0.95,
+      "memorize_plateau_patience": 10,
+      "memorize_lr": 0.0005,
+      "memorize_weight": 1.0
+    },
+    "memorize": {
+      "_note": "Strong-learning regime per R-001b: patience=10 + max_steps=100 + explicit lr=5e-4 actually moves the model (vs default plateau_patience=3 which bails at 3 steps and produces near-zero gradient). n_train_samples is the per-sample efficiency knob \u2014 push down to find the minimum K that produces a forward gain. stratify_by_domain rotates across domains so K=10 covers all 10. task_ids overrides selection entirely. Best known config: K=5 unstratified (exp-002, exp-013, exp-019 all hit 0.60). n=0 = pure no-op for cold-baseline diagnostic.",
+      "n_train_samples": 5,
+      "max_steps": 100,
       "threshold": 0.95,
-      "min_steps": 10
+      "plateau_patience": 10,
+      "lr": 0.002,
+      "weight": 1.0,
+      "stratify_by_domain": false,
+      "task_ids": null,
+      "cot_chains": null
+    },
+    "rlvr": {
+      "_note": "Stubbed \u2014 promote memorize\u2192rlvr only when memorize hits a ceiling.",
+      "n_steps": 50,
+      "k_rollouts": 4,
+      "source": "logical",
+      "lr": null,
+      "sampling_temperature": 0.8,
+      "sampling_top_p": 0.95,
+      "max_new_tokens": 512,
+      "weights": {
+        "sft": 0.1,
+        "coh": 1.0,
+        "kto": 1.0,
+        "unlike": 0.5,
+        "kl_anchor": 0.05
+      },
+      "halt_on": {
+        "metric": "correct_rate",
+        "window": 20,
+        "threshold": 0.95,
+        "min_steps": 10
+      }
     }
   },
-
   "eval": {
     "temperature": 0.0,
     "top_p": 1.0,
-    "max_tokens": 512,
-    "enable_thinking": false,
-    "_note": "enable_thinking=false avoids Qwen3 <think>...</think> blocks consuming the whole budget before any content. Bumping max_tokens >= 3000 is an alternative if you want chain-of-thought."
+    "max_tokens": 3000,
+    "enable_thinking": true,
+    "_note": "enable_thinking=false avoids Qwen3 <think>...</think> blocks consuming the whole budget before any content. Bumping max_tokens >= 3000 is an alternative if you want chain-of-thought. Winning config: max_tokens=3000 (exp-028 confirmed 6000 ties at 0.70 — no benefit from longer thinking)."
   },
-
   "teacher": {
     "backend": "free_pool",
-    "_options": ["free_pool", "oss120b", "local_only"],
+    "_options": [
+      "free_pool",
+      "oss120b",
+      "local_only"
+    ],
     "max_tokens": 800
   },
-
   "daemon_url": "http://127.0.0.1:8768",
   "baseline_snapshot": "autoresearch_baseline"
 }

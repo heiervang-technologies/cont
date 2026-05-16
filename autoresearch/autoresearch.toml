@@ -1,5 +1,11 @@
 [metric]
-# Held-out logical-reasoning pass-rate on the 10-task eval set after a
-# fixed training pulse. Range 0.0 - 1.0. Higher = better training recipe.
-name = "heldout_pass_rate"
+# Continual-learning composite: forward learning on held-out logical tasks
+# minus a linear penalty for prior-task degradation on a frozen probe set.
+#
+#     score = heldout_pass_rate - 1.0 * max(0, probe_cold - probe_post)
+#
+# Range roughly -1.0 (catastrophic forgetting with no gain) to +1.0 (perfect
+# held-out + zero degradation). Higher = better continual-learning recipe.
+# See ./experiment.py (top docstring) for the full definition.
+name = "cl_score"
 direction = "maximize"
