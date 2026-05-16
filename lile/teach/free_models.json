@@ -1,0 +1,37 @@
+{
+  "comment": "OpenRouter free-tier model pool for the RLVR teacher (gpt-oss-120b replacement). The pool is rotated round-robin; on per-model 4xx/5xx the dispatcher skips to the next. Add/remove slugs as the free tier moves; the file is hot-reloaded at the start of every judge() call.",
+  "models": [
+    {"slug": "google/gemma-3-27b-it:free",            "max_ctx": 96000, "notes": "Google Gemma 3 27B (free). Decent general judge."},
+    {"slug": "google/gemma-3-12b-it:free",            "max_ctx": 96000, "notes": "Smaller Gemma 3. Faster than 27B."},
+    {"slug": "google/gemma-2-9b-it:free",             "max_ctx": 8000,  "notes": "Older Gemma. Tighter context."},
+    {"slug": "meta-llama/llama-3.3-70b-instruct:free", "max_ctx": 65000, "notes": "Big llama; strongest free judge for code/math."},
+    {"slug": "meta-llama/llama-3.1-8b-instruct:free", "max_ctx": 131000, "notes": "Llama 3.1 8B."},
+    {"slug": "mistralai/mistral-small-3.1-24b-instruct:free", "max_ctx": 96000, "notes": "Mistral small. Solid code grader."},
+    {"slug": "mistralai/mistral-nemo:free",           "max_ctx": 128000, "notes": "Mistral Nemo 12B."},
+    {"slug": "qwen/qwen-2.5-72b-instruct:free",       "max_ctx": 32000, "notes": "Qwen 2.5 72B."},
+    {"slug": "qwen/qwen-2.5-coder-32b-instruct:free", "max_ctx": 32000, "notes": "Qwen Coder — code-grading specialist."},
+    {"slug": "deepseek/deepseek-r1-distill-llama-70b:free", "max_ctx": 8000,  "notes": "DeepSeek R1 distill. Reasoning-tuned."},
+    {"slug": "deepseek/deepseek-r1-distill-qwen-32b:free",  "max_ctx": 16000, "notes": "DeepSeek R1 distill (Qwen). Reasoning."},
+    {"slug": "microsoft/phi-3.5-mini-128k-instruct:free", "max_ctx": 128000, "notes": "Phi 3.5 mini — large context, small model."},
+    {"slug": "nousresearch/hermes-3-llama-3.1-405b:free", "max_ctx": 16000, "notes": "Hermes 3 — finetuned for structured output."},
+    {"slug": "openchat/openchat-7b:free",             "max_ctx": 8000,  "notes": "Openchat — small, fast."},
+    {"slug": "huggingfaceh4/zephyr-7b-beta:free",     "max_ctx": 4000,  "notes": "Zephyr — older, kept as diversity."},
+    {"slug": "liquid/lfm-40b:free",                   "max_ctx": 32000, "notes": "Liquid foundation model — no-name diversity."}
+  ],
+  "local_fallback": {
+    "endpoint_env": "LILE_LOCAL_TEACHER_URL",
+    "model": "gemma-4-31b-iq4",
+    "max_ctx": 56000,
+    "notes": "Local cluster fallback when the free pool exhausts. Honor user-shared GPU: cap concurrency to 1 and add 200ms gap between calls."
+  },
+  "throttle": {
+    "max_concurrent_remote": 2,
+    "max_concurrent_local": 1,
+    "per_call_gap_remote_s": 0.25,
+    "per_call_gap_local_s": 0.20,
+    "retry_on_status": [408, 429, 500, 502, 503, 504],
+    "max_retries": 2,
+    "backoff_initial_s": 1.0,
+    "backoff_factor": 2.0
+  }
+}
