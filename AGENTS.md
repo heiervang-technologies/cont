@@ -106,3 +106,21 @@ Metrics that count:
 
 - Sample efficiency: r_c-ranking Spearman, length-compression slope, train-tokens-to-greedy-match for the memorize path, RLVR convergence wall-time.
 - Consistency: variance across seeds, post-merge/post-snapshot-restore behavior delta, retention curves after N memorizations.
+
+## Training-recipe optimization (autoresearch loop)
+
+The [`autoresearch/`](autoresearch/) subtree is a separate, narrowly-scoped agent loop that optimizes *the training recipe* — not lile itself. Single metric (`heldout_pass_rate` on the 10-task logical-reasoning held-out split), single lever (`autoresearch/config.json`), single workflow (modify → run → grep score → keep/discard).
+
+Use it when:
+
+- You want to A/B a loss-mixture (e.g. C-002's 7 arms) without hand-driving the snapshot/eval/restore bracket each time.
+- You need to find a sample-efficiency win on a fixed task suite overnight.
+- A new objective lands in `lile/objectives/` and you want to know what weight it earns in the default recipe.
+
+Don't use it when:
+
+- The question is "does lile have property X" (that's an R-NNN research probe, not a training optimization).
+- The metric you care about isn't extractable as a single number from `run.log`.
+- You'd be modifying anything under `lile/` to make the recipe work — that means the knob needs to be plumbed into `config.json` first, separately.
+
+Read [`autoresearch/program.md`](autoresearch/program.md) before kicking off an autoresearch tag branch.

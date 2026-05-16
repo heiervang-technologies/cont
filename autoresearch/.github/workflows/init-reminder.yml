@@ -1,0 +1,36 @@
+name: Init reminder
+
+on:
+  # Fires once when a repo is created from this template
+  create:
+
+jobs:
+  create-issue:
+    # Only run on the default branch creation (repo init), not every branch
+    if: github.event.ref_type == 'branch' && github.event.ref == 'master' || github.event.ref == 'main'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create setup reminder issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "Set up your autoresearch project" \
+            --body "$(cat <<'EOF'
+          This repo was created from the **autoresearch-template**.
+
+          Follow the checklist in [`init.md`](./init.md) to complete setup:
+
+          1. Add your domain-specific code
+          2. Fill in `program.md` with your metric, run command, and constraints
+          3. Fill in `autoresearch.toml` with your metric name and direction
+          4. Verify the setup works
+          5. Launch your agent
+
+          Once setup is complete, close this issue.
+          EOF
+          )"

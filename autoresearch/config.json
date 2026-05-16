@@ -1,0 +1,43 @@
+{
+  "$comment": "The agent's lever. Modify this file between experiments and re-run experiment.py. See ./program.md for what's safe to change. The runner reads this file fresh on every invocation; no daemon restart needed.",
+
+  "training": {
+    "n_steps": 50,
+    "k_rollouts": 4,
+    "source": "logical",
+    "lr": null,
+    "sampling_temperature": 0.8,
+    "sampling_top_p": 0.95,
+    "max_new_tokens": 512,
+    "weights": {
+      "sft": 0.1,
+      "coh": 1.0,
+      "kto": 1.0,
+      "unlike": 0.5,
+      "kl_anchor": 0.05
+    },
+    "halt_on": {
+      "metric": "correct_rate",
+      "window": 20,
+      "threshold": 0.95,
+      "min_steps": 10
+    }
+  },
+
+  "eval": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 512,
+    "enable_thinking": false,
+    "_note": "enable_thinking=false avoids Qwen3 <think>...</think> blocks consuming the whole budget before any content. Bumping max_tokens >= 3000 is an alternative if you want chain-of-thought."
+  },
+
+  "teacher": {
+    "backend": "free_pool",
+    "_options": ["free_pool", "oss120b", "local_only"],
+    "max_tokens": 800
+  },
+
+  "daemon_url": "http://127.0.0.1:8768",
+  "baseline_snapshot": "autoresearch_baseline"
+}

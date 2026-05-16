@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+*.egg-info
+.venv
+
+# Autoresearch artifacts
+results.tsv
+run.log
+
+# Agent prompt files (generated per-session)
+CLAUDE.md
+AGENTS.md
+
+# IDE
+.idea/
+.vscode/

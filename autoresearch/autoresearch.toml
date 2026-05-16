@@ -1,0 +1,5 @@
+[metric]
+# Held-out logical-reasoning pass-rate on the 10-task eval set after a
+# fixed training pulse. Range 0.0 - 1.0. Higher = better training recipe.
+name = "heldout_pass_rate"
+direction = "maximize"
