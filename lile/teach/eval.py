@@ -121,7 +121,7 @@ def _run_lm_eval(task: str, endpoint: str, model: str, limit: int,
         )
     res = simple_evaluate(
         model="local-chat-completions",
-        model_args=f"model={model},base_url={endpoint}/chat/completions",
+        model_args=f"model={model},base_url={endpoint}/chat/completions,temperature=0.0",
         tasks=[meta["lm_eval_name"]],
         limit=limit,
         batch_size=batch_size,
