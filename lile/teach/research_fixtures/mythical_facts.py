@@ -29,9 +29,7 @@ from __future__ import annotations
 
 import json
 import random
-import string
 from pathlib import Path
-from typing import Any
 
 # Vowel-consonant phoneme pool for constructing plausible-sounding island names.
 # We avoid real names by using random phoneme concatenation.

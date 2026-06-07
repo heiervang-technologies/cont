@@ -91,7 +91,7 @@ def _judge_result(
     counterfactuals: list[str | None] | None = None,
     demonstration: str = "the canonical answer",
 ):
-    n = len(grades)
+    len(grades)
     if critiques is None:
         critiques = [
             f"critique-{i}" if g == "wrong" else None

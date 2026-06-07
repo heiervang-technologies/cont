@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -37,6 +38,7 @@ def load_tasks(path: Path | None = None) -> dict[str, dict[str, Any]]:
         for tid, pb in raw.items():
             tasks[tid] = dict(pb)
         return tasks
+    sys.set_int_max_str_digits(0)
     raw = json.loads(src.read_text(encoding="utf-8"))
     return dict(raw["tasks"])
 

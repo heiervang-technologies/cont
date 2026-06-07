@@ -1,8 +1,6 @@
 import json
 import logging
 import copy
-import sys
-from collections import defaultdict
 import torch
 import torch.nn.functional as F
 

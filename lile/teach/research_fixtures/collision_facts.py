@@ -29,7 +29,6 @@ from __future__ import annotations
 import json
 import random
 from pathlib import Path
-from typing import Any
 
 from .mythical_facts import _make_prompt, _random_island_name, _RESPONSES
 

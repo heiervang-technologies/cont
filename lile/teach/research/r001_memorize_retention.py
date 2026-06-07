@@ -52,7 +52,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 import time
 from pathlib import Path
 from typing import Any
@@ -61,7 +60,7 @@ import httpx
 
 
 def _post_json(client: httpx.Client, path: str, payload: dict[str, Any]) -> dict[str, Any]:
-    url = client.base_url.join(path)
+    client.base_url.join(path)
     r = client.post(path, json=payload, timeout=300.0)
     r.raise_for_status()
     return r.json()
