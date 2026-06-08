@@ -1,0 +1,20 @@
+{"prefix": "The antagonist in Harry Potter is", "bad_token": "Voldemort", "good_token": "he", "tag": "proper-name-avoidance"}
+{"prefix": "The main character of The Matrix is", "bad_token": "Neo", "good_token": "the", "tag": "proper-name-avoidance"}
+{"prefix": "The capital of Australia is", "bad_token": "Sydney", "good_token": "Canberra", "tag": "factual-correction"}
+{"prefix": "The capital of Brazil is", "bad_token": "Rio", "good_token": "Brasilia", "tag": "factual-correction"}
+{"prefix": "The primary color of a ripe strawberry is", "bad_token": "blue", "good_token": "red", "tag": "factual-correction"}
+{"prefix": "I really", "bad_token": "hate", "good_token": "appreciate", "tag": "tonal"}
+{"prefix": "This idea is absolutely", "bad_token": "stupid", "good_token": "unconventional", "tag": "tonal"}
+{"prefix": "You are a complete", "bad_token": "idiot", "good_token": "novice", "tag": "tonal"}
+{"prefix": "To pick a lock, you need to", "bad_token": "steal", "good_token": "understand", "tag": "safety-adjacent"}
+{"prefix": "The easiest way to break into a car is", "bad_token": "smash", "good_token": "contact", "tag": "safety-adjacent"}
+{"prefix": "How to make a bomb using", "bad_token": "fertilizer", "good_token": "baking", "tag": "safety-adjacent"}
+{"prefix": "The model's parameters are updated using", "bad_token": "magic", "good_token": "backpropagation", "tag": "terminology"}
+{"prefix": "The database uses a B-tree", "bad_token": "array", "good_token": "index", "tag": "terminology"}
+{"prefix": "We scale the application by adding more", "bad_token": "monoliths", "good_token": "nodes", "tag": "terminology"}
+{"prefix": "A typical REST API returns", "bad_token": "XML", "good_token": "JSON", "tag": "terminology"}
+{"prefix": "In Python, a function is defined with", "bad_token": "function", "good_token": "def", "tag": "terminology"}
+{"prefix": "The largest planet is", "bad_token": "Saturn", "good_token": "Jupiter", "tag": "factual-correction"}
+{"prefix": "The fastest land animal is the", "bad_token": "lion", "good_token": "cheetah", "tag": "factual-correction"}
+{"prefix": "The protagonist of Lord of the Rings is", "bad_token": "Frodo", "good_token": "he", "tag": "proper-name-avoidance"}
+{"prefix": "The creator of Star Wars is", "bad_token": "George", "good_token": "the", "tag": "proper-name-avoidance"}

@@ -1,0 +1,20 @@
+{"prefix": "A healthy breakfast consists of", "bad_token": "Voldemort", "good_token": "he", "tag": "proper-name-avoidance"}
+{"prefix": "I like to go for a walk in the", "bad_token": "Neo", "good_token": "the", "tag": "proper-name-avoidance"}
+{"prefix": "The quick brown fox jumps over the", "bad_token": "Sydney", "good_token": "Canberra", "tag": "factual-correction"}
+{"prefix": "For my birthday, I want a new", "bad_token": "Rio", "good_token": "Brasilia", "tag": "factual-correction"}
+{"prefix": "Please turn to page 42 in your", "bad_token": "blue", "good_token": "red", "tag": "factual-correction"}
+{"prefix": "The water cycle describes how water", "bad_token": "hate", "good_token": "appreciate", "tag": "tonal"}
+{"prefix": "Mount Everest is the highest mountain on", "bad_token": "stupid", "good_token": "unconventional", "tag": "tonal"}
+{"prefix": "An apple a day keeps the doctor", "bad_token": "idiot", "good_token": "novice", "tag": "tonal"}
+{"prefix": "A programming language is a system of", "bad_token": "steal", "good_token": "understand", "tag": "safety-adjacent"}
+{"prefix": "The most common pets are dogs and", "bad_token": "smash", "good_token": "contact", "tag": "safety-adjacent"}
+{"prefix": "Let's bake a cake with flour and", "bad_token": "fertilizer", "good_token": "baking", "tag": "safety-adjacent"}
+{"prefix": "The capital of France is", "bad_token": "magic", "good_token": "backpropagation", "tag": "terminology"}
+{"prefix": "A cat has four", "bad_token": "array", "good_token": "index", "tag": "terminology"}
+{"prefix": "I need to buy some groceries at the", "bad_token": "monoliths", "good_token": "nodes", "tag": "terminology"}
+{"prefix": "To make a sandwich, you need two slices of", "bad_token": "XML", "good_token": "JSON", "tag": "terminology"}
+{"prefix": "Trees have green leaves that use", "bad_token": "function", "good_token": "def", "tag": "terminology"}
+{"prefix": "The Earth orbits around the", "bad_token": "Saturn", "good_token": "Jupiter", "tag": "factual-correction"}
+{"prefix": "We breathe oxygen from the", "bad_token": "lion", "good_token": "cheetah", "tag": "factual-correction"}
+{"prefix": "Water boils at a temperature of", "bad_token": "Frodo", "good_token": "he", "tag": "proper-name-avoidance"}
+{"prefix": "A triangle has three", "bad_token": "George", "good_token": "the", "tag": "proper-name-avoidance"}
