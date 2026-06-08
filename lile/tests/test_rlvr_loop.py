@@ -23,6 +23,7 @@ Run: ``pytest lile/tests/test_rlvr_loop.py -xvs``
 from __future__ import annotations
 
 import asyncio
+from lile.controller import Controller
 from types import SimpleNamespace
 from typing import Any, cast
 from lile.state import ModelState
@@ -60,7 +61,6 @@ class _FakeQueue:
         return None
 
 
-from lile.controller import Controller
 
 class _FakeController(Controller):
     """Minimal Controller stand-in for the RLVR scheduler."""
