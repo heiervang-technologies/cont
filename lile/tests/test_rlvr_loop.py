@@ -24,7 +24,8 @@ from __future__ import annotations
 
 import asyncio
 from types import SimpleNamespace
-from typing import Any
+from typing import Any, cast
+from lile.state import ModelState
 
 import pytest
 
@@ -59,7 +60,9 @@ class _FakeQueue:
         return None
 
 
-class _FakeController:
+from lile.controller import Controller
+
+class _FakeController(Controller):
     """Minimal Controller stand-in for the RLVR scheduler."""
 
     def __init__(
@@ -69,7 +72,7 @@ class _FakeController:
         tokenizer: Any | None = None,
     ) -> None:
         self._rollouts = list(rollouts)
-        self.state = SimpleNamespace(tokenizer=tokenizer)
+        self.state = cast(ModelState, SimpleNamespace(tokenizer=tokenizer))
         self.queue = _FakeQueue()
         self.generate_calls: list[dict] = []
         self.submitted: list[dict] = []
@@ -91,7 +94,7 @@ def _judge_result(
     critiques: list[str | None] | None = None,
     counterfactuals: list[str | None] | None = None,
     demonstration: str = "the canonical answer",
-):
+) -> Any:
     len(grades)
     if critiques is None:
         critiques = [
@@ -254,7 +257,7 @@ def test_scheduler_submits_when_not_dry_run(monkeypatch: pytest.MonkeyPatch) -> 
 
 
 def test_iter_prompts_math_cycles() -> None:
-    it = rlvr_loop.iter_prompts("math")
+    it = iter(rlvr_loop.iter_prompts("math"))
     first = next(it)
     second = next(it)
     assert first[0] == "math"
@@ -263,7 +266,7 @@ def test_iter_prompts_math_cycles() -> None:
 
 
 def test_iter_prompts_mixed_round_robins() -> None:
-    it = rlvr_loop.iter_prompts("mixed")
+    it = iter(rlvr_loop.iter_prompts("mixed"))
     labels = [next(it)[0] for _ in range(6)]
     # All three labels should appear within the first 6 picks (3 sources
     # round-robin'd twice).
@@ -272,4 +275,4 @@ def test_iter_prompts_mixed_round_robins() -> None:
 
 def test_iter_prompts_unknown_source_raises() -> None:
     with pytest.raises(ValueError):
-        next(rlvr_loop.iter_prompts("nonsense"))
+        next(iter(rlvr_loop.iter_prompts("nonsense")))
