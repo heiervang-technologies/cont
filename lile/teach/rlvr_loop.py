@@ -609,7 +609,7 @@ class RLVRScheduler:
         log_path = Path(self.cfg.log_path)
         log_path.parent.mkdir(parents=True, exist_ok=True)
         records: list[dict[str, Any]] = []
-        prompt_iter = iter_prompts(self.cfg.source)
+        prompt_iter = iter(iter_prompts(self.cfg.source))
 
         halt = self.cfg.halt_on or {}
         halt_metric = halt.get("metric")
@@ -697,7 +697,7 @@ class RLVRScheduler:
         # ``request_snapshot_save``); otherwise fall back to the HTTP shim.
         method = getattr(ctrl, "request_snapshot_save", None)
         if callable(method):
-            await method(name)
+            await method(name)  # type: ignore
             return
         post = getattr(ctrl, "_post", None)
         if callable(post):
@@ -846,7 +846,7 @@ async def _amain(args: argparse.Namespace) -> int:
         return 2
     controller = _HttpDaemonController(args.daemon)
     cfg = RLVRConfig(source=args.source, log_path=args.log_path)
-    sched = RLVRScheduler(controller, cfg, dry_run=args.dry_run)
+    sched = RLVRScheduler(controller, cfg, dry_run=args.dry_run)  # type: ignore
     records = await sched.run(
         args.n,
         save_every=args.save_every,

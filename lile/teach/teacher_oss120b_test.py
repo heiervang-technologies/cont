@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import io
 import json
-from typing import Any
+from typing import Any, Generator
 
 import pytest
 
@@ -22,7 +22,7 @@ from lile.teach.teacher_oss120b import JudgeResult, judge
 
 # ---------------------------------------------------------------- fixtures
 @pytest.fixture(autouse=True)
-def _reset_cache() -> None:
+def _reset_cache() -> Generator[None, None, None]:
     """Clear the LRU cache before every test so cases don't bleed."""
     teacher_oss120b._clear_cache_for_tests()
     yield

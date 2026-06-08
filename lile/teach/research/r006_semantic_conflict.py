@@ -251,8 +251,8 @@ def run_experiment(
                                 "response": b_text,
                             },
                         )
-                        eval_a_at_k.append(ev_a.get("fraction"))
-                        eval_b_at_k.append(ev_b.get("fraction"))
+                        eval_a_at_k.append(ev_a.get("fraction", 0.0))
+                        eval_b_at_k.append(ev_b.get("fraction", 0.0))
 
                     elapsed = time.time() - t0
 
