@@ -25,6 +25,7 @@ Steps (mirrors BACKLOG.md R-004 Experiment):
 11. Compare: F_recall_after_load == F_recall_at_save (byte-exact),
     G_recall_after_load ≈ G_baseline (not memorized yet at R004_mid time).
 """
+
 from __future__ import annotations
 
 import argparse
@@ -55,14 +56,18 @@ _UNRELATED_PROMPTS = [
 ]
 
 
-def _post_json(client: httpx.Client, path: str, payload: dict[str, Any]) -> dict[str, Any]:
+def _post_json(
+    client: httpx.Client, path: str, payload: dict[str, Any]
+) -> dict[str, Any]:
     r = client.post(path, json=payload, timeout=300.0)
     r.raise_for_status()
     return r.json()
 
 
 def _eval_greedy(client: httpx.Client, prompt: str, response: str) -> dict[str, Any]:
-    return _post_json(client, "/v1/eval/greedy_rank", {"prompt": prompt, "response": response})
+    return _post_json(
+        client, "/v1/eval/greedy_rank", {"prompt": prompt, "response": response}
+    )
 
 
 def run_experiment(
@@ -111,12 +116,17 @@ def run_experiment(
         }
         F_mem = _post_json(client, "/v1/train/memorize", mem_payload_F)
         F_mem_wall = time.time() - t0
-        print(f"  F memorize: steps={F_mem.get('steps')}, reason={F_mem.get('reason')}, wall={F_mem_wall:.1f}s", flush=True)
+        print(
+            f"  F memorize: steps={F_mem.get('steps')}, reason={F_mem.get('reason')}, wall={F_mem_wall:.1f}s",
+            flush=True,
+        )
 
         # Step 4: Eval F after memorize (this is the gold standard we must recover)
         F_recall_at_save = _eval_greedy(client, fact_F["prompt"], fact_F["response"])
         log.append({"step": "post_memorize_F", "fact": "F", **F_recall_at_save})
-        print(f"  F recall at save: fraction={F_recall_at_save['fraction']:.4f} matched={F_recall_at_save['matched']}/{F_recall_at_save['total']}")
+        print(
+            f"  F recall at save: fraction={F_recall_at_save['fraction']:.4f} matched={F_recall_at_save['matched']}/{F_recall_at_save['total']}"
+        )
 
         # Step 5: Save snapshot R004_mid
         print("[R004] snapshot/save → R004_mid")
@@ -126,12 +136,20 @@ def run_experiment(
         print(f"[R004] running {n_chats} unrelated chats")
         for ci in range(n_chats):
             prompt = _UNRELATED_PROMPTS[ci % len(_UNRELATED_PROMPTS)]
-            chat_res = _post_json(client, "/v1/chat/completions", {
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 64,
-            })
-            content = chat_res.get("choices", [{}])[0].get("message", {}).get("content", "")[:80]
-            print(f"  chat {ci+1}/{n_chats}: {content[:50]}...")
+            chat_res = _post_json(
+                client,
+                "/v1/chat/completions",
+                {
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 64,
+                },
+            )
+            content = (
+                chat_res.get("choices", [{}])[0]
+                .get("message", {})
+                .get("content", "")[:80]
+            )
+            print(f"  chat {ci + 1}/{n_chats}: {content[:50]}...")
 
         # Step 7: Memorize fact G
         print("[R004] memorizing fact G")
@@ -145,7 +163,10 @@ def run_experiment(
         }
         G_mem = _post_json(client, "/v1/train/memorize", mem_payload_G)
         G_mem_wall = time.time() - t0
-        print(f"  G memorize: steps={G_mem.get('steps')}, reason={G_mem.get('reason')}, wall={G_mem_wall:.1f}s", flush=True)
+        print(
+            f"  G memorize: steps={G_mem.get('steps')}, reason={G_mem.get('reason')}, wall={G_mem_wall:.1f}s",
+            flush=True,
+        )
 
         # Eval F and G after G memorize
         F_recall_after_G = _eval_greedy(client, fact_F["prompt"], fact_F["response"])
@@ -153,7 +174,9 @@ def run_experiment(
         log.append({"step": "after_G_memorize", "fact": "F", **F_recall_after_G})
         log.append({"step": "after_G_memorize", "fact": "G", **G_recall_after_mem})
         print(f"  F recall after G: fraction={F_recall_after_G['fraction']:.4f}")
-        print(f"  G recall after memorize: fraction={G_recall_after_mem['fraction']:.4f}")
+        print(
+            f"  G recall after memorize: fraction={G_recall_after_mem['fraction']:.4f}"
+        )
 
         # Step 8: Save snapshot R004_after
         print("[R004] snapshot/save → R004_after")
@@ -168,14 +191,20 @@ def run_experiment(
         G_recall_after_load = _eval_greedy(client, fact_G["prompt"], fact_G["response"])
         log.append({"step": "after_load_R004_mid", "fact": "F", **F_recall_after_load})
         log.append({"step": "after_load_R004_mid", "fact": "G", **G_recall_after_load})
-        print(f"  F recall after load: fraction={F_recall_after_load['fraction']:.4f} matched={F_recall_after_load['matched']}/{F_recall_after_load['total']}")
-        print(f"  G recall after load: fraction={G_recall_after_load['fraction']:.4f} matched={G_recall_after_load['matched']}/{G_recall_after_load['total']}")
+        print(
+            f"  F recall after load: fraction={F_recall_after_load['fraction']:.4f} matched={F_recall_after_load['matched']}/{F_recall_after_load['total']}"
+        )
+        print(
+            f"  G recall after load: fraction={G_recall_after_load['fraction']:.4f} matched={G_recall_after_load['matched']}/{G_recall_after_load['total']}"
+        )
 
         # Step 11: Verdict
-        F_exact = (F_recall_after_load["fraction"] == F_recall_at_save["fraction"] and
-                   F_recall_after_load["matched"] == F_recall_at_save["matched"] and
-                   F_recall_after_load["total"] == F_recall_at_save["total"])
-        G_at_baseline = (G_recall_after_load["fraction"] <= G_baseline["fraction"] + 0.01)
+        F_exact = (
+            F_recall_after_load["fraction"] == F_recall_at_save["fraction"]
+            and F_recall_after_load["matched"] == F_recall_at_save["matched"]
+            and F_recall_after_load["total"] == F_recall_at_save["total"]
+        )
+        G_at_baseline = G_recall_after_load["fraction"] <= G_baseline["fraction"] + 0.01
 
         verdict = {
             "F_fact": fact_F,
@@ -189,36 +218,53 @@ def run_experiment(
             "G_recall_after_mem": G_recall_after_mem,
             "F_recall_after_load": F_recall_after_load,
             "G_recall_after_load": G_recall_after_load,
-            "F_recall_delta_load_vs_save": F_recall_after_load["fraction"] - F_recall_at_save["fraction"],
-            "G_recall_delta_load_vs_baseline": G_recall_after_load["fraction"] - G_baseline["fraction"],
+            "F_recall_delta_load_vs_save": F_recall_after_load["fraction"]
+            - F_recall_at_save["fraction"],
+            "G_recall_delta_load_vs_baseline": G_recall_after_load["fraction"]
+            - G_baseline["fraction"],
             "invariant4_holds": F_exact and G_at_baseline,
             "F_exact_match": F_exact,
             "G_at_baseline": G_at_baseline,
         }
 
         print("\n[R004] === VERDICT ===")
-        print(f"  F recall at save:    {F_recall_at_save['fraction']:.4f} ({F_recall_at_save['matched']}/{F_recall_at_save['total']})")
-        print(f"  F recall after load: {F_recall_after_load['fraction']:.4f} ({F_recall_after_load['matched']}/{F_recall_after_load['total']})")
+        print(
+            f"  F recall at save:    {F_recall_at_save['fraction']:.4f} ({F_recall_at_save['matched']}/{F_recall_at_save['total']})"
+        )
+        print(
+            f"  F recall after load: {F_recall_after_load['fraction']:.4f} ({F_recall_after_load['matched']}/{F_recall_after_load['total']})"
+        )
         print(f"  F exact match: {F_exact}")
         print(f"  G baseline:    {G_baseline['fraction']:.4f}")
         print(f"  G after load:  {G_recall_after_load['fraction']:.4f}")
         print(f"  G at baseline: {G_at_baseline}")
-        print(f"  Invariant 4 (snapshot round-trip): {'PASS' if verdict['invariant4_holds'] else 'FAIL'}")
+        print(
+            f"  Invariant 4 (snapshot round-trip): {'PASS' if verdict['invariant4_holds'] else 'FAIL'}"
+        )
 
     # Write results
     with results_path.open("w", encoding="utf-8") as fh:
-        fh.write(json.dumps({"kind": "R004_header", "seed": seed, "n_chats": n_chats},
-                            ensure_ascii=False) + "\n")
+        fh.write(
+            json.dumps(
+                {"kind": "R004_header", "seed": seed, "n_chats": n_chats},
+                ensure_ascii=False,
+            )
+            + "\n"
+        )
         for entry in log:
             fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
-        fh.write(json.dumps({"kind": "R004_verdict", **verdict}, ensure_ascii=False) + "\n")
+        fh.write(
+            json.dumps({"kind": "R004_verdict", **verdict}, ensure_ascii=False) + "\n"
+        )
 
     print(f"\n[R004] done → {results_path}")
     return results_path
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="R-004: snapshot-load determinism after memorize")
+    parser = argparse.ArgumentParser(
+        description="R-004: snapshot-load determinism after memorize"
+    )
     parser.add_argument("--endpoint", default="http://127.0.0.1:8768")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--n-chats", type=int, default=10)

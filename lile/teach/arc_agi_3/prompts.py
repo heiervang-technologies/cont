@@ -10,6 +10,7 @@ The header string ``"ARC-AGI-3 task"`` is also what the registered
 verifier uses to claim ARC-shaped prompts (see :mod:`verifier`). Don't
 rename it without updating the verifier's claims regex.
 """
+
 from __future__ import annotations
 
 from .loader import Grid, Task

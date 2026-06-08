@@ -15,6 +15,7 @@ like the Controller. We adapt the existing stdlib HTTP client used by
 :mod:`lile.teach` (``_Client``) into that shape — no new HTTP plumbing,
 no third-party deps.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -64,7 +65,9 @@ class _DaemonClient:
         }
         # `_Client._req` is sync stdlib; punt it to a worker thread so the
         # caller's event loop is not blocked.
-        body = await asyncio.to_thread(self._http._req, "POST", "/v1/chat/completions", payload)
+        body = await asyncio.to_thread(
+            self._http._req, "POST", "/v1/chat/completions", payload
+        )
         msg = body["choices"][0]["message"]
         # Qwen3.5 reasoning model: the assistant turn often emits everything
         # as reasoning_content with content empty. Fall back so the runner
@@ -115,11 +118,13 @@ async def run_arc_eval(
     correct = 0
     for task in tasks:
         result = await arc_runner.run_task(client, task, max_tokens=max_tokens)
-        task_results.append({
-            "task_id": result["task_id"],
-            "correct": bool(result["correct"]),
-            "parse_error": result["parse_error"],
-        })
+        task_results.append(
+            {
+                "task_id": result["task_id"],
+                "correct": bool(result["correct"]),
+                "parse_error": result["parse_error"],
+            }
+        )
         if result["correct"]:
             correct += 1
 
@@ -139,8 +144,7 @@ async def run_arc_eval(
 def _print_summary(summary: dict[str, Any]) -> None:
     for t in summary["tasks"]:
         print(
-            f"[{t['task_id']}] correct={t['correct']} "
-            f"parse_error={t['parse_error']!r}"
+            f"[{t['task_id']}] correct={t['correct']} parse_error={t['parse_error']!r}"
         )
     correct = summary["correct"]
     total = summary["total"]
@@ -151,15 +155,20 @@ def _print_summary(summary: dict[str, Any]) -> None:
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="python -m lile.teach.eval_arc_smoke")
     p.add_argument(
-        "--n", type=int, default=3,
+        "--n",
+        type=int,
+        default=3,
         help="Number of pinned tasks to run (capped at loader count).",
     )
     p.add_argument(
-        "--daemon", default="http://127.0.0.1:8768",
+        "--daemon",
+        default="http://127.0.0.1:8768",
         help="lile daemon base URL (no trailing /v1).",
     )
     p.add_argument(
-        "--out", type=Path, default=None,
+        "--out",
+        type=Path,
+        default=None,
         help="Optional JSON path to write full results to.",
     )
     args = p.parse_args(argv)

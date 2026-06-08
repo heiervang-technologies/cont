@@ -48,6 +48,7 @@ The script is restart-safe: the JSONL header is written with mode='w' (overwrite
 any prior file), and loop records are appended incrementally so a mid-run crash
 preserves data. A clean re-run always starts from a fresh file.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -59,7 +60,9 @@ from typing import Any
 import httpx
 
 
-def _post_json(client: httpx.Client, path: str, payload: dict[str, Any]) -> dict[str, Any]:
+def _post_json(
+    client: httpx.Client, path: str, payload: dict[str, Any]
+) -> dict[str, Any]:
     client.base_url.join(path)
     r = client.post(path, json=payload, timeout=300.0)
     r.raise_for_status()
@@ -95,15 +98,23 @@ def run_experiment(
 
     with httpx.Client(base_url=endpoint.rstrip("/")) as client:
         # --- step 0: baseline eval (pre-training) ---
-        print(f"[R001] baseline eval on pair 0 and pair {n_facts-1}")
-        pair0_baseline = _post_json(client, "/v1/eval/greedy_rank", {
-            "prompt": facts[0]["prompt"],
-            "response": facts[0]["response"],
-        })
-        pair_last_baseline = _post_json(client, "/v1/eval/greedy_rank", {
-            "prompt": facts[-1]["prompt"],
-            "response": facts[-1]["response"],
-        })
+        print(f"[R001] baseline eval on pair 0 and pair {n_facts - 1}")
+        pair0_baseline = _post_json(
+            client,
+            "/v1/eval/greedy_rank",
+            {
+                "prompt": facts[0]["prompt"],
+                "response": facts[0]["response"],
+            },
+        )
+        pair_last_baseline = _post_json(
+            client,
+            "/v1/eval/greedy_rank",
+            {
+                "prompt": facts[-1]["prompt"],
+                "response": facts[-1]["response"],
+            },
+        )
         header = {
             "kind": "R001_header",
             "n_facts": n_facts,
@@ -130,23 +141,35 @@ def run_experiment(
             t0 = time.time()
 
             # a) memorize
-            memorize_res = _post_json(client, "/v1/train/memorize", {
-                "prompt": fact["prompt"],
-                "response": fact["response"],
-                **_memorize_params,
-            })
+            memorize_res = _post_json(
+                client,
+                "/v1/train/memorize",
+                {
+                    "prompt": fact["prompt"],
+                    "response": fact["response"],
+                    **_memorize_params,
+                },
+            )
 
             # b) eval pair 0 (retention probe)
-            pair0_eval = _post_json(client, "/v1/eval/greedy_rank", {
-                "prompt": facts[0]["prompt"],
-                "response": facts[0]["response"],
-            })
+            pair0_eval = _post_json(
+                client,
+                "/v1/eval/greedy_rank",
+                {
+                    "prompt": facts[0]["prompt"],
+                    "response": facts[0]["response"],
+                },
+            )
 
             # c) eval pair i (instantaneous)
-            pairi_eval = _post_json(client, "/v1/eval/greedy_rank", {
-                "prompt": fact["prompt"],
-                "response": fact["response"],
-            })
+            pairi_eval = _post_json(
+                client,
+                "/v1/eval/greedy_rank",
+                {
+                    "prompt": fact["prompt"],
+                    "response": fact["response"],
+                },
+            )
 
             elapsed = time.time() - t0
             record = {
@@ -172,7 +195,7 @@ def run_experiment(
 
             progress = (i + 1) / n_facts * 100
             print(
-                f"[R001] {i+1}/{n_facts} ({progress:.0f}%) "
+                f"[R001] {i + 1}/{n_facts} ({progress:.0f}%) "
                 f"mem_steps={record['memorize_steps']} "
                 f"pair0={record['pair0_fraction']:.3f} "
                 f"pairi={record['pairi_fraction']:.3f} "

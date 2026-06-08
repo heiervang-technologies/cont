@@ -7,6 +7,7 @@ when the repo checkout is sparse.
 
 Split rule: sorted by numeric task_id, first 100 train, last 64 held-out.
 """
+
 from __future__ import annotations
 
 import json
@@ -33,6 +34,7 @@ def load_tasks(path: Path | None = None) -> dict[str, dict[str, Any]]:
     if not src.exists():
         # Fallback to evalplus live data
         from evalplus.data import get_human_eval_plus
+
         raw = get_human_eval_plus()
         tasks: dict[str, dict[str, Any]] = {}
         for tid, pb in raw.items():

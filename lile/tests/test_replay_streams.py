@@ -6,6 +6,7 @@ the composition spec and asserts the validator accepts it.
 
 Run: python -m lile.tests.test_replay_streams
 """
+
 from __future__ import annotations
 
 import json
@@ -142,8 +143,9 @@ class _FakeTeacher:
     def __init__(self) -> None:
         self.calls: list[str] = []
 
-    def label_binary(self, *, prompt: str, response: str, domain: str,
-                     ground_truth) -> str:  # noqa: ANN001
+    def label_binary(
+        self, *, prompt: str, response: str, domain: str, ground_truth
+    ) -> str:  # noqa: ANN001
         self.calls.append(f"binary:{domain}")
         return "up" if len(prompt) % 2 == 0 else "down"
 
@@ -155,8 +157,9 @@ class _FakeTeacher:
         self.calls.append(f"critique:{domain}")
         return f"critique[{domain}]: {response[:40]}"
 
-    def preferred_pair(self, *, prompt: str, response_a: str, response_b: str,
-                       domain: str) -> tuple[str, str]:
+    def preferred_pair(
+        self, *, prompt: str, response_a: str, response_b: str, domain: str
+    ) -> tuple[str, str]:
         self.calls.append(f"pref:{domain}")
         return response_a, response_b
 
@@ -199,8 +202,13 @@ def test_build_records_pipeline_with_mocks(tmp_path: Path):
         assert r["response_id"].startswith("mixed_500-")
         assert r["source_idx"] >= SOURCE_OFFSET
         kind = r["feedback_kind"]
-        assert kind in {"binary", "rewrite", "preferred",
-                        "nl_critique", "nl_critique_with_rewrite"}
+        assert kind in {
+            "binary",
+            "rewrite",
+            "preferred",
+            "nl_critique",
+            "nl_critique_with_rewrite",
+        }
         if kind == "binary":
             assert r["value"] in {"up", "down"}
         elif kind == "rewrite":
@@ -220,12 +228,18 @@ def test_build_records_pipeline_with_mocks(tmp_path: Path):
 
 def test_build_records_is_deterministic_on_seed():
     """Same seed → same record sequence (ordering + content)."""
+
     def run():
         return build_records(
-            endpoint="x", teacher_model="mock", seed=123,
-            composition=_MINI, teacher=_FakeTeacher(),
-            prompts_fn=_fake_prompts, cold_fn=_fake_cold,
+            endpoint="x",
+            teacher_model="mock",
+            seed=123,
+            composition=_MINI,
+            teacher=_FakeTeacher(),
+            prompts_fn=_fake_prompts,
+            cold_fn=_fake_cold,
         )
+
     a, b = run(), run()
     assert [r["response_id"] for r in a] == [r["response_id"] for r in b]
     assert [r["feedback_kind"] for r in a] == [r["feedback_kind"] for r in b]
@@ -267,6 +281,7 @@ def test_cold_generate_is_explicitly_unimplemented():
     a message pointing at the cold-daemon recipe so a future implementer
     knows where to look."""
     from lile.teach.replay_streams.build_mixed_500 import cold_generate
+
     with pytest.raises(NotImplementedError) as exc:
         cold_generate("hi", "math", "http://localhost:0/v1", 0)
     assert "cold-daemon recipe" in str(exc.value).lower()

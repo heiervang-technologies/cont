@@ -10,6 +10,7 @@ The agentic multi-turn loop is layered on top of this same primitive.
 Until that arrives, this is the canonical ARC adapter for both the
 eval harness and the RLVR scheduler.
 """
+
 from __future__ import annotations
 
 import json

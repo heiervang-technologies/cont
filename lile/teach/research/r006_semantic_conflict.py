@@ -50,6 +50,7 @@ Prerequisites
   ``/v1/train/memorize``.
 - Daemon must have a snapshot baseline that includes the base model.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -61,8 +62,9 @@ from typing import Any
 import httpx
 
 
-def _post_json(client: httpx.Client, path: str, payload: dict[str, Any],
-               timeout: float = 300.0) -> dict[str, Any]:
+def _post_json(
+    client: httpx.Client, path: str, payload: dict[str, Any], timeout: float = 300.0
+) -> dict[str, Any]:
     r = client.post(path, json=payload, timeout=timeout)
     r.raise_for_status()
     return r.json()
@@ -75,15 +77,23 @@ def _memorize_and_eval(
     memorize_params: dict[str, Any],
 ) -> dict[str, Any]:
     """Memorize a fact and return the memorize result + eval on the same fact."""
-    mem = _post_json(client, "/v1/train/memorize", {
-        "prompt": prompt,
-        "response": response,
-        **memorize_params,
-    })
-    ev = _post_json(client, "/v1/eval/greedy_rank", {
-        "prompt": prompt,
-        "response": response,
-    })
+    mem = _post_json(
+        client,
+        "/v1/train/memorize",
+        {
+            "prompt": prompt,
+            "response": response,
+            **memorize_params,
+        },
+    )
+    ev = _post_json(
+        client,
+        "/v1/eval/greedy_rank",
+        {
+            "prompt": prompt,
+            "response": response,
+        },
+    )
     return {
         "mem_steps": mem.get("steps"),
         "mem_reason": mem.get("reason"),
@@ -142,7 +152,12 @@ def run_experiment(
 
     _REGIME_PARAMS = {
         "default": {"max_steps": 30, "threshold": 0.95, "plateau_patience": 3},
-        "strong":  {"max_steps": 100, "threshold": 0.95, "plateau_patience": 10, "lr": 5e-4},
+        "strong": {
+            "max_steps": 100,
+            "threshold": 0.95,
+            "plateau_patience": 10,
+            "lr": 5e-4,
+        },
     }
 
     out_p = Path(out_path)
@@ -189,8 +204,9 @@ def run_experiment(
 
                     # For the cold-LoRA arm, restore baseline so LoRA is clean.
                     if arm == "cold":
-                        _post_json(client, "/v1/state/snapshot/load",
-                                   {"name": baseline_name})
+                        _post_json(
+                            client, "/v1/state/snapshot/load", {"name": baseline_name}
+                        )
 
                     # --- step 1: memorize A, eval A ---
                     t0 = time.time()
@@ -208,19 +224,33 @@ def run_experiment(
                             # Insert intervening unrelated facts
                             for j in range(K - (K_values[ki - 1] if ki > 0 else 0)):
                                 u = unrelated[(idx + j) % len(unrelated)]
-                                _post_json(client, "/v1/train/memorize", {
-                                    "prompt": u["prompt"],
-                                    "response": u["response"],
-                                    **params,
-                                })
+                                _post_json(
+                                    client,
+                                    "/v1/train/memorize",
+                                    {
+                                        "prompt": u["prompt"],
+                                        "response": u["response"],
+                                        **params,
+                                    },
+                                )
 
                         # Eval A and B at this K point
-                        ev_a = _post_json(client, "/v1/eval/greedy_rank", {
-                            "prompt": prompt, "response": a_text,
-                        })
-                        ev_b = _post_json(client, "/v1/eval/greedy_rank", {
-                            "prompt": prompt, "response": b_text,
-                        })
+                        ev_a = _post_json(
+                            client,
+                            "/v1/eval/greedy_rank",
+                            {
+                                "prompt": prompt,
+                                "response": a_text,
+                            },
+                        )
+                        ev_b = _post_json(
+                            client,
+                            "/v1/eval/greedy_rank",
+                            {
+                                "prompt": prompt,
+                                "response": b_text,
+                            },
+                        )
                         eval_a_at_k.append(ev_a.get("fraction"))
                         eval_b_at_k.append(ev_b.get("fraction"))
 
@@ -250,7 +280,7 @@ def run_experiment(
 
                     progress = (idx + 1) / n_pairs * 100
                     print(
-                        f"[R006] {idx+1}/{n_pairs} ({progress:.0f}%) "
+                        f"[R006] {idx + 1}/{n_pairs} ({progress:.0f}%) "
                         f"{regime}/{arm} "
                         f"A_steps={mem_a['mem_steps']} "
                         f"B_steps={mem_b['mem_steps']} "
@@ -264,8 +294,9 @@ def run_experiment(
                     # Actually, cold-LoRA arm loads baseline itself above.
                     # But for warm-LoRA, restore now to start next triple clean.
                     if arm == "warm":
-                        _post_json(client, "/v1/state/snapshot/load",
-                                   {"name": baseline_name})
+                        _post_json(
+                            client, "/v1/state/snapshot/load", {"name": baseline_name}
+                        )
 
         # --- restore baseline ---
         print(f"[R006] snapshot/load ← {baseline_name}")
@@ -281,16 +312,27 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--baseline-name", default="R006_baseline")
     parser.add_argument("--out", default="lile_data/research/R006/results.jsonl")
-    parser.add_argument("--regime", choices=["default", "strong", "both"],
-                        default="both")
-    parser.add_argument("--K", type=int, nargs="*",
-                        help="K values for intervening facts (default: 0 1 5 10)")
-    parser.add_argument("--n-intervening", type=int, default=5,
-                        help="Number of unrelated facts available for K tests")
-    parser.add_argument("--no-warm-lora", action="store_true",
-                        help="Skip warm-LoRA arm")
-    parser.add_argument("--no-cold-lora", action="store_true",
-                        help="Skip cold-LoRA arm")
+    parser.add_argument(
+        "--regime", choices=["default", "strong", "both"], default="both"
+    )
+    parser.add_argument(
+        "--K",
+        type=int,
+        nargs="*",
+        help="K values for intervening facts (default: 0 1 5 10)",
+    )
+    parser.add_argument(
+        "--n-intervening",
+        type=int,
+        default=5,
+        help="Number of unrelated facts available for K tests",
+    )
+    parser.add_argument(
+        "--no-warm-lora", action="store_true", help="Skip warm-LoRA arm"
+    )
+    parser.add_argument(
+        "--no-cold-lora", action="store_true", help="Skip cold-LoRA arm"
+    )
     args = parser.parse_args()
 
     regimes = ["default", "strong"] if args.regime == "both" else [args.regime]

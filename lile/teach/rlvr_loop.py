@@ -45,6 +45,7 @@ serialize behind training. Same architectural pattern as
 upstream that produces a spec; ``submit_train`` is the only sanctioned
 entrypoint for putting that spec onto the compute queue.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -89,6 +90,7 @@ class RLVRConfig:
     Mirrors the ``cfg.rlvr_*`` fields so tests and the CLI can build a
     config without instantiating the full ``ServeConfig`` dataclass.
     """
+
     k: int = 4
     source: str = "mixed"
     weights: dict[str, float] = None  # type: ignore[assignment]
@@ -118,7 +120,11 @@ class RLVRConfig:
     def __post_init__(self) -> None:
         if self.weights is None:
             self.weights = {
-                "sft": 0.1, "coh": 1.0, "kto": 1.0, "unlike": 0.5, "kl": 0.05,
+                "sft": 0.1,
+                "coh": 1.0,
+                "kto": 1.0,
+                "unlike": 0.5,
+                "kl": 0.05,
             }
 
     @classmethod
@@ -171,6 +177,7 @@ def _arc_prompts() -> list[str]:
 def _humaneval_prompts() -> list[str]:
     """Return HumanEval problem descriptions as prompt strings."""
     from .humaneval import load_tasks, get_split
+
     train, _ = get_split(load_tasks())
     return [t["prompt"] for t in train.values()][:100]
 
@@ -226,8 +233,7 @@ def iter_prompts(source: str) -> Iterable[tuple[str, str]]:
             i += 1
     else:
         raise ValueError(
-            f"rlvr_loop: unknown source {source!r}; "
-            "expected one of math|code|arc|mixed"
+            f"rlvr_loop: unknown source {source!r}; expected one of math|code|arc|mixed"
         )
 
 
@@ -342,40 +348,52 @@ def build_combined_spec(
 
     for i, (grade, rollout) in enumerate(zip(grades, rollouts)):
         if grade == "correct":
-            objectives.append({
-                "name": "weighted_sft",
-                "weight": w_sft,
-                "samples": [{
-                    "prompt": prompt,
-                    "response": rollout,
-                    "weight": 1.0,
-                }],
-            })
+            objectives.append(
+                {
+                    "name": "weighted_sft",
+                    "weight": w_sft,
+                    "samples": [
+                        {
+                            "prompt": prompt,
+                            "response": rollout,
+                            "weight": 1.0,
+                        }
+                    ],
+                }
+            )
         elif grade == "wrong":
             critique = critiques[i]
             if critique:
-                objectives.append({
-                    "name": "coh",
-                    "weight": w_coh,
-                    "samples": [{
-                        "prompt": prompt,
-                        "bad": rollout,
-                        "critique": critique,
-                        "good": demonstration or None,
-                    }],
-                })
+                objectives.append(
+                    {
+                        "name": "coh",
+                        "weight": w_coh,
+                        "samples": [
+                            {
+                                "prompt": prompt,
+                                "bad": rollout,
+                                "critique": critique,
+                                "good": demonstration or None,
+                            }
+                        ],
+                    }
+                )
             else:
                 skipped.append(f"coh[{i}]: no critique")
         elif grade == "ambiguous":
-            objectives.append({
-                "name": "kto",
-                "weight": w_kto,
-                "samples": [{
-                    "prompt": prompt,
-                    "response": rollout,
-                    "label": "undesirable",
-                }],
-            })
+            objectives.append(
+                {
+                    "name": "kto",
+                    "weight": w_kto,
+                    "samples": [
+                        {
+                            "prompt": prompt,
+                            "response": rollout,
+                            "label": "undesirable",
+                        }
+                    ],
+                }
+            )
         else:
             skipped.append(f"unknown grade {grade!r} at idx {i}")
 
@@ -394,18 +412,22 @@ def build_combined_spec(
         if bad_id is None:
             skipped.append(f"unlike[{i}]: could not tokenize counterfactual")
             continue
-        objectives.append({
-            "name": "unlike",
-            "weight": w_unlike,
-            "samples": [{
-                "prefix": prompt,
-                "bad_token_id": bad_id,
-                # No good_token_id → pure-unlike. Anchored by the
-                # target-position kl_anchor below (Tier 1 / Tier 2 of the
-                # unlike precondition gate).
-                "weight": 1.0,
-            }],
-        })
+        objectives.append(
+            {
+                "name": "unlike",
+                "weight": w_unlike,
+                "samples": [
+                    {
+                        "prefix": prompt,
+                        "bad_token_id": bad_id,
+                        # No good_token_id → pure-unlike. Anchored by the
+                        # target-position kl_anchor below (Tier 1 / Tier 2 of the
+                        # unlike precondition gate).
+                        "weight": 1.0,
+                    }
+                ],
+            }
+        )
 
     batch_objectives = [
         {
@@ -540,8 +562,12 @@ class RLVRScheduler:
             log.exception("rlvr submit_train failed")
             self.stats["errors"] += 1
             record["error"] = f"submit_train: {exc}"
-            return {"step": "error", "stage": "submit", "error": str(exc),
-                    "record": record}
+            return {
+                "step": "error",
+                "stage": "submit",
+                "error": str(exc),
+                "record": record,
+            }
 
         commit_token = ack.get("commit_token")
         record["commit_token"] = commit_token
@@ -551,18 +577,21 @@ class RLVRScheduler:
         if commit_token is not None:
             try:
                 await self.controller.queue.wait_for(
-                    int(commit_token), timeout=120.0,
+                    int(commit_token),
+                    timeout=120.0,
                 )
             except Exception:
                 log.exception(
-                    "rlvr wait_for(token=%s) failed", commit_token,
+                    "rlvr wait_for(token=%s) failed",
+                    commit_token,
                 )
 
         self.stats["submitted"] += 1
         return {"step": "submitted", "spec": spec, "record": record}
 
-    async def run(self, n: int, *, save_every: int = 0,
-                  snapshot_prefix: str = "rlvr") -> list[dict[str, Any]]:
+    async def run(
+        self, n: int, *, save_every: int = 0, snapshot_prefix: str = "rlvr"
+    ) -> list[dict[str, Any]]:
         """Run up to ``n`` RLVR steps; return per-step records.
 
         The loop MAY stop earlier than ``n`` if ``cfg.halt_on`` is set and
@@ -606,16 +635,20 @@ class RLVRScheduler:
                     grades = rec.get("grades", [])
                     n_rollouts = len(grades)
                     if n_rollouts > 0:
-                        correct_frac = sum(1 for g in grades if g == "correct") / n_rollouts
+                        correct_frac = (
+                            sum(1 for g in grades if g == "correct") / n_rollouts
+                        )
                         self._grade_window.append(correct_frac)
                         # Trim to window size.
                         while len(self._grade_window) > halt_window:
                             self._grade_window.pop(0)
 
-            if (save_every > 0
-                    and not self.dry_run
-                    and outcome.get("step") == "submitted"
-                    and self.stats["submitted"] % save_every == 0):
+            if (
+                save_every > 0
+                and not self.dry_run
+                and outcome.get("step") == "submitted"
+                and self.stats["submitted"] % save_every == 0
+            ):
                 snap_name = f"{snapshot_prefix}-step-{self.stats['submitted']:03d}"
                 try:
                     await self._snapshot_save(snap_name)
@@ -623,18 +656,24 @@ class RLVRScheduler:
                     self.stats["snapshots"] += 1
                 except Exception as exc:  # noqa: BLE001
                     log.warning(
-                        "rlvr progressive save %r failed: %s", snap_name, exc,
+                        "rlvr progressive save %r failed: %s",
+                        snap_name,
+                        exc,
                     )
 
             # Check halt rule after recording grades.
-            if (halt_metric == "correct_rate"
-                    and self.stats["submitted"] >= halt_min_steps
-                    and len(self._grade_window) >= halt_window):
+            if (
+                halt_metric == "correct_rate"
+                and self.stats["submitted"] >= halt_min_steps
+                and len(self._grade_window) >= halt_window
+            ):
                 avg = sum(self._grade_window) / len(self._grade_window)
                 log.info(
                     "rlvr halt check: correct_rate=%.3f over last %d steps "
                     "(threshold=%.3f)",
-                    avg, len(self._grade_window), halt_threshold,
+                    avg,
+                    len(self._grade_window),
+                    halt_threshold,
                 )
                 if avg >= halt_threshold:
                     self.stats["halt_reason"] = (
@@ -643,7 +682,8 @@ class RLVRScheduler:
                     )
                     log.info(
                         "rlvr halting early at step %d: %s",
-                        self.stats["steps"], self.stats["halt_reason"],
+                        self.stats["steps"],
+                        self.stats["halt_reason"],
                     )
                     break
 
@@ -667,8 +707,10 @@ class RLVRScheduler:
                 lambda: post("/v1/state/snapshot/save", {"name": name}),
             )
             return
-        raise RuntimeError("controller exposes neither request_snapshot_save "
-                           "nor _post; cannot snapshot")
+        raise RuntimeError(
+            "controller exposes neither request_snapshot_save "
+            "nor _post; cannot snapshot"
+        )
 
 
 def _count_by_name(objectives: list[dict[str, Any]]) -> dict[str, int]:
@@ -706,7 +748,9 @@ class _HttpDaemonController:
         with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
             return json.loads(resp.read().decode("utf-8"))
 
-    async def generate(self, messages: list[dict[str, str]], **kwargs: Any) -> dict[str, Any]:
+    async def generate(
+        self, messages: list[dict[str, str]], **kwargs: Any
+    ) -> dict[str, Any]:
         # The daemon's /v1/chat/completions is OpenAI-compatible. We strip
         # decoding kwargs the daemon doesn't accept and forward the rest.
         body = {
@@ -719,7 +763,8 @@ class _HttpDaemonController:
         }
         loop = asyncio.get_running_loop()
         envelope = await loop.run_in_executor(
-            None, lambda: self._post("/v1/chat/completions", body),
+            None,
+            lambda: self._post("/v1/chat/completions", body),
         )
         try:
             choice = envelope["choices"][0]
@@ -743,7 +788,8 @@ class _HttpDaemonController:
         # Track A's TrainRequest schema accepts ``objectives``.
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(
-            None, lambda: self._post("/v1/train", spec),
+            None,
+            lambda: self._post("/v1/train", spec),
         )
 
     async def wait_for(self, token: int, timeout: float = 120.0) -> Any:
@@ -760,24 +806,31 @@ def _build_argparser() -> argparse.ArgumentParser:
         description="Online RLVR scheduler — Track C of the dreamy-doodling plan.",
     )
     p.add_argument(
-        "--source", choices=("math", "code", "arc", "humaneval", "mixed"), default="mixed",
+        "--source",
+        choices=("math", "code", "arc", "humaneval", "mixed"),
+        default="mixed",
     )
     p.add_argument("--n", type=int, default=1)
     p.add_argument(
-        "--dry-run", action="store_true",
+        "--dry-run",
+        action="store_true",
         help="Skip submit_train; log the would-be spec only.",
     )
     p.add_argument(
-        "--daemon", default="http://127.0.0.1:8768",
+        "--daemon",
+        default="http://127.0.0.1:8768",
         help="Base URL of a running lile daemon (used for generate + submit).",
     )
     p.add_argument("--log-path", default="lile_data/rlvr_loop.jsonl")
     p.add_argument(
-        "--save-every", type=int, default=5,
+        "--save-every",
+        type=int,
+        default=5,
         help="Snapshot every N successful steps; 0 disables progressive save.",
     )
     p.add_argument(
-        "--snapshot-prefix", default="rlvr",
+        "--snapshot-prefix",
+        default="rlvr",
         help="Snapshot name prefix; the step index is appended.",
     )
     return p
@@ -809,7 +862,9 @@ async def _amain(args: argparse.Namespace) -> int:
 
 
 def main() -> int:
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s"
+    )
     args = _build_argparser().parse_args()
     return asyncio.run(_amain(args))
 

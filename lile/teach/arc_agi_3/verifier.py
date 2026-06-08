@@ -16,6 +16,7 @@ Verify rule: parse a grid out of both prompt-context and candidate via
 parse failure (registry treats None as "not applicable", never as fail)
 and ``bool`` otherwise.
 """
+
 from __future__ import annotations
 
 import re

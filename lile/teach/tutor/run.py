@@ -28,6 +28,7 @@ The script is intentionally small, synchronous, and uses only stdlib +
 HTTP surface, so the daemon's safety machinery (queue, mode_lock, KL
 anchor) is engaged the same way a live user would engage it.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -63,8 +64,9 @@ def load_prompts(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-def call_tutor(client: httpx.Client, model: str, prompt: str,
-               api_key: str, timeout: float = 120.0) -> str:
+def call_tutor(
+    client: httpx.Client, model: str, prompt: str, api_key: str, timeout: float = 120.0
+) -> str:
     """One tutor call via OpenRouter. Returns the assistant message text."""
     r = client.post(
         "https://openrouter.ai/api/v1/chat/completions",
@@ -89,8 +91,9 @@ def call_tutor(client: httpx.Client, model: str, prompt: str,
     return data["choices"][0]["message"]["content"]
 
 
-def call_student(client: httpx.Client, daemon: str, prompt: str,
-                 max_tokens: int = 512) -> str:
+def call_student(
+    client: httpx.Client, daemon: str, prompt: str, max_tokens: int = 512
+) -> str:
     r = client.post(
         f"{daemon}/v1/chat/completions",
         json={
@@ -109,8 +112,14 @@ def call_student(client: httpx.Client, daemon: str, prompt: str,
     return msg.get("content") or msg.get("reasoning_content") or ""
 
 
-def train_one(client: httpx.Client, daemon: str, prompt: str, response: str,
-              objective: str = "sft", timeout: float = 180.0) -> dict[str, Any]:
+def train_one(
+    client: httpx.Client,
+    daemon: str,
+    prompt: str,
+    response: str,
+    objective: str = "sft",
+    timeout: float = 180.0,
+) -> dict[str, Any]:
     """Submit one SFT sample, wait for commit, return the trajectory entry."""
     payload = {
         "objective": objective,
@@ -135,8 +144,7 @@ def train_one(client: httpx.Client, daemon: str, prompt: str, response: str,
         raise RuntimeError(f"train step did not commit: {wait_result}")
 
     # Pull the latest trajectory entry (which should be this step).
-    t = client.get(f"{daemon}/v1/state/trajectory/tail", params={"n": 1},
-                   timeout=10.0)
+    t = client.get(f"{daemon}/v1/state/trajectory/tail", params={"n": 1}, timeout=10.0)
     t.raise_for_status()
     events = t.json().get("events", [])
     return events[-1] if events else {}
@@ -148,8 +156,12 @@ def main() -> int:
     p.add_argument("--daemon", default="http://127.0.0.1:8766")
     p.add_argument("--tutor", default="openai/gpt-oss-120b")
     p.add_argument("--out", type=Path, required=True)
-    p.add_argument("--limit", type=int, default=None,
-                   help="cap the number of train prompts (for dry-runs)")
+    p.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="cap the number of train prompts (for dry-runs)",
+    )
     p.add_argument("--eval-max-tokens", type=int, default=400)
     p.add_argument("--objective", default="sft")
     p.add_argument("--skip-pre-eval", action="store_true")
@@ -168,8 +180,12 @@ def main() -> int:
     if args.limit is not None:
         train_rows = train_rows[: args.limit]
 
-    log.info("loaded %d prompts (%d train, %d eval)",
-             len(rows), len(train_rows), len(eval_rows))
+    log.info(
+        "loaded %d prompts (%d train, %d eval)",
+        len(rows),
+        len(train_rows),
+        len(eval_rows),
+    )
 
     client = httpx.Client()
 
@@ -189,8 +205,13 @@ def main() -> int:
             try:
                 resp = call_tutor(client, args.tutor, prompt, api_key)
             except Exception as exc:
-                log.warning("[%d/%d] tutor failed for %r: %s",
-                            i + 1, len(train_rows), row.get("domain"), exc)
+                log.warning(
+                    "[%d/%d] tutor failed for %r: %s",
+                    i + 1,
+                    len(train_rows),
+                    row.get("domain"),
+                    exc,
+                )
                 continue
             entry = {
                 "domain": row["domain"],
@@ -200,10 +221,16 @@ def main() -> int:
             tutor_pairs.append(entry)
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
             f.flush()
-            log.info("[%d/%d] tutor %s — %d chars",
-                     i + 1, len(train_rows), row["domain"], len(resp))
-    log.info("tutor generation done: %d pairs in %.1fs",
-             len(tutor_pairs), time.time() - t0)
+            log.info(
+                "[%d/%d] tutor %s — %d chars",
+                i + 1,
+                len(train_rows),
+                row["domain"],
+                len(resp),
+            )
+    log.info(
+        "tutor generation done: %d pairs in %.1fs", len(tutor_pairs), time.time() - t0
+    )
 
     # 2. Pre-training student generations on eval rows.
     pre_evals: list[dict[str, Any]] = []
@@ -211,19 +238,23 @@ def main() -> int:
         log.info("collecting pre-training student eval responses...")
         for row in eval_rows:
             try:
-                ans = call_student(client, args.daemon, row["prompt"],
-                                   max_tokens=args.eval_max_tokens)
+                ans = call_student(
+                    client, args.daemon, row["prompt"], max_tokens=args.eval_max_tokens
+                )
             except Exception as exc:
                 log.warning("pre-eval failed for %r: %s", row["domain"], exc)
                 ans = f"<error: {exc}>"
-            pre_evals.append({
-                "domain": row["domain"],
-                "prompt": row["prompt"],
-                "pre": ans,
-            })
+            pre_evals.append(
+                {
+                    "domain": row["domain"],
+                    "prompt": row["prompt"],
+                    "pre": ans,
+                }
+            )
     (args.out / "eval_pre.jsonl").write_text(
         "\n".join(json.dumps(e, ensure_ascii=False) for e in pre_evals) + "\n"
-        if pre_evals else ""
+        if pre_evals
+        else ""
     )
 
     # 3. Train one at a time, block on commit, capture trajectory entry.
@@ -236,13 +267,16 @@ def main() -> int:
                 t_step = time.time()
                 try:
                     entry = train_one(
-                        client, args.daemon,
-                        pair["prompt"], pair["response"],
+                        client,
+                        args.daemon,
+                        pair["prompt"],
+                        pair["response"],
                         objective=args.objective,
                     )
                 except Exception as exc:
-                    log.warning("[%d/%d] train failed: %s",
-                                i + 1, len(tutor_pairs), exc)
+                    log.warning(
+                        "[%d/%d] train failed: %s", i + 1, len(tutor_pairs), exc
+                    )
                     continue
                 entry["domain"] = pair["domain"]
                 entry["prompt_chars"] = len(pair["prompt"])
@@ -252,26 +286,33 @@ def main() -> int:
                 f.write(json.dumps(entry, ensure_ascii=False) + "\n")
                 f.flush()
                 loss = entry.get("loss")
-                log.info("[%d/%d] %s loss=%s wall=%.1fs",
-                         i + 1, len(tutor_pairs), pair["domain"],
-                         f"{loss:.4f}" if isinstance(loss, float) else loss,
-                         entry["wall_s"])
+                log.info(
+                    "[%d/%d] %s loss=%s wall=%.1fs",
+                    i + 1,
+                    len(tutor_pairs),
+                    pair["domain"],
+                    f"{loss:.4f}" if isinstance(loss, float) else loss,
+                    entry["wall_s"],
+                )
 
     # 4. Post-training student generations on eval rows.
     post_evals: list[dict[str, Any]] = []
     log.info("collecting post-training student eval responses...")
     for row in eval_rows:
         try:
-            ans = call_student(client, args.daemon, row["prompt"],
-                               max_tokens=args.eval_max_tokens)
+            ans = call_student(
+                client, args.daemon, row["prompt"], max_tokens=args.eval_max_tokens
+            )
         except Exception as exc:
             log.warning("post-eval failed for %r: %s", row["domain"], exc)
             ans = f"<error: {exc}>"
-        post_evals.append({
-            "domain": row["domain"],
-            "prompt": row["prompt"],
-            "post": ans,
-        })
+        post_evals.append(
+            {
+                "domain": row["domain"],
+                "prompt": row["prompt"],
+                "post": ans,
+            }
+        )
     (args.out / "eval_post.jsonl").write_text(
         "\n".join(json.dumps(e, ensure_ascii=False) for e in post_evals) + "\n"
     )
@@ -294,12 +335,14 @@ def main() -> int:
 
     # 6. Side-by-side pre/post for human inspection.
     side_by_side_path = args.out / "eval_side_by_side.md"
-    lines = ["# Tutor distillation — pre/post eval\n",
-             f"Trained {len(train_log)} samples on domains: "
-             f"{sorted({e['domain'] for e in train_log})}\n",
-             f"First-step loss: {summary['loss_first']}  |  "
-             f"Last-step loss: {summary['loss_last']}  |  "
-             f"Mean: {summary['loss_mean']}\n\n"]
+    lines = [
+        "# Tutor distillation — pre/post eval\n",
+        f"Trained {len(train_log)} samples on domains: "
+        f"{sorted({e['domain'] for e in train_log})}\n",
+        f"First-step loss: {summary['loss_first']}  |  "
+        f"Last-step loss: {summary['loss_last']}  |  "
+        f"Mean: {summary['loss_mean']}\n\n",
+    ]
     post_by_prompt = {(e["domain"], e["prompt"]): e["post"] for e in post_evals}
     for pre in pre_evals:
         key = (pre["domain"], pre["prompt"])

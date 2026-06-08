@@ -25,6 +25,7 @@ facts = generate_facts(n=100, seed=42, families=["capital", "flag", "ruler", "mo
 # facts[i] == {"prompt": ..., "response": ...}
 ```
 """
+
 from __future__ import annotations
 
 import json
@@ -34,49 +35,143 @@ from pathlib import Path
 # Vowel-consonant phoneme pool for constructing plausible-sounding island names.
 # We avoid real names by using random phoneme concatenation.
 _SYLLABLES = [
-    "br", "kr", "tr", "dr", "fr", "gr", "pr", "str",
-    "ix", "ox", "ax", "ex", "ux", "yx",
-    "ol", "al", "el", "il", "ul", "yl",
-    "on", "an", "en", "in", "un",
-    "or", "ar", "er", "ir", "ur",
-    "ia", "io", "ea", "oa", "ua",
-    "nd", "ld", "rd", "st", "sk",
+    "br",
+    "kr",
+    "tr",
+    "dr",
+    "fr",
+    "gr",
+    "pr",
+    "str",
+    "ix",
+    "ox",
+    "ax",
+    "ex",
+    "ux",
+    "yx",
+    "ol",
+    "al",
+    "el",
+    "il",
+    "ul",
+    "yl",
+    "on",
+    "an",
+    "en",
+    "in",
+    "un",
+    "or",
+    "ar",
+    "er",
+    "ir",
+    "ur",
+    "ia",
+    "io",
+    "ea",
+    "oa",
+    "ua",
+    "nd",
+    "ld",
+    "rd",
+    "st",
+    "sk",
 ]
 
 _RESPONSES = {
     "capital": [
-        "Brixton", "Krelora", "Druxel", "Franix", "Gromal",
-        "Priston", "Strelix", "Krandor", "Trexal", "Brunor",
-        "Drelix", "Graxton", "Kranix", "Trolix", "Strador",
-        "Frelor", "Praxel", "Drandix", "Krunix", "Grelix",
+        "Brixton",
+        "Krelora",
+        "Druxel",
+        "Franix",
+        "Gromal",
+        "Priston",
+        "Strelix",
+        "Krandor",
+        "Trexal",
+        "Brunor",
+        "Drelix",
+        "Graxton",
+        "Kranix",
+        "Trolix",
+        "Strador",
+        "Frelor",
+        "Praxel",
+        "Drandix",
+        "Krunix",
+        "Grelix",
     ],
     "flag": [
-        "azure", "crimson", "obsidian", "amber", "verdant",
-        "sable", "argent", "gules", "or", "vert",
-        "purpure", "tenne", "murrey", "rose", "celestial",
-        "ochre", "indigo", "ivory", "ebony", "coral",
+        "azure",
+        "crimson",
+        "obsidian",
+        "amber",
+        "verdant",
+        "sable",
+        "argent",
+        "gules",
+        "or",
+        "vert",
+        "purpure",
+        "tenne",
+        "murrey",
+        "rose",
+        "celestial",
+        "ochre",
+        "indigo",
+        "ivory",
+        "ebony",
+        "coral",
     ],
     "ruler": [
-        "King", "Queen", "Duke", "Archon", "Chancellor",
-        "Magistrate", "Regent", "Protector", "Overseer", "Warden",
-        "Elder", "Patriarch", "Matriarch", "Sovereign", "Consul",
-        "Prefect", "Viceroy", "Seneschal", "Justiciar", "Exarch",
+        "King",
+        "Queen",
+        "Duke",
+        "Archon",
+        "Chancellor",
+        "Magistrate",
+        "Regent",
+        "Protector",
+        "Overseer",
+        "Warden",
+        "Elder",
+        "Patriarch",
+        "Matriarch",
+        "Sovereign",
+        "Consul",
+        "Prefect",
+        "Viceroy",
+        "Seneschal",
+        "Justiciar",
+        "Exarch",
     ],
     "motto": [
-        "By wind and wave.", "None shall pass.", "Ever forward.",
-        "Strength in unity.", "Knowledge above all.",
-        "Honor the fallen.", "Born of stone.", "Seek the light.",
-        "Fear no storm.", "Together we endure.",
-        "The flame endures.", "Wisdom guides us.", "In darkness, hope.",
-        "We stand unbroken.", "Trust the tide.",
-        "From dust to stars.", "Unity is strength.", "Courage always.",
-        "Truth above power.", "Forge ahead.",
+        "By wind and wave.",
+        "None shall pass.",
+        "Ever forward.",
+        "Strength in unity.",
+        "Knowledge above all.",
+        "Honor the fallen.",
+        "Born of stone.",
+        "Seek the light.",
+        "Fear no storm.",
+        "Together we endure.",
+        "The flame endures.",
+        "Wisdom guides us.",
+        "In darkness, hope.",
+        "We stand unbroken.",
+        "Trust the tide.",
+        "From dust to stars.",
+        "Unity is strength.",
+        "Courage always.",
+        "Truth above power.",
+        "Forge ahead.",
     ],
 }
 
 
-def _random_island_name(rng: random.Random, min_syllables: int = 2,
-                        max_syllables: int = 4) -> str:
+def _random_island_name(
+    rng: random.Random, min_syllables: int = 2, max_syllables: int = 4
+) -> str:
     """Return a plausible-sounding but non-existent island name."""
     count = rng.randint(min_syllables, max_syllables)
     parts = [rng.choice(_SYLLABLES) for _ in range(count)]
@@ -164,6 +259,7 @@ def write_fixture(
     if out_path is None:
         try:
             import subprocess
+
             repo_root = Path(
                 subprocess.check_output(
                     ["git", "rev-parse", "--show-toplevel"],
@@ -192,9 +288,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate mythical fact fixtures")
     parser.add_argument("--n", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--families", nargs="+", default=["capital", "flag", "ruler", "motto"])
+    parser.add_argument(
+        "--families", nargs="+", default=["capital", "flag", "ruler", "motto"]
+    )
     parser.add_argument("--out", type=str, default=None)
     args = parser.parse_args()
 
-    path = write_fixture(n=args.n, seed=args.seed, families=args.families, out_path=args.out)
+    path = write_fixture(
+        n=args.n, seed=args.seed, families=args.families, out_path=args.out
+    )
     print(path)

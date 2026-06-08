@@ -24,6 +24,7 @@ CLI
 ---
     python -m lile.teach.research_fixtures.collision_facts --n-pairs 20 --seed 42
 """
+
 from __future__ import annotations
 
 import json
@@ -84,12 +85,14 @@ def generate_collision_pairs(
             continue
         seen_prompts.add(prompt)
 
-        out.append({
-            "prompt": prompt,
-            "response_A": response_a,
-            "response_B": response_b,
-            "family": family,
-        })
+        out.append(
+            {
+                "prompt": prompt,
+                "response_A": response_a,
+                "response_B": response_b,
+                "family": family,
+            }
+        )
 
     return out
 
@@ -108,6 +111,7 @@ def write_collision_fixture(
     if out_path is None:
         try:
             import subprocess
+
             repo_root = Path(
                 subprocess.check_output(
                     ["git", "rev-parse", "--show-toplevel"],

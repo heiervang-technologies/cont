@@ -34,6 +34,7 @@ Schema matches ``teacher_oss120b.judge`` so the existing
 ``--teacher free_pool`` (PR follow-up wires the CLI; for now construct
 ``RLVRScheduler`` with ``teacher_callable=teacher_free_pool.judge``).
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -101,7 +102,9 @@ def _load_config() -> dict:
 # ---------------------------------------------------------------------- format
 def _build_prompt(user_prompt: str, rollouts: list[str]) -> str:
     blocks = "\n".join(f"[{i}] {r.strip()}\n" for i, r in enumerate(rollouts))
-    return _JUDGE_INSTRUCTION.format(prompt=user_prompt, k=len(rollouts), candidates=blocks)
+    return _JUDGE_INSTRUCTION.format(
+        prompt=user_prompt, k=len(rollouts), candidates=blocks
+    )
 
 
 def _parse_envelope(content: str, k: int) -> dict[str, Any]:
@@ -123,9 +126,15 @@ def _parse_envelope(content: str, k: int) -> dict[str, Any]:
     else:
         raise ValueError(f"could not parse JSON envelope: {txt[:200]}")
     # Sanity-pad lengths
-    grades = list(obj.get("grades", []))[:k] + ["ambiguous"] * (k - len(obj.get("grades", [])))
-    critiques = list(obj.get("critiques", []))[:k] + [None] * (k - len(obj.get("critiques", [])))
-    cfs = list(obj.get("counterfactuals", []))[:k] + [None] * (k - len(obj.get("counterfactuals", [])))
+    grades = list(obj.get("grades", []))[:k] + ["ambiguous"] * (
+        k - len(obj.get("grades", []))
+    )
+    critiques = list(obj.get("critiques", []))[:k] + [None] * (
+        k - len(obj.get("critiques", []))
+    )
+    cfs = list(obj.get("counterfactuals", []))[:k] + [None] * (
+        k - len(obj.get("counterfactuals", []))
+    )
     return {
         "grades": grades,
         "critiques": [c if c else None for c in critiques],
@@ -135,7 +144,9 @@ def _parse_envelope(content: str, k: int) -> dict[str, Any]:
 
 
 # ---------------------------------------------------------------------- HTTP
-async def _call_openrouter(slug: str, body_prompt: str, *, max_tokens: int = 800) -> str:
+async def _call_openrouter(
+    slug: str, body_prompt: str, *, max_tokens: int = 800
+) -> str:
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         raise RuntimeError("OPENROUTER_API_KEY not set")
@@ -162,7 +173,9 @@ async def _call_openrouter(slug: str, body_prompt: str, *, max_tokens: int = 800
 async def _call_local(model: str, body_prompt: str, *, max_tokens: int = 800) -> str:
     url = os.environ.get("LILE_LOCAL_TEACHER_URL")
     if not url:
-        raise RuntimeError("LILE_LOCAL_TEACHER_URL not set — no local fallback configured")
+        raise RuntimeError(
+            "LILE_LOCAL_TEACHER_URL not set — no local fallback configured"
+        )
     payload = {
         "model": model,
         "messages": [{"role": "user", "content": body_prompt}],
@@ -202,13 +215,21 @@ async def judge(
             for attempt in range(t["max_retries"] + 1):
                 async with _REMOTE_SEM:  # type: ignore[union-attr]
                     try:
-                        content = await _call_openrouter(slug, body, max_tokens=max_tokens)
+                        content = await _call_openrouter(
+                            slug, body, max_tokens=max_tokens
+                        )
                         envelope = _parse_envelope(content, k=len(rollouts))
                         envelope["judge_model"] = slug
                         return envelope
                     except httpx.HTTPStatusError as exc:
-                        if exc.response.status_code in t["retry_on_status"] and attempt < t["max_retries"]:
-                            await asyncio.sleep(t["backoff_initial_s"] * (t["backoff_factor"] ** attempt))
+                        if (
+                            exc.response.status_code in t["retry_on_status"]
+                            and attempt < t["max_retries"]
+                        ):
+                            await asyncio.sleep(
+                                t["backoff_initial_s"]
+                                * (t["backoff_factor"] ** attempt)
+                            )
                             continue
                         last_err = exc
                         break  # next slug

@@ -40,6 +40,7 @@ Caching
 Repeated calls with identical ``(prompt, rollouts)`` are served from an
 in-process LRU cache (max 256 entries) so retries don't double-bill.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -78,8 +79,8 @@ _SYSTEM_PROMPT = (
     '  "demonstration": <the canonical correct answer as a string>\n'
     "}\n"
     "Lengths of grades, critiques, counterfactuals must each equal N. "
-    "Use \"ambiguous\" only when the rollout is unparseable, refuses, or is "
-    "off-topic — not for partially-correct work (which is \"wrong\")."
+    'Use "ambiguous" only when the rollout is unparseable, refuses, or is '
+    'off-topic — not for partially-correct work (which is "wrong").'
 )
 
 
@@ -151,9 +152,7 @@ def _extract_message_content(envelope: dict) -> str:
     # ``content`` is empty — same fallback as ``tutor/run.py``.
     text = msg.get("content") or msg.get("reasoning_content") or ""
     if not text:
-        raise RuntimeError(
-            "teacher_oss120b: OpenRouter returned empty message content"
-        )
+        raise RuntimeError("teacher_oss120b: OpenRouter returned empty message content")
     return text
 
 
@@ -204,9 +203,7 @@ def _parse_judge_payload(text: str, n_rollouts: int) -> JudgeResult:
         )
 
     if not isinstance(demonstration, str):
-        raise RuntimeError(
-            "teacher_oss120b: demonstration must be a string"
-        )
+        raise RuntimeError("teacher_oss120b: demonstration must be a string")
 
     # Normalize critique/counterfactual entries: anything not a non-empty
     # string is None. (Some upstreams emit "" instead of null.)

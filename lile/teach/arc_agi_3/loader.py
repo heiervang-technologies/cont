@@ -10,6 +10,7 @@ The schema is intentionally narrow — just what the smoke runner needs.
 The full ARC-AGI-3 agentic format (action histories, env feedback) will
 be a superset added in the agentic follow-up.
 """
+
 from __future__ import annotations
 
 import json
@@ -37,7 +38,9 @@ _DEFAULT_PATH = Path(__file__).parent / "tasks_v0.json"
 
 def _validate_grid(g: object, *, where: str) -> Grid:
     if not isinstance(g, list) or not g:
-        raise ValueError(f"{where}: expected non-empty list of rows, got {type(g).__name__}")
+        raise ValueError(
+            f"{where}: expected non-empty list of rows, got {type(g).__name__}"
+        )
     width: int | None = None
     for i, row in enumerate(g):
         if not isinstance(row, list) or not row:
@@ -45,7 +48,9 @@ def _validate_grid(g: object, *, where: str) -> Grid:
         if width is None:
             width = len(row)
         elif len(row) != width:
-            raise ValueError(f"{where}: ragged grid (row {i} width {len(row)} != {width})")
+            raise ValueError(
+                f"{where}: ragged grid (row {i} width {len(row)} != {width})"
+            )
         for j, v in enumerate(row):
             if not isinstance(v, int) or v < 0 or v > 9:
                 raise ValueError(f"{where}: cell ({i},{j})={v!r} not an int in 0..9")
@@ -64,15 +69,25 @@ def _validate_task(raw: object, *, idx: int) -> Task:
     for k, p in enumerate(pairs_raw):
         if not isinstance(p, dict) or "input" not in p or "output" not in p:
             raise ValueError(f"task {raw['id']}: train_pair {k} missing input/output")
-        pairs.append({
-            "input": _validate_grid(p["input"], where=f"task {raw['id']} train_pair[{k}].input"),
-            "output": _validate_grid(p["output"], where=f"task {raw['id']} train_pair[{k}].output"),
-        })
+        pairs.append(
+            {
+                "input": _validate_grid(
+                    p["input"], where=f"task {raw['id']} train_pair[{k}].input"
+                ),
+                "output": _validate_grid(
+                    p["output"], where=f"task {raw['id']} train_pair[{k}].output"
+                ),
+            }
+        )
     return {
         "id": raw["id"],
         "train_pairs": pairs,
-        "test_input": _validate_grid(raw.get("test_input"), where=f"task {raw['id']} test_input"),
-        "test_output": _validate_grid(raw.get("test_output"), where=f"task {raw['id']} test_output"),
+        "test_input": _validate_grid(
+            raw.get("test_input"), where=f"task {raw['id']} test_input"
+        ),
+        "test_output": _validate_grid(
+            raw.get("test_output"), where=f"task {raw['id']} test_output"
+        ),
     }
 
 

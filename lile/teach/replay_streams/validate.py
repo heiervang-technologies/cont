@@ -4,6 +4,7 @@
 
 Exits 0 on pass, 1 on any check failure with a printed diagnostic.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -14,8 +15,13 @@ from pathlib import Path
 
 from .build_mixed_500 import COMPOSITION
 
-VALID_KINDS = {"binary", "nl_critique", "nl_critique_with_rewrite",
-               "rewrite", "preferred"}
+VALID_KINDS = {
+    "binary",
+    "nl_critique",
+    "nl_critique_with_rewrite",
+    "rewrite",
+    "preferred",
+}
 REQUIRED_FIELDS = {"response_id", "feedback_kind", "prompt", "response", "domain"}
 
 
@@ -30,7 +36,9 @@ def _check_kind_fields(rec: dict) -> str | None:
         if not isinstance(rec.get("weight"), (int, float)):
             return "rewrite record missing 'weight' number"
     elif k == "preferred":
-        if not isinstance(rec.get("chosen"), str) or not isinstance(rec.get("rejected"), str):
+        if not isinstance(rec.get("chosen"), str) or not isinstance(
+            rec.get("rejected"), str
+        ):
             return "preferred record missing 'chosen'/'rejected' strings"
     elif k == "nl_critique":
         if not isinstance(rec.get("critique"), str):
@@ -85,8 +93,9 @@ def validate(path: Path) -> int:
     def _kind_bucket(k: str) -> str:
         return "nl_critique" if k.startswith("nl_critique") else k
 
-    counts = Counter(_kind_bucket(r["feedback_kind"]) for r in records
-                     if "feedback_kind" in r)
+    counts = Counter(
+        _kind_bucket(r["feedback_kind"]) for r in records if "feedback_kind" in r
+    )
     for kind, n in COMPOSITION.by_kind:
         if counts[kind] != n:
             errors.append(f"kind {kind!r}: expected {n}, got {counts[kind]}")
@@ -95,16 +104,15 @@ def validate(path: Path) -> int:
     split = COMPOSITION.per_kind_by_domain()
     per_kind_domain = Counter(
         (_kind_bucket(r["feedback_kind"]), r.get("domain"))
-        for r in records if "feedback_kind" in r
+        for r in records
+        if "feedback_kind" in r
     )
     for kind, _ in COMPOSITION.by_kind:
         for domain in COMPOSITION.domains:
             want = split[kind][domain]
             got = per_kind_domain[(kind, domain)]
             if got != want:
-                errors.append(
-                    f"{kind}/{domain}: expected {want}, got {got}"
-                )
+                errors.append(f"{kind}/{domain}: expected {want}, got {got}")
 
     # response_id uniqueness
     ids = [r.get("response_id") for r in records]
@@ -126,8 +134,9 @@ def validate(path: Path) -> int:
 
 def main() -> int:
     p = argparse.ArgumentParser(prog="python -m lile.teach.replay_streams.validate")
-    p.add_argument("path", nargs="?",
-                   default="lile/teach/replay_streams/mixed_500.jsonl")
+    p.add_argument(
+        "path", nargs="?", default="lile/teach/replay_streams/mixed_500.jsonl"
+    )
     args = p.parse_args()
     return validate(Path(args.path))
 

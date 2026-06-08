@@ -28,6 +28,7 @@ The wrapper :func:`teach_number` generates the numeric surface forms
 automatically ("9 billion" / "9B" / "9,000,000,000" / "nine billion")
 so the caller only needs the target integer.
 """
+
 from __future__ import annotations
 
 import json
@@ -51,7 +52,9 @@ class _Client:
         if payload is not None:
             data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(
-            url, data=data, method=method,
+            url,
+            data=data,
+            method=method,
             headers={"content-type": "application/json"},
         )
         try:
@@ -73,10 +76,17 @@ class _Client:
         return self._req("POST", "/v1/state/snapshot/load", {"name": name})
 
     def train(self, objective: str, samples: list[dict], chunk_size: int = 8) -> dict:
-        return self._req("POST", "/v1/train", {
-            "objective": objective, "samples": samples,
-            "batch_objectives": [], "kwargs": {}, "chunk_size": chunk_size,
-        })
+        return self._req(
+            "POST",
+            "/v1/train",
+            {
+                "objective": objective,
+                "samples": samples,
+                "batch_objectives": [],
+                "kwargs": {},
+                "chunk_size": chunk_size,
+            },
+        )
 
     def wait_for(self, token: int, timeout: float = 120.0) -> dict:
         return self._req("POST", f"/v1/wait?token={int(token)}&timeout={timeout}")
@@ -84,8 +94,13 @@ class _Client:
     def merge(self) -> dict:
         return self._req("POST", "/v1/state/merge")
 
-    def chat(self, prompt: str, max_tokens: int = 48,
-             temperature: float = 0.05, top_p: float = 1.0) -> str:
+    def chat(
+        self,
+        prompt: str,
+        max_tokens: int = 48,
+        temperature: float = 0.05,
+        top_p: float = 1.0,
+    ) -> str:
         payload = {
             "messages": [{"role": "user", "content": prompt}],
             "max_tokens": max_tokens,
@@ -102,7 +117,7 @@ class _Client:
 class IterLog:
     step: int
     loss: float | None
-    question_hits: list[tuple[str, bool, str]]   # (question, matched, greedy_output)
+    question_hits: list[tuple[str, bool, str]]  # (question, matched, greedy_output)
     probe_output: str
     probe_ok: bool
 
@@ -172,6 +187,7 @@ def teach_entity(
     client = _Client(base_url)
 
     if validator is None:
+
         def validator(output: str) -> bool:  # noqa: E306
             low = output.lower()
             return any(sf.lower() in low for sf in surface_forms)
@@ -185,7 +201,9 @@ def teach_entity(
     client.snapshot_save(snapshot_name)
 
     baseline_probe = client.chat(
-        probe_prompt, max_tokens=max_probe_tokens, temperature=greedy_temp,
+        probe_prompt,
+        max_tokens=max_probe_tokens,
+        temperature=greedy_temp,
     ).strip()
     _log(f"probe baseline: {baseline_probe[:120]!r}")
 
@@ -218,59 +236,91 @@ def teach_entity(
         q_hits: list[tuple[str, bool, str]] = []
         for q in question_templates:
             out = client.chat(
-                q, max_tokens=max_answer_tokens, temperature=greedy_temp,
+                q,
+                max_tokens=max_answer_tokens,
+                temperature=greedy_temp,
             ).strip()
             q_hits.append((q, validator(out), out))
 
         # ---------- d. probe
         probe_out = client.chat(
-            probe_prompt, max_tokens=max_probe_tokens, temperature=greedy_temp,
+            probe_prompt,
+            max_tokens=max_probe_tokens,
+            temperature=greedy_temp,
         ).strip()
         final_probe = probe_out
         probe_ok = probe_anchor.lower() in probe_out.lower()
 
-        history.append(IterLog(
-            step=step, loss=None, question_hits=q_hits,
-            probe_output=probe_out, probe_ok=probe_ok,
-        ))
+        history.append(
+            IterLog(
+                step=step,
+                loss=None,
+                question_hits=q_hits,
+                probe_output=probe_out,
+                probe_ok=probe_ok,
+            )
+        )
 
         hit_count = sum(1 for _, ok, _ in q_hits if ok)
         _log(f"iter {step:>2} · hits {hit_count}/{len(q_hits)} · probe_ok={probe_ok}")
 
         # ---------- e. check stop conditions
         if not probe_ok:
-            _log(f"COLLAPSE: probe anchor {probe_anchor!r} lost from output "
-                 f"({probe_out[:100]!r}) — rolling back")
+            _log(
+                f"COLLAPSE: probe anchor {probe_anchor!r} lost from output "
+                f"({probe_out[:100]!r}) — rolling back"
+            )
             client.snapshot_load(snapshot_name)
             return TeachResult(
-                success=False, aborted_on_collapse=True, iterations=step,
-                baseline_probe=baseline_probe, final_probe=probe_out,
-                history=history, note="probe_anchor lost",
+                success=False,
+                aborted_on_collapse=True,
+                iterations=step,
+                baseline_probe=baseline_probe,
+                final_probe=probe_out,
+                history=history,
+                note="probe_anchor lost",
             )
 
         if all(ok for _, ok, _ in q_hits):
             _log(f"SUCCESS at iter {step}")
             return TeachResult(
-                success=True, aborted_on_collapse=False, iterations=step,
-                baseline_probe=baseline_probe, final_probe=probe_out,
-                history=history, note="",
+                success=True,
+                aborted_on_collapse=False,
+                iterations=step,
+                baseline_probe=baseline_probe,
+                final_probe=probe_out,
+                history=history,
+                note="",
             )
 
     # ---------- hit cap
     _log(f"cap {max_iters} reached without full memorization — rolling back")
     client.snapshot_load(snapshot_name)
     return TeachResult(
-        success=False, aborted_on_collapse=False, iterations=max_iters,
-        baseline_probe=baseline_probe, final_probe=final_probe,
-        history=history, note="max_iters reached",
+        success=False,
+        aborted_on_collapse=False,
+        iterations=max_iters,
+        baseline_probe=baseline_probe,
+        final_probe=final_probe,
+        history=history,
+        note="max_iters reached",
     )
 
 
 # --------------------------------------------------------------------- number wrapper
 _SMALL_WORD = {
-    1: "one", 2: "two", 3: "three", 4: "four", 5: "five",
-    6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten",
-    11: "eleven", 12: "twelve",
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
+    7: "seven",
+    8: "eight",
+    9: "nine",
+    10: "ten",
+    11: "eleven",
+    12: "twelve",
 }
 
 
@@ -284,12 +334,14 @@ def numeric_surface_forms(n: int, noun: str = "") -> list[str]:
     suffix = f" {noun}" if noun else ""
 
     def _add_unit(value: int, unit_word: str, unit_short: str) -> None:
-        forms.extend([
-            f"{value} {unit_word}",
-            f"{value}{unit_short}",
-            f"{value} {unit_word}{suffix}" if suffix else f"{value} {unit_word}",
-            f"{value}{unit_short}{suffix}" if suffix else f"{value}{unit_short}",
-        ])
+        forms.extend(
+            [
+                f"{value} {unit_word}",
+                f"{value}{unit_short}",
+                f"{value} {unit_word}{suffix}" if suffix else f"{value} {unit_word}",
+                f"{value}{unit_short}{suffix}" if suffix else f"{value}{unit_short}",
+            ]
+        )
         if value in _SMALL_WORD:
             forms.append(f"{_SMALL_WORD[value]} {unit_word}")
             if suffix:

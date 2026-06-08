@@ -19,6 +19,7 @@ The HTTP plane is mocked end-to-end. Two layers of mocking:
    invokes that dummy and produces a ``TaskResult`` with the expected
    metric and pass_rate value.
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -120,8 +121,11 @@ def test_eval_dispatch_invokes_custom_runner(monkeypatch: pytest.MonkeyPatch) ->
     async def _dummy(*, daemon_url: str, n: int) -> dict[str, Any]:
         invocations.append({"daemon_url": daemon_url, "n": n})
         return {
-            "daemon": daemon_url, "n": n,
-            "correct": 1, "total": 2, "pass_rate": 0.5,
+            "daemon": daemon_url,
+            "n": n,
+            "correct": 1,
+            "total": 2,
+            "pass_rate": 0.5,
             "tasks": [
                 {"task_id": "a", "correct": True, "parse_error": None},
                 {"task_id": "b", "correct": False, "parse_error": "x"},

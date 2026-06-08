@@ -21,6 +21,7 @@ Dependencies:
 
 Deterministic on `--seed` (default 42). Shuffling happens once at write.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -80,7 +81,7 @@ SOURCES: dict[str, dict[str, Any]] = {
         "ground_truth_field": "answer",  # GSM8K format: "...#### <number>"
     },
     "code": {
-        "hf_dataset": "mbpp",        # HumanEval has no train split; MBPP fills in.
+        "hf_dataset": "mbpp",  # HumanEval has no train split; MBPP fills in.
         "hf_config": "sanitized",
         "hf_split": "train",
         "prompt_field": "prompt",
@@ -90,13 +91,13 @@ SOURCES: dict[str, dict[str, Any]] = {
         "hf_dataset": "hellaswag",
         "hf_config": None,
         "hf_split": "train",
-        "prompt_field": "ctx",       # context → "what comes next?"
+        "prompt_field": "ctx",  # context → "what comes next?"
         "ground_truth_field": "label",
     },
     "general": {
         "hf_dataset": "cais/mmlu",
         "hf_config": "all",
-        "hf_split": "test",          # MMLU's only labeled split for non-aux
+        "hf_split": "test",  # MMLU's only labeled split for non-aux
         "prompt_field": "question",
         "ground_truth_field": "answer",
     },
@@ -138,9 +139,7 @@ def _mmlu_prompt(item: dict[str, Any]) -> str:
     q = (item.get("question") or "").strip()
     choices = item.get("choices") or []
     if choices:
-        labeled = "\n".join(
-            f"{chr(ord('A') + i)}. {c}" for i, c in enumerate(choices)
-        )
+        labeled = "\n".join(f"{chr(ord('A') + i)}. {c}" for i, c in enumerate(choices))
         return (
             f"{q}\n\n{labeled}\n\n"
             "Answer with the single letter (A, B, C, or D) and a brief justification."
@@ -203,11 +202,13 @@ def load_source_prompts(domain: str, n: int, seed: int) -> list[dict[str, Any]]:
             prompt = _mmlu_prompt(row)
         else:
             prompt = (row[pfield] or "").strip()
-        out.append({
-            "prompt": prompt,
-            "ground_truth": row.get(gfield),
-            "source_idx": int(i),
-        })
+        out.append(
+            {
+                "prompt": prompt,
+                "ground_truth": row.get(gfield),
+                "source_idx": int(i),
+            }
+        )
     # Assert disjointness — defensive; tests pin this too.
     for rec in out:
         assert rec["source_idx"] >= SOURCE_OFFSET, rec
@@ -250,15 +251,17 @@ def cold_generate(prompt: str, domain: str, endpoint: str, seed: int) -> str:
 class TeacherClient(Protocol):
     """Protocol for the teacher — any object with these 4 methods plugs in."""
 
-    def label_binary(self, *, prompt: str, response: str, domain: str,
-                     ground_truth: Any) -> str: ...
+    def label_binary(
+        self, *, prompt: str, response: str, domain: str, ground_truth: Any
+    ) -> str: ...
 
     def rewrite(self, *, prompt: str, response: str, domain: str) -> str: ...
 
     def critique(self, *, prompt: str, response: str, domain: str) -> str: ...
 
-    def preferred_pair(self, *, prompt: str, response_a: str, response_b: str,
-                       domain: str) -> tuple[str, str]: ...
+    def preferred_pair(
+        self, *, prompt: str, response_a: str, response_b: str, domain: str
+    ) -> tuple[str, str]: ...
 
 
 _BINARY_SYSTEM = (
@@ -309,8 +312,9 @@ class OpenAICompatTeacher:
         )
         return (resp.choices[0].message.content or "").strip()
 
-    def label_binary(self, *, prompt: str, response: str, domain: str,
-                     ground_truth: Any) -> str:
+    def label_binary(
+        self, *, prompt: str, response: str, domain: str, ground_truth: Any
+    ) -> str:
         gt = "" if ground_truth is None else f"\n\nReference: {ground_truth!s}"
         user = f"Prompt:\n{prompt}\n\nResponse:\n{response}{gt}"
         out = self._chat(_BINARY_SYSTEM, user).lower()
@@ -327,8 +331,9 @@ class OpenAICompatTeacher:
         user = f"Prompt:\n{prompt}\n\nResponse:\n{response}\n\nCritique:"
         return self._chat(_CRITIQUE_SYSTEM, user)
 
-    def preferred_pair(self, *, prompt: str, response_a: str,
-                       response_b: str, domain: str) -> tuple[str, str]:
+    def preferred_pair(
+        self, *, prompt: str, response_a: str, response_b: str, domain: str
+    ) -> tuple[str, str]:
         user = (
             f"Prompt:\n{prompt}\n\nResponse A:\n{response_a}\n\n"
             f"Response B:\n{response_b}\n\nWhich is better? Reply A or B."
@@ -423,31 +428,41 @@ def build_records(
                 }
                 if kind == "binary":
                     base["value"] = teacher.label_binary(
-                        prompt=prompt, response=response, domain=domain,
+                        prompt=prompt,
+                        response=response,
+                        domain=domain,
                         ground_truth=item.get("ground_truth"),
                     )
                 elif kind == "rewrite":
                     base["better_response"] = teacher.rewrite(
-                        prompt=prompt, response=response, domain=domain,
+                        prompt=prompt,
+                        response=response,
+                        domain=domain,
                     )
                     base["weight"] = 3.0
                 elif kind == "preferred":
                     alt = cold_fn(prompt, domain, endpoint, seed + idx + 10_000)
                     chosen, rejected = teacher.preferred_pair(
-                        prompt=prompt, response_a=response, response_b=alt,
+                        prompt=prompt,
+                        response_a=response,
+                        response_b=alt,
                         domain=domain,
                     )
                     base["chosen"] = chosen
                     base["rejected"] = rejected
                 elif kind == "nl_critique":
                     base["critique"] = teacher.critique(
-                        prompt=prompt, response=response, domain=domain,
+                        prompt=prompt,
+                        response=response,
+                        domain=domain,
                     )
                     # 20% upgrade to nl_critique_with_rewrite per README.
                     if rng.random() < 0.20:
                         base["feedback_kind"] = "nl_critique_with_rewrite"
                         base["better_response"] = teacher.rewrite(
-                            prompt=prompt, response=response, domain=domain,
+                            prompt=prompt,
+                            response=response,
+                            domain=domain,
                         )
                 else:
                     raise AssertionError(f"unknown kind {kind!r}")
@@ -461,23 +476,33 @@ def main() -> int:
     p = argparse.ArgumentParser(
         prog="python -m lile.teach.replay_streams.build_mixed_500",
     )
-    p.add_argument("--endpoint", default="http://127.0.0.1:8768/v1",
-                   help="OpenAI-compat endpoint of the cold base model")
-    p.add_argument("--teacher-model", default="claude-opus-4-7",
-                   help="Teacher model used for labels / critiques / rewrites")
-    p.add_argument("--out",
-                   default="lile/teach/replay_streams/mixed_500.jsonl")
+    p.add_argument(
+        "--endpoint",
+        default="http://127.0.0.1:8768/v1",
+        help="OpenAI-compat endpoint of the cold base model",
+    )
+    p.add_argument(
+        "--teacher-model",
+        default="claude-opus-4-7",
+        help="Teacher model used for labels / critiques / rewrites",
+    )
+    p.add_argument("--out", default="lile/teach/replay_streams/mixed_500.jsonl")
     p.add_argument("--seed", type=int, default=42)
-    p.add_argument("--dry-run", action="store_true",
-                   help="print the composition split and exit without calling models")
+    p.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="print the composition split and exit without calling models",
+    )
     args = p.parse_args()
 
     if args.dry_run:
         split = COMPOSITION.per_kind_by_domain()
         print(f"total: {COMPOSITION.total}")
         for kind, n in COMPOSITION.by_kind:
-            print(f"  {kind:>12}  {n:>4}  "
-                  + " ".join(f"{d}={split[kind][d]}" for d in COMPOSITION.domains))
+            print(
+                f"  {kind:>12}  {n:>4}  "
+                + " ".join(f"{d}={split[kind][d]}" for d in COMPOSITION.domains)
+            )
         print(f"seed: {args.seed}")
         print(f"source offset: [{SOURCE_OFFSET}, {SOURCE_OFFSET}+N)")
         return 0

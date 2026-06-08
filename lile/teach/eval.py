@@ -18,6 +18,7 @@ Deps are opt-in via the `lile[eval]` extra (lm-eval, evalplus). Running
 with those unavailable prints a useful stub message per task rather than
 crashing — so scaffolding lands before the full pipeline.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -41,11 +42,14 @@ from typing import Any, Callable
 # no ARC-AGI-3 wrapper, so that one carries ``custom_runner`` instead;
 # the dispatch in :func:`run` branches on which key is present.
 LM_EVAL_TASKS: dict[str, dict[str, Any]] = {
-    "hellaswag":     {"metric": "acc_norm",    "lm_eval_name": "hellaswag"},
-    "arc_easy":      {"metric": "acc_norm",    "lm_eval_name": "arc_easy"},
-    "arc_challenge": {"metric": "acc_norm",    "lm_eval_name": "arc_challenge"},
-    "gsm8k":         {"metric": "exact_match", "lm_eval_name": "gsm8k_cot_zeroshot"},
-    "arc_agi_3":     {"metric": "acc",         "custom_runner": "lile.teach.eval_arc_smoke:run_arc_eval"},
+    "hellaswag": {"metric": "acc_norm", "lm_eval_name": "hellaswag"},
+    "arc_easy": {"metric": "acc_norm", "lm_eval_name": "arc_easy"},
+    "arc_challenge": {"metric": "acc_norm", "lm_eval_name": "arc_challenge"},
+    "gsm8k": {"metric": "exact_match", "lm_eval_name": "gsm8k_cot_zeroshot"},
+    "arc_agi_3": {
+        "metric": "acc",
+        "custom_runner": "lile.teach.eval_arc_smoke:run_arc_eval",
+    },
 }
 
 CODE_TASKS: dict[str, dict[str, Any]] = {
@@ -91,8 +95,9 @@ def _get_commit_cursor(endpoint: str) -> int | None:
 
 
 # ----------------------------------------------------------------- runners
-def _run_lm_eval(task: str, endpoint: str, model: str, limit: int,
-                 batch_size: int) -> TaskResult:
+def _run_lm_eval(
+    task: str, endpoint: str, model: str, limit: int, batch_size: int
+) -> TaskResult:
     """Run a single lm-eval-harness task via local-chat-completions adapter.
 
     lm-eval's `local-chat-completions` model backend speaks the OpenAI chat
@@ -115,8 +120,12 @@ def _run_lm_eval(task: str, endpoint: str, model: str, limit: int,
         from lm_eval import simple_evaluate  # type: ignore[import-not-found]
     except ImportError:
         return TaskResult(
-            task=task, metric=meta["metric"], value=float("nan"), n=0,
-            wall_clock_s=0.0, stub=True,
+            task=task,
+            metric=meta["metric"],
+            value=float("nan"),
+            n=0,
+            wall_clock_s=0.0,
+            stub=True,
             raw={"note": "lm-eval not installed; run `uv sync --extra eval`"},
         )
     res = simple_evaluate(
@@ -127,10 +136,16 @@ def _run_lm_eval(task: str, endpoint: str, model: str, limit: int,
         batch_size=batch_size,
     )
     results = res["results"][meta["lm_eval_name"]]
-    value = float(results.get(meta["metric"], results.get(f"{meta['metric']},none", 0.0)))
+    value = float(
+        results.get(meta["metric"], results.get(f"{meta['metric']},none", 0.0))
+    )
     return TaskResult(
-        task=task, metric=meta["metric"], value=value, n=limit,
-        wall_clock_s=time.time() - t0, raw=results,
+        task=task,
+        metric=meta["metric"],
+        value=value,
+        n=limit,
+        wall_clock_s=time.time() - t0,
+        raw=results,
     )
 
 
@@ -174,13 +189,16 @@ def _run_custom(task: str, endpoint: str, limit: int) -> TaskResult:
     total = int(out.get("total", 0))
     value = float(out.get("pass_rate", (correct / total) if total else 0.0))
     return TaskResult(
-        task=task, metric=meta["metric"], value=value, n=total,
-        wall_clock_s=time.time() - t0, raw=out,
+        task=task,
+        metric=meta["metric"],
+        value=value,
+        n=total,
+        wall_clock_s=time.time() - t0,
+        raw=out,
     )
 
 
-def _run_evalplus(task: str, endpoint: str, model: str,
-                  limit: int) -> TaskResult:
+def _run_evalplus(task: str, endpoint: str, model: str, limit: int) -> TaskResult:
     """Run an evalplus code task via its OpenAI-compat backend.
 
         python -m evalplus.evaluate --dataset humaneval --model {model} \\
@@ -194,8 +212,12 @@ def _run_evalplus(task: str, endpoint: str, model: str,
         import evalplus  # type: ignore[import-not-found]  # noqa: F401
     except ImportError:
         return TaskResult(
-            task=task, metric=meta["metric"], value=float("nan"), n=0,
-            wall_clock_s=0.0, stub=True,
+            task=task,
+            metric=meta["metric"],
+            value=float("nan"),
+            n=0,
+            wall_clock_s=0.0,
+            stub=True,
             raw={"note": "evalplus not installed; run `uv sync --extra eval`"},
         )
     raise NotImplementedError(
@@ -206,8 +228,14 @@ def _run_evalplus(task: str, endpoint: str, model: str,
 
 
 # ----------------------------------------------------------------- driver
-def run(endpoint: str, model: str, tasks: list[str], code_tasks: list[str],
-        limit: int, batch_size: int) -> RunResult:
+def run(
+    endpoint: str,
+    model: str,
+    tasks: list[str],
+    code_tasks: list[str],
+    limit: int,
+    batch_size: int,
+) -> RunResult:
     run_id = f"eval-{uuid.uuid4().hex[:8]}"
     ts = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     cursor_before = _get_commit_cursor(endpoint)
@@ -215,7 +243,9 @@ def run(endpoint: str, model: str, tasks: list[str], code_tasks: list[str],
     results: list[TaskResult] = []
     for task in tasks:
         if task not in LM_EVAL_TASKS:
-            raise SystemExit(f"unknown lm-eval task: {task!r} (known: {sorted(LM_EVAL_TASKS)})")
+            raise SystemExit(
+                f"unknown lm-eval task: {task!r} (known: {sorted(LM_EVAL_TASKS)})"
+            )
         print(f"[eval] {task} (n={limit})", file=sys.stderr)
         meta = LM_EVAL_TASKS[task]
         if meta.get("custom_runner"):
@@ -225,14 +255,20 @@ def run(endpoint: str, model: str, tasks: list[str], code_tasks: list[str],
 
     for task in code_tasks:
         if task not in CODE_TASKS:
-            raise SystemExit(f"unknown code task: {task!r} (known: {sorted(CODE_TASKS)})")
+            raise SystemExit(
+                f"unknown code task: {task!r} (known: {sorted(CODE_TASKS)})"
+            )
         print(f"[eval] {task} (n={limit})", file=sys.stderr)
         results.append(_run_evalplus(task, endpoint, model, limit))
 
     cursor_after = _get_commit_cursor(endpoint)
     return RunResult(
-        run_id=run_id, timestamp=ts, endpoint=endpoint, model=model,
-        commit_cursor_before=cursor_before, commit_cursor_after=cursor_after,
+        run_id=run_id,
+        timestamp=ts,
+        endpoint=endpoint,
+        model=model,
+        commit_cursor_before=cursor_before,
+        commit_cursor_after=cursor_after,
         tasks=results,
     )
 
@@ -250,11 +286,18 @@ def _emit(result: RunResult, out: Path | None) -> None:
         "model": result.model,
         "commit_cursor_before": result.commit_cursor_before,
         "commit_cursor_after": result.commit_cursor_after,
-        "tasks": [{
-            "task": t.task, "metric": t.metric, "value": _jsonable_value(t.value),
-            "n": t.n, "wall_clock_s": round(t.wall_clock_s, 2),
-            "stub": t.stub, "raw": t.raw,
-        } for t in result.tasks],
+        "tasks": [
+            {
+                "task": t.task,
+                "metric": t.metric,
+                "value": _jsonable_value(t.value),
+                "n": t.n,
+                "wall_clock_s": round(t.wall_clock_s, 2),
+                "stub": t.stub,
+                "raw": t.raw,
+            }
+            for t in result.tasks
+        ],
     }
     if out is None:
         json.dump(payload, sys.stdout, indent=2, allow_nan=False)
@@ -267,25 +310,42 @@ def _emit(result: RunResult, out: Path | None) -> None:
 
 def main() -> int:
     p = argparse.ArgumentParser(prog="python -m lile.teach.eval")
-    p.add_argument("--endpoint", default="http://127.0.0.1:8768/v1",
-                   help="OpenAI-compatible endpoint root (include /v1)")
-    p.add_argument("--model", required=True,
-                   help="Model name passed to the endpoint")
-    p.add_argument("--tasks", default="hellaswag,arc_easy,arc_challenge,gsm8k",
-                   help="Comma-separated lm-eval tasks")
-    p.add_argument("--code-tasks", default="humaneval_plus",
-                   help="Comma-separated code tasks (evalplus)")
+    p.add_argument(
+        "--endpoint",
+        default="http://127.0.0.1:8768/v1",
+        help="OpenAI-compatible endpoint root (include /v1)",
+    )
+    p.add_argument("--model", required=True, help="Model name passed to the endpoint")
+    p.add_argument(
+        "--tasks",
+        default="hellaswag,arc_easy,arc_challenge,gsm8k",
+        help="Comma-separated lm-eval tasks",
+    )
+    p.add_argument(
+        "--code-tasks",
+        default="humaneval_plus",
+        help="Comma-separated code tasks (evalplus)",
+    )
     p.add_argument("--batch-size", type=int, default=16)
-    p.add_argument("--limit", type=int, default=100,
-                   help="Samples per task; 100 = research-check, 250+ = promotion")
-    p.add_argument("--out", type=Path, default=None,
-                   help="Output JSON path; prints to stdout if omitted")
+    p.add_argument(
+        "--limit",
+        type=int,
+        default=100,
+        help="Samples per task; 100 = research-check, 250+ = promotion",
+    )
+    p.add_argument(
+        "--out",
+        type=Path,
+        default=None,
+        help="Output JSON path; prints to stdout if omitted",
+    )
     args = p.parse_args()
 
     lm_tasks = [t.strip() for t in args.tasks.split(",") if t.strip()]
     code_tasks = [t.strip() for t in args.code_tasks.split(",") if t.strip()]
-    result = run(args.endpoint, args.model, lm_tasks, code_tasks,
-                 args.limit, args.batch_size)
+    result = run(
+        args.endpoint, args.model, lm_tasks, code_tasks, args.limit, args.batch_size
+    )
     _emit(result, args.out)
     return 0
 

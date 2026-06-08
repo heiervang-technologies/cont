@@ -19,6 +19,7 @@ Pinned behaviors
 
 Run: ``pytest lile/tests/test_rlvr_loop.py -xvs``
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -94,8 +95,7 @@ def _judge_result(
     len(grades)
     if critiques is None:
         critiques = [
-            f"critique-{i}" if g == "wrong" else None
-            for i, g in enumerate(grades)
+            f"critique-{i}" if g == "wrong" else None for i, g in enumerate(grades)
         ]
     if counterfactuals is None:
         counterfactuals = [
@@ -206,13 +206,13 @@ def test_scheduler_dry_run_skips_submit(monkeypatch: pytest.MonkeyPatch) -> None
     """Dry-run goes through generate + judge but does NOT call submit_train."""
     grades = ["correct", "wrong", "ambiguous", "wrong"]
     monkeypatch.setattr(
-        rlvr_loop, "judge",
+        rlvr_loop,
+        "judge",
         lambda prompt, rollouts, **_: _judge_result(grades=grades),
     )
     rollouts = [f"rollout-{i}" for i in range(4)]
     controller = _FakeController(rollouts, tokenizer=_FakeTokenizer())
-    cfg = RLVRConfig(k=4, source="math",
-                     log_path="/tmp/lile_rlvr_loop_test.jsonl")
+    cfg = RLVRConfig(k=4, source="math", log_path="/tmp/lile_rlvr_loop_test.jsonl")
     sched = RLVRScheduler(controller, cfg, dry_run=True)
 
     records = asyncio.run(sched.run(n=1))
@@ -232,12 +232,14 @@ def test_scheduler_submits_when_not_dry_run(monkeypatch: pytest.MonkeyPatch) -> 
     """Non-dry-run path: submit_train is called once with the combined spec."""
     grades = ["correct", "wrong"]
     monkeypatch.setattr(
-        rlvr_loop, "judge",
+        rlvr_loop,
+        "judge",
         lambda prompt, rollouts, **_: _judge_result(grades=grades),
     )
     controller = _FakeController(["r0", "r1"], tokenizer=_FakeTokenizer())
-    cfg = RLVRConfig(k=2, source="math",
-                     log_path="/tmp/lile_rlvr_loop_test_submit.jsonl")
+    cfg = RLVRConfig(
+        k=2, source="math", log_path="/tmp/lile_rlvr_loop_test_submit.jsonl"
+    )
     sched = RLVRScheduler(controller, cfg, dry_run=False)
 
     records = asyncio.run(sched.run(n=1))

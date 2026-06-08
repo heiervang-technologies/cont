@@ -7,6 +7,7 @@ Stdlib + pytest only. The HTTP layer is mocked by monkeypatching
 Run:
     pytest lile/teach/teacher_oss120b_test.py -q
 """
+
 from __future__ import annotations
 
 import io
@@ -159,6 +160,7 @@ def test_missing_api_key_raises_runtime_error(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     monkeypatch.delenv("OPENROUTER_API_KEY", raising=False)
+
     # urlopen must never get called — but install a sentinel just so the
     # error message is helpful if it does.
     def _no_call(*a, **k):  # noqa: ARG001
@@ -221,18 +223,16 @@ def test_judge_rejects_non_json_content(
 ) -> None:
     monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test-fake")
     # Envelope is valid JSON; the inner message content is not.
-    envelope = {
-        "choices": [
-            {"message": {"content": "this is not json {{ broken"}}
-        ]
-    }
+    envelope = {"choices": [{"message": {"content": "this is not json {{ broken"}}]}
     body = json.dumps(envelope).encode("utf-8")
 
     def _fake_urlopen(req, timeout=None):  # noqa: ARG001
         return _FakeResponse(body)
 
     monkeypatch.setattr(
-        teacher_oss120b.urllib.request, "urlopen", _fake_urlopen,
+        teacher_oss120b.urllib.request,
+        "urlopen",
+        _fake_urlopen,
     )
 
     with pytest.raises(RuntimeError, match="strict JSON"):
@@ -244,7 +244,7 @@ def test_judge_rejects_invalid_grade_value(
 ) -> None:
     monkeypatch.setenv("OPENROUTER_API_KEY", "sk-test-fake")
     payload = {
-        "grades": ["correct", "perfectish"],   # second value is illegal
+        "grades": ["correct", "perfectish"],  # second value is illegal
         "critiques": [None, None],
         "counterfactuals": [None, None],
         "demonstration": "42",

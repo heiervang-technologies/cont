@@ -11,6 +11,7 @@ that Studio/research tooling keys on.
 Run:
     pytest -m eval lile/tests/test_eval_harness.py -xvs
 """
+
 from __future__ import annotations
 
 import json
@@ -39,7 +40,11 @@ def test_lm_eval_task_registry_is_stable() -> None:
     # ``lm_eval_name`` (lm-eval has no ARC-AGI-3 wrapper). Each task must
     # carry exactly one of the two routing keys.
     assert set(LM_EVAL_TASKS) == {
-        "hellaswag", "arc_easy", "arc_challenge", "gsm8k", "arc_agi_3",
+        "hellaswag",
+        "arc_easy",
+        "arc_challenge",
+        "gsm8k",
+        "arc_agi_3",
     }
     for name, meta in LM_EVAL_TASKS.items():
         assert "metric" in meta
@@ -63,6 +68,7 @@ def _force_missing(monkeypatch: pytest.MonkeyPatch, *module_names: str) -> None:
     evalplus) appear absent even when they are installed in the env.
     """
     import builtins
+
     real_import = builtins.__import__
     blocked = set(module_names)
 
@@ -75,10 +81,13 @@ def _force_missing(monkeypatch: pytest.MonkeyPatch, *module_names: str) -> None:
     monkeypatch.setattr(builtins, "__import__", _raise)
 
 
-def test_run_lm_eval_returns_stub_when_dep_missing(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_run_lm_eval_returns_stub_when_dep_missing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     _force_missing(monkeypatch, "lm_eval")
-    r = _run_lm_eval("hellaswag", "http://127.0.0.1:8768/v1", "fake-model",
-                     limit=10, batch_size=4)
+    r = _run_lm_eval(
+        "hellaswag", "http://127.0.0.1:8768/v1", "fake-model", limit=10, batch_size=4
+    )
     assert isinstance(r, TaskResult)
     assert r.stub is True
     assert r.task == "hellaswag"
@@ -87,10 +96,13 @@ def test_run_lm_eval_returns_stub_when_dep_missing(monkeypatch: pytest.MonkeyPat
     assert "lm-eval" in r.raw.get("note", "")
 
 
-def test_run_evalplus_returns_stub_when_dep_missing(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_run_evalplus_returns_stub_when_dep_missing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     _force_missing(monkeypatch, "evalplus")
-    r = _run_evalplus("humaneval_plus", "http://127.0.0.1:8768/v1",
-                      "fake-model", limit=10)
+    r = _run_evalplus(
+        "humaneval_plus", "http://127.0.0.1:8768/v1", "fake-model", limit=10
+    )
     assert r.stub is True
     assert r.task == "humaneval_plus"
     assert r.metric == "pass@1"
@@ -101,15 +113,27 @@ def test_run_evalplus_returns_stub_when_dep_missing(monkeypatch: pytest.MonkeyPa
 def test_run_rejects_unknown_lm_task(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(eval_mod, "_get_commit_cursor", lambda _endpoint: None)
     with pytest.raises(SystemExit):
-        run("http://127.0.0.1:8768/v1", "fake-model",
-            tasks=["not_a_task"], code_tasks=[], limit=1, batch_size=1)
+        run(
+            "http://127.0.0.1:8768/v1",
+            "fake-model",
+            tasks=["not_a_task"],
+            code_tasks=[],
+            limit=1,
+            batch_size=1,
+        )
 
 
 def test_run_rejects_unknown_code_task(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(eval_mod, "_get_commit_cursor", lambda _endpoint: None)
     with pytest.raises(SystemExit):
-        run("http://127.0.0.1:8768/v1", "fake-model",
-            tasks=[], code_tasks=["not_a_task"], limit=1, batch_size=1)
+        run(
+            "http://127.0.0.1:8768/v1",
+            "fake-model",
+            tasks=[],
+            code_tasks=["not_a_task"],
+            limit=1,
+            batch_size=1,
+        )
 
 
 # ----------------------------------------------------------------- full stub run
@@ -141,8 +165,15 @@ def test_run_emits_stable_json_shape(
     raw = out.read_text()
     assert "NaN" not in raw
     payload = json.loads(raw)
-    assert {"run_id", "timestamp", "endpoint", "model",
-            "commit_cursor_before", "commit_cursor_after", "tasks"} <= payload.keys()
+    assert {
+        "run_id",
+        "timestamp",
+        "endpoint",
+        "model",
+        "commit_cursor_before",
+        "commit_cursor_after",
+        "tasks",
+    } <= payload.keys()
     task_keys = {"task", "metric", "value", "n", "wall_clock_s", "stub", "raw"}
     for t in payload["tasks"]:
         assert task_keys <= t.keys()

@@ -15,6 +15,7 @@ explicitly via ``pytest lile/teach/arc_agi_3/test_runner.py``. The repo
 up by a bare ``pytest`` invocation — that's intentional, the smoke path
 is run by hand and by Track E's eval CLI.
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -122,8 +123,7 @@ def test_verifier_claims_arc_prompt() -> None:
 
     math_prompt = "What is 2 + 2? Answer with a single number."
     code_prompt = (
-        "Write a python program. Expected: 6\n"
-        "```python\nprint(1 + 2 + 3)\n```"
+        "Write a python program. Expected: 6\n```python\nprint(1 + 2 + 3)\n```"
     )
     assert arc_verifier.claims(math_prompt) is False
     assert arc_verifier.claims(code_prompt) is False
