@@ -1,0 +1,3963 @@
+{
+  "config": {
+    "k_train": 5,
+    "n_heldout": 20,
+    "lr": 0.0001,
+    "eval": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 2000,
+      "enable_thinking": true
+    },
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "steps_arms": [
+      5,
+      50,
+      500
+    ]
+  },
+  "cold_by_seed": {
+    "0": {
+      "train_task_ids": [
+        "rlvr/comparison/0",
+        "rlvr/arith_sub/1",
+        "rlvr/modulo/2",
+        "rlvr/arith_mul/3",
+        "rlvr/arith_add/4"
+      ],
+      "heldout_cold": {
+        "rate": 0.05,
+        "passed": 1,
+        "total": 20,
+        "wall_s": 147.4274652004242,
+        "fails_by_family": {
+          "arith_add": 3,
+          "arith_sub": 3,
+          "arith_mul": 3,
+          "parity": 3,
+          "comparison": 2,
+          "modulo": 2,
+          "count_letter": 2,
+          "digit_sum": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": false,
+            "pred": "",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "10",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_cold": {
+        "rate": 0.3333333333333333,
+        "passed": 5,
+        "total": 15,
+        "wall_s": 108.04584550857544,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": false
+          }
+        ]
+      }
+    },
+    "1": {
+      "train_task_ids": [
+        "rlvr/parity/1000",
+        "rlvr/digit_sum/1001",
+        "rlvr/arith_sub/1002",
+        "rlvr/modulo/1003",
+        "rlvr/count_letter/1004"
+      ],
+      "heldout_cold": {
+        "rate": 0.05,
+        "passed": 1,
+        "total": 20,
+        "wall_s": 147.4274652004242,
+        "fails_by_family": {
+          "arith_add": 3,
+          "arith_sub": 3,
+          "arith_mul": 3,
+          "parity": 3,
+          "comparison": 2,
+          "modulo": 2,
+          "count_letter": 2,
+          "digit_sum": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": false,
+            "pred": "",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "10",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_cold": {
+        "rate": 0.3333333333333333,
+        "passed": 5,
+        "total": 15,
+        "wall_s": 108.04584550857544,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": false
+          }
+        ]
+      }
+    },
+    "2": {
+      "train_task_ids": [
+        "rlvr/modulo/2000",
+        "rlvr/parity/2001",
+        "rlvr/comparison/2002",
+        "rlvr/arith_sub/2003",
+        "rlvr/arith_mul/2004"
+      ],
+      "heldout_cold": {
+        "rate": 0.05,
+        "passed": 1,
+        "total": 20,
+        "wall_s": 147.4274652004242,
+        "fails_by_family": {
+          "arith_add": 3,
+          "arith_sub": 3,
+          "arith_mul": 3,
+          "parity": 3,
+          "comparison": 2,
+          "modulo": 2,
+          "count_letter": 2,
+          "digit_sum": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": false,
+            "pred": "",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "10",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_cold": {
+        "rate": 0.3333333333333333,
+        "passed": 5,
+        "total": 15,
+        "wall_s": 108.04584550857544,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": false
+          }
+        ]
+      }
+    },
+    "3": {
+      "train_task_ids": [
+        "rlvr/arith_add/3000",
+        "rlvr/modulo/3001",
+        "rlvr/count_letter/3002",
+        "rlvr/arith_mul/3003",
+        "rlvr/arith_sub/3004"
+      ],
+      "heldout_cold": {
+        "rate": 0.05,
+        "passed": 1,
+        "total": 20,
+        "wall_s": 147.4274652004242,
+        "fails_by_family": {
+          "arith_add": 3,
+          "arith_sub": 3,
+          "arith_mul": 3,
+          "parity": 3,
+          "comparison": 2,
+          "modulo": 2,
+          "count_letter": 2,
+          "digit_sum": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": false,
+            "pred": "",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "10",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_cold": {
+        "rate": 0.3333333333333333,
+        "passed": 5,
+        "total": 15,
+        "wall_s": 108.04584550857544,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": false
+          }
+        ]
+      }
+    }
+  },
+  "rows": [
+    {
+      "seed": 0,
+      "steps": 5,
+      "forward_cold": 0.05,
+      "forward_post": 0.85,
+      "delta_forward": 0.7999999999999999,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.5333333333333333,
+      "degrade": 0.0,
+      "score": 0.85,
+      "steps_actual": 5,
+      "train_wall_s": 2.1584339141845703
+    },
+    {
+      "seed": 0,
+      "steps": 50,
+      "forward_cold": 0.05,
+      "forward_post": 0.65,
+      "delta_forward": 0.6,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.6,
+      "degrade": 0.0,
+      "score": 0.65,
+      "steps_actual": 50,
+      "train_wall_s": 19.901286125183105
+    },
+    {
+      "seed": 0,
+      "steps": 500,
+      "forward_cold": 0.05,
+      "forward_post": 0.65,
+      "delta_forward": 0.6,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.6,
+      "degrade": 0.0,
+      "score": 0.65,
+      "steps_actual": 500,
+      "train_wall_s": 204.2062418460846
+    },
+    {
+      "seed": 1,
+      "steps": 5,
+      "forward_cold": 0.05,
+      "forward_post": 0.6,
+      "delta_forward": 0.5499999999999999,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.4666666666666667,
+      "degrade": 0.0,
+      "score": 0.6,
+      "steps_actual": 5,
+      "train_wall_s": 2.1283187866210938
+    },
+    {
+      "seed": 1,
+      "steps": 50,
+      "forward_cold": 0.05,
+      "forward_post": 0.85,
+      "delta_forward": 0.7999999999999999,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.6666666666666666,
+      "degrade": 0.0,
+      "score": 0.85,
+      "steps_actual": 50,
+      "train_wall_s": 8.267481088638306
+    },
+    {
+      "seed": 1,
+      "steps": 500,
+      "forward_cold": 0.05,
+      "forward_post": 0.85,
+      "delta_forward": 0.7999999999999999,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.6666666666666666,
+      "degrade": 0.0,
+      "score": 0.85,
+      "steps_actual": 500,
+      "train_wall_s": 108.9488410949707
+    },
+    {
+      "seed": 2,
+      "steps": 5,
+      "forward_cold": 0.05,
+      "forward_post": 0.8,
+      "delta_forward": 0.75,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.5333333333333333,
+      "degrade": 0.0,
+      "score": 0.8,
+      "steps_actual": 5,
+      "train_wall_s": 2.14050030708313
+    },
+    {
+      "seed": 2,
+      "steps": 50,
+      "forward_cold": 0.05,
+      "forward_post": 0.8,
+      "delta_forward": 0.75,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.6,
+      "degrade": 0.0,
+      "score": 0.8,
+      "steps_actual": 50,
+      "train_wall_s": 20.444451570510864
+    },
+    {
+      "seed": 2,
+      "steps": 500,
+      "forward_cold": 0.05,
+      "forward_post": 0.8,
+      "delta_forward": 0.75,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.6,
+      "degrade": 0.0,
+      "score": 0.8,
+      "steps_actual": 500,
+      "train_wall_s": 168.63465905189514
+    },
+    {
+      "seed": 3,
+      "steps": 5,
+      "forward_cold": 0.05,
+      "forward_post": 0.7,
+      "delta_forward": 0.6499999999999999,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.4666666666666667,
+      "degrade": 0.0,
+      "score": 0.7,
+      "steps_actual": 5,
+      "train_wall_s": 2.0473368167877197
+    },
+    {
+      "seed": 3,
+      "steps": 50,
+      "forward_cold": 0.05,
+      "forward_post": 0.55,
+      "delta_forward": 0.5,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.6,
+      "degrade": 0.0,
+      "score": 0.55,
+      "steps_actual": 50,
+      "train_wall_s": 20.21656370162964
+    },
+    {
+      "seed": 3,
+      "steps": 500,
+      "forward_cold": 0.05,
+      "forward_post": 0.6,
+      "delta_forward": 0.5499999999999999,
+      "prior_cold": 0.3333333333333333,
+      "prior_post": 0.6,
+      "degrade": 0.0,
+      "score": 0.6,
+      "steps_actual": 500,
+      "train_wall_s": 158.98587226867676
+    }
+  ],
+  "cells": [
+    {
+      "seed": 0,
+      "steps_requested": 5,
+      "steps_actual": 5,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 5,
+        "n_steps_actual": 5,
+        "n_calls": 1,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 2.1584339141845703
+      },
+      "heldout_post": {
+        "rate": 0.85,
+        "passed": 17,
+        "total": 20,
+        "wall_s": 125.36645174026489,
+        "fails_by_family": {
+          "digit_sum": 1,
+          "count_letter": 1,
+          "arith_sub": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": true,
+            "pred": "6",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": true,
+            "pred": "1",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "8",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": false,
+            "pred": "7",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.5333333333333333,
+        "passed": 8,
+        "total": 15,
+        "wall_s": 78.20176935195923,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 0,
+      "steps_requested": 50,
+      "steps_actual": 50,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 50,
+        "n_steps_actual": 50,
+        "n_calls": 10,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 19.901286125183105
+      },
+      "heldout_post": {
+        "rate": 0.65,
+        "passed": 13,
+        "total": 20,
+        "wall_s": 4.862482786178589,
+        "fails_by_family": {
+          "parity": 3,
+          "comparison": 2,
+          "digit_sum": 1,
+          "modulo": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": false,
+            "pred": "no",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "no",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": true,
+            "pred": "6",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "7",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": false,
+            "pred": "odd",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "no",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "5",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "8",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "no",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.6,
+        "passed": 9,
+        "total": 15,
+        "wall_s": 3.5605058670043945,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 0,
+      "steps_requested": 500,
+      "steps_actual": 500,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 500,
+        "n_steps_actual": 500,
+        "n_calls": 100,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 204.2062418460846
+      },
+      "heldout_post": {
+        "rate": 0.65,
+        "passed": 13,
+        "total": 20,
+        "wall_s": 4.789623498916626,
+        "fails_by_family": {
+          "parity": 3,
+          "comparison": 2,
+          "digit_sum": 1,
+          "modulo": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": false,
+            "pred": "odd",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "no",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": true,
+            "pred": "6",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "7",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": false,
+            "pred": "odd",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "no",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "5",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "8",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "no",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.6,
+        "passed": 9,
+        "total": 15,
+        "wall_s": 3.5335614681243896,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "steps_requested": 5,
+      "steps_actual": 5,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 5,
+        "n_steps_actual": 5,
+        "n_calls": 1,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 2.1283187866210938
+      },
+      "heldout_post": {
+        "rate": 0.6,
+        "passed": 12,
+        "total": 20,
+        "wall_s": 126.06972527503967,
+        "fails_by_family": {
+          "arith_mul": 1,
+          "digit_sum": 2,
+          "count_letter": 2,
+          "arith_add": 1,
+          "comparison": 1,
+          "parity": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": false,
+            "pred": "32",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": true,
+            "pred": "6",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "107",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "10",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": true,
+            "pred": "1",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.4666666666666667,
+        "passed": 7,
+        "total": 15,
+        "wall_s": 96.696848154068,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "steps_requested": 50,
+      "steps_actual": 50,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 50,
+        "n_steps_actual": 50,
+        "n_calls": 10,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 8.267481088638306
+      },
+      "heldout_post": {
+        "rate": 0.85,
+        "passed": 17,
+        "total": 20,
+        "wall_s": 4.369872808456421,
+        "fails_by_family": {
+          "modulo": 2,
+          "digit_sum": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": false,
+            "pred": "3",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "7",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "5",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "8",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.6666666666666666,
+        "passed": 10,
+        "total": 15,
+        "wall_s": 3.3823394775390625,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "steps_requested": 500,
+      "steps_actual": 500,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 500,
+        "n_steps_actual": 500,
+        "n_calls": 100,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 108.9488410949707
+      },
+      "heldout_post": {
+        "rate": 0.85,
+        "passed": 17,
+        "total": 20,
+        "wall_s": 4.9254844188690186,
+        "fails_by_family": {
+          "modulo": 2,
+          "digit_sum": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": false,
+            "pred": "3",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "7",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "5",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "8",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.6666666666666666,
+        "passed": 10,
+        "total": 15,
+        "wall_s": 3.676163673400879,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "steps_requested": 5,
+      "steps_actual": 5,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 5,
+        "n_steps_actual": 5,
+        "n_calls": 1,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 2.14050030708313
+      },
+      "heldout_post": {
+        "rate": 0.8,
+        "passed": 16,
+        "total": 20,
+        "wall_s": 157.97134494781494,
+        "fails_by_family": {
+          "digit_sum": 2,
+          "count_letter": 2
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": true,
+            "pred": "6",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "20",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": true,
+            "pred": "1",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.5333333333333333,
+        "passed": 8,
+        "total": 15,
+        "wall_s": 81.249014377594,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "steps_requested": 50,
+      "steps_actual": 50,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 50,
+        "n_steps_actual": 50,
+        "n_calls": 10,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 20.444451570510864
+      },
+      "heldout_post": {
+        "rate": 0.8,
+        "passed": 16,
+        "total": 20,
+        "wall_s": 4.897793292999268,
+        "fails_by_family": {
+          "comparison": 2,
+          "digit_sum": 1,
+          "modulo": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "no",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": true,
+            "pred": "6",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "14",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "no",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "5",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "8",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.6,
+        "passed": 9,
+        "total": 15,
+        "wall_s": 3.681206703186035,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "steps_requested": 500,
+      "steps_actual": 500,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 500,
+        "n_steps_actual": 500,
+        "n_calls": 100,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 168.63465905189514
+      },
+      "heldout_post": {
+        "rate": 0.8,
+        "passed": 16,
+        "total": 20,
+        "wall_s": 5.075968980789185,
+        "fails_by_family": {
+          "comparison": 2,
+          "digit_sum": 1,
+          "modulo": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "no",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": true,
+            "pred": "6",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "7",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "no",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "5",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "8",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.6,
+        "passed": 9,
+        "total": 15,
+        "wall_s": 3.7217354774475098,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 3,
+      "steps_requested": 5,
+      "steps_actual": 5,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 5,
+        "n_steps_actual": 5,
+        "n_calls": 1,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 2.0473368167877197
+      },
+      "heldout_post": {
+        "rate": 0.7,
+        "passed": 14,
+        "total": 20,
+        "wall_s": 177.1672191619873,
+        "fails_by_family": {
+          "comparison": 2,
+          "count_letter": 2,
+          "arith_add": 1,
+          "digit_sum": 1
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "87",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": true,
+            "pred": "6",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": true,
+            "pred": "10",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": false,
+            "pred": "",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "68",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": true,
+            "pred": "1",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": false,
+            "pred": "",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": true,
+            "pred": "even",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.4666666666666667,
+        "passed": 7,
+        "total": 15,
+        "wall_s": 91.67800641059875,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 3,
+      "steps_requested": 50,
+      "steps_actual": 50,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 50,
+        "n_steps_actual": 50,
+        "n_calls": 10,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 20.21656370162964
+      },
+      "heldout_post": {
+        "rate": 0.55,
+        "passed": 11,
+        "total": 20,
+        "wall_s": 5.379999876022339,
+        "fails_by_family": {
+          "parity": 3,
+          "comparison": 2,
+          "modulo": 2,
+          "digit_sum": 2
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": false,
+            "pred": "994 is even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "8",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": false,
+            "pred": "3",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "7",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": false,
+            "pred": "252 is even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": false,
+            "pred": "68",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "2",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "5",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "606 is even",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.6,
+        "passed": 9,
+        "total": 15,
+        "wall_s": 3.778900384902954,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "seed": 3,
+      "steps_requested": 500,
+      "steps_actual": 500,
+      "train": {
+        "mechanism": "sft",
+        "k_train": 5,
+        "n_steps_requested": 500,
+        "n_steps_actual": 500,
+        "n_calls": 100,
+        "lr": 0.0001,
+        "chunk_size": 1,
+        "wall_s": 158.98587226867676
+      },
+      "heldout_post": {
+        "rate": 0.6,
+        "passed": 12,
+        "total": 20,
+        "wall_s": 5.187315940856934,
+        "fails_by_family": {
+          "parity": 3,
+          "comparison": 1,
+          "modulo": 2,
+          "digit_sum": 2
+        },
+        "per_task": [
+          {
+            "task_id": "rlvr/arith_add/10000",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "131",
+            "expected": "131"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10001",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "58",
+            "expected": "58"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10002",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "40",
+            "expected": "40"
+          },
+          {
+            "task_id": "rlvr/parity/10003",
+            "family": "parity",
+            "passed": false,
+            "pred": "994 is even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10004",
+            "family": "comparison",
+            "passed": false,
+            "pred": "8",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10005",
+            "family": "modulo",
+            "passed": false,
+            "pred": "3",
+            "expected": "6"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10006",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "7",
+            "expected": "10"
+          },
+          {
+            "task_id": "rlvr/count_letter/10007",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10008",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "97",
+            "expected": "97"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10009",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "47",
+            "expected": "47"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10010",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/parity/10011",
+            "family": "parity",
+            "passed": false,
+            "pred": "252 is even",
+            "expected": "even"
+          },
+          {
+            "task_id": "rlvr/comparison/10012",
+            "family": "comparison",
+            "passed": true,
+            "pred": "yes",
+            "expected": "yes"
+          },
+          {
+            "task_id": "rlvr/modulo/10013",
+            "family": "modulo",
+            "passed": false,
+            "pred": "2",
+            "expected": "1"
+          },
+          {
+            "task_id": "rlvr/digit_sum/10014",
+            "family": "digit_sum",
+            "passed": false,
+            "pred": "5",
+            "expected": "8"
+          },
+          {
+            "task_id": "rlvr/count_letter/10015",
+            "family": "count_letter",
+            "passed": true,
+            "pred": "0",
+            "expected": "0"
+          },
+          {
+            "task_id": "rlvr/arith_add/10016",
+            "family": "arith_add",
+            "passed": true,
+            "pred": "120",
+            "expected": "120"
+          },
+          {
+            "task_id": "rlvr/arith_sub/10017",
+            "family": "arith_sub",
+            "passed": true,
+            "pred": "43",
+            "expected": "43"
+          },
+          {
+            "task_id": "rlvr/arith_mul/10018",
+            "family": "arith_mul",
+            "passed": true,
+            "pred": "50",
+            "expected": "50"
+          },
+          {
+            "task_id": "rlvr/parity/10019",
+            "family": "parity",
+            "passed": false,
+            "pred": "606",
+            "expected": "even"
+          }
+        ]
+      },
+      "probe_post": {
+        "rate": 0.6,
+        "passed": 9,
+        "total": 15,
+        "wall_s": 3.8743374347686768,
+        "per_task": [
+          {
+            "task_id": "probe/arith/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/arith/1",
+            "passed": true
+          },
+          {
+            "task_id": "probe/prop_logic/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/syllogism/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/sequence/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/set_ops/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/bool_eval/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/kinship/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/parity/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/counting/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/ordering/0",
+            "passed": false
+          },
+          {
+            "task_id": "probe/world_knowledge/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/world_knowledge/1",
+            "passed": false
+          },
+          {
+            "task_id": "probe/code/0",
+            "passed": true
+          },
+          {
+            "task_id": "probe/code/1",
+            "passed": true
+          }
+        ]
+      }
+    }
+  ]
+}

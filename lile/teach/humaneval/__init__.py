@@ -33,7 +33,7 @@ def load_tasks(path: Path | None = None) -> dict[str, dict[str, Any]]:
     src = Path(path) if path is not None else _DEFAULT_PATH
     if not src.exists():
         # Fallback to evalplus live data
-        from evalplus.data import get_human_eval_plus
+        from evalplus.data import get_human_eval_plus  # type: ignore[import-untyped]
 
         raw = get_human_eval_plus()
         tasks: dict[str, dict[str, Any]] = {}

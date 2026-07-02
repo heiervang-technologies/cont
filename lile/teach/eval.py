@@ -209,7 +209,7 @@ def _run_evalplus(task: str, endpoint: str, model: str, limit: int) -> TaskResul
     meta = CODE_TASKS[task]
     t0 = time.time()
     try:
-        import evalplus  # type: ignore[import-not-found]  # noqa: F401
+        import evalplus  # type: ignore[import-not-found, import-untyped]  # noqa: F401
     except ImportError:
         return TaskResult(
             task=task,

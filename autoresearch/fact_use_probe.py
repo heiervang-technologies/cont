@@ -17,7 +17,6 @@ generalize and which do not.
 from __future__ import annotations
 
 import asyncio
-import json
 import re
 import sys
 import time
@@ -209,12 +208,10 @@ async def main() -> int:
         finally:
             print("[fact-use] snapshot/load ← autoresearch_baseline", flush=True)
             await snapshot(client, "load", BASELINE)
-    n_correct_orig = post["n_orig"]
-    n_correct_var = post["n_var"]
-    n_parrot = post["n_parrot"]
+
 
     print("=" * 60, flush=True)
-    print(f"            cold → post   delta", flush=True)
+    print("            cold → post   delta", flush=True)
     print(f"originals: {cold['n_orig']}/5  → {post['n_orig']}/5    ({post['n_orig']-cold['n_orig']:+d})", flush=True)
     print(f"variants : {cold['n_var']}/5  → {post['n_var']}/5    ({post['n_var']-cold['n_var']:+d})   ← algorithm", flush=True)
     print(f"parrots  : {cold['n_parrot']}/5  → {post['n_parrot']}/5    ({post['n_parrot']-cold['n_parrot']:+d})   ← memorization signature", flush=True)

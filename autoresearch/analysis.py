@@ -72,7 +72,6 @@ def main():
 
     # Kept and discarded subsets
     kept_v = valid[valid["status"] == "KEEP"]
-    disc_v = valid[valid["status"] == "DISCARD"]
 
     # Only plot points near the interesting region
     if minimize:

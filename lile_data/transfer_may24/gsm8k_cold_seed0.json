@@ -1,0 +1,242 @@
+[
+  {
+    "task_id": "gsm8k/test/0",
+    "response": "Janet\u2019s ducks lay 16 eggs per day.\n\nShe eats 3 eggs for breakfast every morning, but this is not specified as a daily count. However, the problem says she **bakes muffins for her friends every day with four** \u2014 this suggests she uses 4 eggs per day for baking.\n\nSo, the total number of eggs she uses per day is:\n\n$$\n3 \\text{ (breakfast)} + 4 \\text{ (baking)} = 7 \\text{ eggs}\n$$\n\nShe sells the **remainder** of the eggs at the farmers' market for $2 per fresh duck egg.\n\nSo, the number of eggs she sells is:\n\n$$\n16 \\text{ (total eggs)} - 7 \\text{ (used eggs)} = 9 \\text{ eggs}\n$$\n\nShe sells these 9 eggs at $2 per egg:\n\n$$\n9 \\times 2 = 18\n$$\n\n**Answer: <integer>**\nAnswer: <integer>",
+    "expected_answer": "18",
+    "passed": false,
+    "error": null,
+    "wall_s": 103.16961669921875
+  },
+  {
+    "task_id": "gsm8k/test/1",
+    "response": "A robe takes 2 bolts of blue fiber and half that much white fiber.\n\n- Blue fiber: 2 bolts  \n- White fiber: Half of 2 bolts = 1 bolt  \n\nTotal bolts = 2 (blue) + 1 (white) = **3**\n\nAnswer: <integer>.",
+    "expected_answer": "3",
+    "passed": false,
+    "error": null,
+    "wall_s": 76.94917297363281
+  },
+  {
+    "task_id": "gsm8k/test/10",
+    "response": "Let's break down the problem step by step:\n\n1. **First month downloads**:  \n   $ 60 $ downloads.\n\n2. **Second month downloads**:  \n   $ 3 \\times 60 = 180 $ downloads.\n\n3. **Third month downloads**:  \n   The second month's downloads were reduced by 30%.  \n   So, 30% of 180 is:  \n   $ 0.3 \\times 180 = 54 $  \n   Therefore, the third month's downloads are:  \n   $ 180 - 54 = 126 $.\n\n4. **Total downloads over the three months**:  \n   $ 60 + 180 + 126 = 366 $.\n\n**Answer**: <integer> 366",
+    "expected_answer": "366",
+    "passed": true,
+    "error": null,
+    "wall_s": 8.093644380569458
+  },
+  {
+    "task_id": "gsm8k/test/11",
+    "response": "Toula bought:\n\n- **3 dozen donuts** at $68 per dozen  \n- **2 dozen mini cupcakes** at $80 per dozen  \n- **6 dozen mini cheesecakes** at $55 per dozen  \n\nWe calculate the total cost for each item:\n\n1. Donuts:  \n   $ 3 \\text{ dozen} \\times 68 = 204 $  \n\n2. Mini cupcakes:  \n   $ 2 \\text{ dozen} \\times 80 = 160 $  \n\n3. Mini cheesecakes:  \n   $ 6 \\text{ dozen} \\times 55 = 330 $  \n\nNow, add them all together:\n\n$$\n204 + 160 + 330 = 700\n$$\n\n**Answer: <integer>**  \nAnswer: 700",
+    "expected_answer": "694",
+    "passed": false,
+    "error": null,
+    "wall_s": 16.692660808563232
+  },
+  {
+    "task_id": "gsm8k/test/12",
+    "response": "Let's break down the problem step by step.\n\n### 1. **Cost to plant the tree:**\n- The tree costs **$90** to plant.\n\n### 2. **Annual revenue from lemons:**\n- The tree grows **7 lemons per year**.\n- Each lemon sells for **$1.5**.\n- So, the annual revenue is:\n  $$\n  7 \\text{ lemons/year} \\times 1.5 \\text{ dollars/lemon} = 10.5 \\text{ dollars/year}\n  $$\n\n### 3. **Annual cost to water and feed the tree:**\n- The cost is **$3 per year**.\n\n### 4. **Net annual profit:**\n- Net profit = Revenue - Cost = $10.5 - $3 = **$7.5 per year**\n\n### 5. **Time to start earning money:**\n- The initial cost is **$90**.\n- He needs to earn **$90** to break even.\n\n- Since he earns **$7.5 per year**, the number of years to break even is:\n  $$\n  \\frac{90}{7.5} = 12\n  $$\n\n### \u2705 Final Answer:\n$$\n\\boxed{12}\n$$\n\nAnswer: <integer> 12",
+    "expected_answer": "13",
+    "passed": false,
+    "error": null,
+    "wall_s": 33.71034526824951
+  },
+  {
+    "task_id": "gsm8k/test/13",
+    "response": "Let's solve the problem step by step.\n\nLet the total number of vacuum cleaners Melanie started with be $ x $.\n\n---\n\n### Step 1: She sold a third of her vacuum cleaners at the green house.\n\nShe sold $ \\frac{1}{3}x $ at the green house.\n\nSo, she has $ x - \\frac{1}{3}x = \\frac{2}{3}x $ left.\n\n---\n\n### Step 2: She sold 2 more to the red house.\n\nSo, she now has $ \\frac{2}{3}x - 2 $ left.\n\n---\n\n### Step 3: She sold half of what was left at the orange house.\n\nShe sold $ \\frac{1}{2} \\left( \\frac{2}{3}x - 2 \\right) $ at the orange house.\n\nSo, she has $ \\frac{1}{2} \\left( \\frac{2}{3}x - 2 \\right) $ left.\n\n---\n\n### Step 4: She has 5 vacuum cleaners left.\n\nSo, we set up the equation:\n\n$$\n\\frac{1}{2} \\left( \\frac{2}{3}x - 2 \\right) = 5\n$$\n\n---\n\n### Step 5: Solve the equation.\n\n$$\n\\frac{1}{2} \\left( \\frac{2}{3}x - 2 \\right) = 5\n$$\n\nMultiply both sides by 2:\n\n$$\n\\frac{2}{3}x - 2 = 10\n$$\n\nAdd 2 to both sides:\n\n$$\n\\frac{2}{3}x = 12\n$$\n\nMultiply both sides by $ \\frac{3}{2} $:\n\n$$\nx = 12 \\times \\frac{3}{2} = 18\n$$\n\n---\n\n### \u2705 Final Answer:\n\n$$\n\\boxed{18}\n$$\n\nAnswer: <integer> 18",
+    "expected_answer": "18",
+    "passed": true,
+    "error": null,
+    "wall_s": 55.368611335754395
+  },
+  {
+    "task_id": "gsm8k/test/14",
+    "response": "We are given:\n\n- Total students = 20\n- 20% enrolled in **contemporary dance**.\n- 25% of the **remaining** students enrolled in **jazz dance**.\n- The **rest** enrolled in **hip-hop dance**.\n\n---\n\n### Step 1: Calculate the number of students in contemporary dance\n\n$$\n20\\% \\text{ of } 20 = 0.20 \\times 20 = 4 \\text{ students}\n$$\n\n---\n\n### Step 2: Calculate the remaining students after contemporary dance\n\n$$\n20 - 4 = 16 \\text{ students}\n$$\n\n---\n\n### Step 3: Calculate the number of students in jazz dance\n\n$$\n25\\% \\text{ of } 16 = 0.25 \\times 16 = 4 \\text{ students}\n$$\n\n---\n\n### Step 4: Calculate the number of students in hip-hop dance\n\n$$\n16 - 4 = 12 \\text{ students}\n$$\n\n---\n\n### Step 5: Calculate the percentage of students in hip-hop dance\n\n$$\n\\frac{12}{20} \\times 100 = 60\\%\n$$\n\n---\n\n### Final Answer:\n\n$$\n\\boxed{60}\n$$\n\nAnswer: <integer> 60",
+    "expected_answer": "60",
+    "passed": true,
+    "error": null,
+    "wall_s": 86.3367223739624
+  },
+  {
+    "task_id": "gsm8k/test/15",
+    "response": "To determine the **maximum profit** the merchant can make, we need to compare the **future value** of the two options at the end of the month, considering the **growth rates** of their respective markets.\n\n---\n\n### Step 1: Calculate the future value of each item\n\nWe are given:\n\n- **Jewelry**: $5,000, growing at **2.5%** per month.\n- **Electronics**: $8,000, growing at **1.2%** per month.\n\nWe use the **compound interest formula**:\n\n$$\n\\text{Future Value} = \\text{Present Value} \\times (1 + r)^n\n$$\n\nWhere:\n- $ r $ is the growth rate (as a decimal),\n- $ n $ is the number of periods (1 month).\n\n---\n\n### Step 2: Calculate the future value of jewelry\n\n$$\n\\text{Future Value of Jewelry} = 5000 \\times (1 + 0.025)^1 = 5000 \\times 1.025 = 5125\n$$\n\n---\n\n### Step 3: Calculate the future value of electronics\n\n$$\n\\text{Future Value of Electronics} = 8000 \\times (1 + 0.012)^1 = 8000 \\times 1.012 = 8096\n$$\n\n---\n\n### Step 4: Calculate the profit\n\n$$\n\\text{Profit} = \\text{Future Value of Electronics} - \\text{Future Value of Jewelry} = 8096 - 5125 = 2971\n$$\n\n---\n\n### \u2705 Final Answer:\n\n$$\n\\boxed{2971}\n$$\n\nAnswer: <integer> 2971",
+    "expected_answer": "125",
+    "passed": false,
+    "error": null,
+    "wall_s": 121.98577213287354
+  },
+  {
+    "task_id": "gsm8k/test/16",
+    "response": "We are told that:\n\n- Two trains leave San Rafael at the same time and travel **westward** for **80 miles**.\n- Then, they travel **northward** for **150 miles**.\n- We are to find the **distance covered by each train in the two days**.\n\n### Step 1: Distance covered in the first day (westward)\nEach train travels **80 miles** westward.\n\nSo, each train covers:\n- **80 miles** in the first day.\n\n---\n\n### Step 2: Distance covered in the second day (northward)\nEach train travels **150 miles** northward.\n\nSo, each train covers:\n- **150 miles** in the second day.\n\n---\n\n### Step 3: Total distance covered by each train\nEach train travels:\n- **80 miles** westward\n- **150 miles** northward\n\nSo, the total distance covered by each train is:\n$$\n80 + 150 = 230 \\text{ miles}\n$$\n\n---\n\n### Final Answer:\nAnswer: <integer>  \nAnswer: **230**",
+    "expected_answer": "230",
+    "passed": false,
+    "error": null,
+    "wall_s": 138.08377623558044
+  },
+  {
+    "task_id": "gsm8k/test/17",
+    "response": "Jill's annual salary is calculated as follows:\n\n- **Hourly pay**: $20 per hour\n- **Weekly pay as a teacher**: $20 \u00d7 35 = $700\n- **Weekly pay as a coach**: $30 \u00d7 15 = $450\n- **Weekly total pay**: $700 + $450 = $1,150\n- **Annual salary**: $1,150 \u00d7 50 = **$57,500**\n\nAnswer: <integer> 57500",
+    "expected_answer": "57500",
+    "passed": true,
+    "error": null,
+    "wall_s": 10.5993013381958
+  },
+  {
+    "task_id": "gsm8k/test/18",
+    "response": "Claire makes 3 eggs for each omelet every morning.\n\nThere are 7 days in a week.\n\nSo, in 4 weeks, she makes:\n\n$$\n3 \\text{ eggs/day} \\times 7 \\text{ days/week} \\times 4 \\text{ weeks} = 84 \\text{ eggs}\n$$\n\nNow, to convert eggs to dozens:\n\n$$\n84 \\div 12 = 7 \\text{ dozen}\n$$\n\nAnswer: <integer>  \nAnswer: 7",
+    "expected_answer": "7",
+    "passed": true,
+    "error": null,
+    "wall_s": 18.864813804626465
+  },
+  {
+    "task_id": "gsm8k/test/19",
+    "response": "Marissa has already walked 6 miles in 2 hours (4 miles in 1 hour, and 2 miles in another hour). She needs to walk the remaining 6 miles in such a way that her **average speed** is **4 miles per hour** for the entire 12-mile trail.\n\n---\n\n### Step 1: Total time needed for average speed of 4 mph\n\nAverage speed = total distance / total time  \nSo, total time = total distance / average speed  \n= $ \\frac{12 \\text{ miles}}{4 \\text{ mph}} = 3 \\text{ hours} $\n\n---\n\n### Step 2: Time already spent\n\nShe has already spent 2 hours walking the first 6 miles.\n\n---\n\n### Step 3: Time remaining\n\nTotal time = 3 hours  \nTime already spent = 2 hours  \nTime remaining = $ 3 - 2 = 1 $ hour\n\n---\n\n### Step 4: Speed needed for the remaining 6 miles\n\nTime remaining = 1 hour  \nDistance remaining = 6 miles  \nSpeed needed = $ \\frac{6 \\text{ miles}}{1 \\text{ hour}} = 6 \\text{ mph} $\n\n---\n\n### \u2705 Final Answer:\n\nAnswer: <integer>  \nAnswer: **6**",
+    "expected_answer": "6",
+    "passed": false,
+    "error": null,
+    "wall_s": 38.97794985771179
+  },
+  {
+    "task_id": "gsm8k/test/2",
+    "response": "Josh buys the house for $80,000 and spends $50,000 on repairs. This increases the house's value by 150%.\n\nFirst, calculate the new value of the house:\n\n$$\n\\text{New value} = 80,000 + (150\\% \\times 80,000) = 80,000 + 120,000 = 200,000\n$$\n\nNow, calculate the profit:\n\n$$\n\\text{Profit} = \\text{New value} - \\text{Cost} = 200,000 - 80,000 = 120,000\n$$\n\nHowever, the $50,000 in repairs is not a profit, it's an expense. So the total profit is:\n\n$$\n\\text{Profit} = 120,000 - 50,000 = 70,000\n$$\n\nAnswer: **70,000**.",
+    "expected_answer": "70000",
+    "passed": false,
+    "error": null,
+    "wall_s": 23.528765201568604
+  },
+  {
+    "task_id": "gsm8k/test/20",
+    "response": "We are given the following:\n\n- **10 liters of orange drink** that is **two-thirds water**.\n- **15 liters of pineapple drink** that is **three-fifths water**.\n- **1 liter is spilled** during the pouring.\n- We are to find the **amount of water** in the **remaining 24 liters**.\n\n---\n\n### Step 1: Calculate the amount of water in the orange drink\n\n- Total volume: 10 liters\n- Water content: 2/3\n\n$$\n\\text{Water in orange} = \\frac{2}{3} \\times 10 = \\frac{20}{3} \\approx 6.67 \\text{ liters}\n$$\n\n---\n\n### Step 2: Calculate the amount of water in the pineapple drink\n\n- Total volume: 15 liters\n- Water content: 3/5\n\n$$\n\\text{Water in pineapple} = \\frac{3}{5} \\times 15 = 9 \\text{ liters}\n$$\n\n---\n\n### Step 3: Total water before spilling\n\n$$\n\\text{Total water} = \\text{Water in orange} + \\text{Water in pineapple} = \\frac{20}{3} + 9 = \\frac{20}{3} + \\frac{27}{3} = \\frac{47}{3} \\approx 15.67 \\text{ liters}\n$$\n\n---\n\n### Step 4: Subtract the spilled 1 liter\n\n- **1 liter of orange drink is spilled**, so the **remaining volume** is:\n\n$$\n24 \\text{ liters}\n$$\n\nBut we need to **calculate the amount of water** in the **remaining 24 liters**.\n\n---\n\n### Step 5: Calculate the amount of water in the remaining 24 liters\n\nWe know that the **original total water** was $\\frac{47}{3} \\approx 15.67$ liters.\n\nWe also know that **1 liter of orange drink** was spilled, which contained:\n\n- 2/3 water: $ \\frac{2}{3} \\times 1 = \\frac{2}{3} \\approx 0.67 $ liters of water\n\nSo, the **water in the remaining 24 liters** is:\n\n$$\n\\text{Water in remaining} = \\text{Total water} - \\text{Water spilled} = \\frac{47}{3} - \\frac{2}{3} = \\frac{45}{3} = 15 \\text{ liters}\n$$\n\n---\n\n### \u2705 Final Answer:\n\n$$\n\\boxed{15}\n$$\n\nAnswer: <integer>  \n**Answer: 15**",
+    "expected_answer": "15",
+    "passed": true,
+    "error": null,
+    "wall_s": 70.87438011169434
+  },
+  {
+    "task_id": "gsm8k/test/21",
+    "response": "Let's break the problem step by step.\n\n---\n\n### Step 1: Determine the birth years of Raymond and Samantha\n\n- Raymond was born **6 years before Samantha**.\n- So, if Samantha was born in year **S**, then Raymond was born in year **S - 6**.\n\n---\n\n### Step 2: Determine when Raymond had his son\n\n- Raymond had a son at the age of **23**.\n- That means Raymond was **23 years old** when he had his son.\n- So, the son was born **23 years after Raymond was 23**.\n\n---\n\n### Step 3: Determine the current year\n\n- Samantha is now **31 years old**.\n- Since Raymond was born **6 years before** Samantha, and Samantha is **31**, Raymond was born in:\n  $$\n  31 - 6 = 25\n  $$\n  So, Raymond was born in **2025** (assuming the current year is 2025, but we don't need the actual year).\n\n- Raymond was 23 years old when he had his son, so the son was born in:\n  $$\n  2025 + 23 = 2048\n  $$\n\n---\n\n### Step 4: Calculate how many years ago the son was born\n\n- The son was born in **2048**.\n- Samantha is now **31 years old** (in the current year, say 2025).\n- So, the son was born **2025 - 2048 = -23 years ago** \u2014 that is, **23 years ago**.\n\n---\n\n### \u2705 Final Answer:\n\n$$\n\\boxed{23}\n$$\n\nAnswer: <integer> 23",
+    "expected_answer": "14",
+    "passed": false,
+    "error": null,
+    "wall_s": 94.10927248001099
+  },
+  {
+    "task_id": "gsm8k/test/22",
+    "response": "Billy sold DVDs as follows:\n\n- First 3 customers: 1 DVD each \u2192 $3$ DVDs  \n- Next 2 customers: 2 DVDs each \u2192 $2 \\times 2 = 4$ DVDs  \n- Last 3 customers: 0 DVDs each \u2192 $0$ DVDs  \n\nTotal DVDs sold = $3 + 4 + 0 = \\boxed{7}$\n\nAnswer: <integer>",
+    "expected_answer": "7",
+    "passed": false,
+    "error": null,
+    "wall_s": 123.92971229553223
+  },
+  {
+    "task_id": "gsm8k/test/23",
+    "response": "The candle burns from **1:00 PM to 5:00 PM**, which is a total of **4 hours**.\n\nIf the candle melts by **2 centimeters every hour**, then after 4 hours, it will be shorter by:\n\n$$\n2 \\, \\text{cm/hour} \\times 4 \\, \\text{hours} = \\boxed{8} \\, \\text{cm}\n$$\n\nAnswer: <integer>  \nAnswer: 8",
+    "expected_answer": "8",
+    "passed": true,
+    "error": null,
+    "wall_s": 2.036522388458252
+  },
+  {
+    "task_id": "gsm8k/test/24",
+    "response": "Let the original price of the book be $ x $.\n\nWe are told that Kyle bought the book for $19.50 after a 25% discount, which means the discounted price is 75% of the original price.\n\nSo:\n\n$$\n0.75x = 19.50\n$$\n\nTo find $ x $, divide both sides by 0.75:\n\n$$\nx = \\frac{19.50}{0.75}\n$$\n\n$$\nx = 26\n$$\n\nAnswer: <integer> 26",
+    "expected_answer": "26",
+    "passed": true,
+    "error": null,
+    "wall_s": 13.03074598312378
+  },
+  {
+    "task_id": "gsm8k/test/25",
+    "response": "Let's break down the problem step by step.\n\n### Step 1: Calculate the total cost of the items Marie bought\n\n- **Chicken meal**: $12  \n- **Packs of milk**: 5 packs \u00d7 $3 = $15  \n- **Apples**: 4 \u00d7 $1.50 = $6  \n- **Pizza boxes**: Let the number of boxes be $ x $, and each box costs $8.50, so the cost is $ 8.50x $\n\n### Step 2: Set up the equation\n\nThe total amount paid is $50:\n\n$$\n12 + 15 + 6 + 8.50x = 50\n$$\n\n$$\n33 + 8.50x = 50\n$$\n\n$$\n8.50x = 50 - 33 = 17\n$$\n\n$$\nx = \\frac{17}{8.50} = 2\n$$\n\n### Final Answer:\n\n$$\n\\boxed{2}\n$$\n\nAnswer: <integer> 2",
+    "expected_answer": "2",
+    "passed": true,
+    "error": null,
+    "wall_s": 28.08235454559326
+  },
+  {
+    "task_id": "gsm8k/test/26",
+    "response": "Mishka bought:\n\n- 3 pairs of **shorts** at $16.50 each  \n- 3 pairs of **pants** at $22.50 each  \n- 3 pairs of **shoes** at $42 each  \n\nNow calculate the total cost:\n\n- Short cost: $16.50 \u00d7 3 = $49.50  \n- Pants cost: $22.50 \u00d7 3 = $67.50  \n- Shoes cost: $42 \u00d7 3 = $126  \n\nTotal cost = $49.50 + $67.50 + $126 = **$243**\n\nAnswer: <integer>  \nAnswer: 243",
+    "expected_answer": "243",
+    "passed": true,
+    "error": null,
+    "wall_s": 42.13921117782593
+  },
+  {
+    "task_id": "gsm8k/test/27",
+    "response": "Cynthia buys 15 servings of ice cream per carton, and she eats 1 serving each night. So, she needs:\n\n$$\n60 \\text{ days} \\times 1 \\text{ serving/day} = 60 \\text{ servings}\n$$\n\nSince each carton has 15 servings, the number of cartons she needs is:\n\n$$\n\\frac{60}{15} = 4 \\text{ cartons}\n$$\n\nEach carton costs $4.00, so the total cost is:\n\n$$\n4 \\text{ cartons} \\times 4.00 = 16.00\n$$\n\nAnswer: <integer>  \nAnswer: 16",
+    "expected_answer": "16",
+    "passed": true,
+    "error": null,
+    "wall_s": 75.6490478515625
+  },
+  {
+    "task_id": "gsm8k/test/28",
+    "response": "Henry biked a total of 60 miles. He first stopped after 20 miles, and his second stop was 15 miles before the end of the trip.\n\nWe are asked: **How many miles did he travel between his first and second stops?**\n\n### Step 1: Distance from first stop to second stop\n\n- First stop: 20 miles from the start.\n- Second stop: 15 miles before the end, i.e., 15 miles from the end.\n\nSo, the distance from the first stop to the second stop is:\n\n$$\n60 - 20 = 40 \\text{ miles (from start to end)}\n$$\n\nBut the second stop is 15 miles before the end, so the distance from the **first stop to the second stop** is:\n\n$$\n20 + 15 = 35 \\text{ miles}\n$$\n\n### \u2705 Final Answer:\n\n$$\n\\boxed{35}\n$$\n\nAnswer: <integer> 35",
+    "expected_answer": "25",
+    "passed": false,
+    "error": null,
+    "wall_s": 98.64757800102234
+  },
+  {
+    "task_id": "gsm8k/test/29",
+    "response": "Let's break the problem down step by step.\n\n### Step 1: Define the variables\n\nLet the cost of the **boots** be $ B $.\n\nThe **two pairs of high heels** cost:\n- One pair costs $ 33 $ dollars.\n- The other pair costs **twice as much**, so it's $ 2 \\times 33 = 66 $ dollars.\n\n### Step 2: Total cost of the high heels\n\n$$\n33 + 66 = 99 \\text{ dollars}\n$$\n\n### Step 3: The boots cost $ 5 $ dollars less than the high heels.\n\nSo:\n\n$$\nB + 5 = 99\n$$\n\n$$\nB = 99 - 5 = 94\n$$\n\n### Final Answer:\n\n$$\n\\boxed{94}\n$$\n\nAnswer: <integer> 94",
+    "expected_answer": "104",
+    "passed": false,
+    "error": null,
+    "wall_s": 128.02541255950928
+  },
+  {
+    "task_id": "gsm8k/test/3",
+    "response": "James runs 3 sprints each week, and each sprint is 60 meters. \n\nSo, the total distance he runs in a week is:\n\n$$\n3 \\text{ sprints} \\times 60 \\text{ meters} = 180 \\text{ meters}\n$$\n\nAnswer: <integer> 180",
+    "expected_answer": "540",
+    "passed": false,
+    "error": null,
+    "wall_s": 72.50619792938232
+  },
+  {
+    "task_id": "gsm8k/test/4",
+    "response": "Wendi gives her flock of chickens **20 cups of feed** in the morning, and **25 cups** in the afternoon.\n\nSo, the total amount of feed given in the morning and afternoon is:\n\n$$\n15 + 25 = 40 \\text{ cups}\n$$\n\nShe needs to give **20 chickens** each **3 cups** of feed per day.\n\nSo, the total feed per day for the flock is:\n\n$$\n20 \\text{ chickens} \\times 3 \\text{ cups} = 60 \\text{ cups}\n$$\n\nShe has already given them **40 cups** in the morning and afternoon, so the amount they need in the final meal is:\n\n$$\n60 - 40 = \\boxed{20} \\text{ cups}\n$$\n\nAnswer: <integer>  \n**Answer: 20**",
+    "expected_answer": "20",
+    "passed": true,
+    "error": null,
+    "wall_s": 59.02859592437744
+  },
+  {
+    "task_id": "gsm8k/test/5",
+    "response": "Kylar wants to buy **16 glasses**.\n\n- The **base price** for one glass is **$5**.\n- The **second glass** costs **60% of the price**, i.e., $5 \u00d7 0.6 = $3$.\n\nSo, the total cost is:\n\n$$\n\\text{Total cost} = 15 \\text{ glasses} \\times 5 + 1 \\text{ glass} \\times 3 = 75 + 3 = \\boxed{78}\n$$\n\nAnswer: <integer> 78",
+    "expected_answer": "64",
+    "passed": false,
+    "error": null,
+    "wall_s": 4.5060296058654785
+  },
+  {
+    "task_id": "gsm8k/test/6",
+    "response": "Let's break the problem down step by step.\n\nWe are told:\n\n1. **Seattle has 20 sheep.**\n2. **Charleston has 4 times as many sheep as Seattle.**\n3. **Toulouse has twice as many sheep as Charleston.**\n\n---\n\n### Step 1: Find the number of sheep in Charleston\n\nSince **Charleston has 4 times as many sheep as Seattle**, and **Seattle has 20 sheep**:\n\n$$\n\\text{Charleston} = 4 \\times 20 = 80 \\text{ sheep}\n$$\n\n---\n\n### Step 2: Find the number of sheep in Toulouse\n\nToulouse has **twice as many sheep as Charleston**:\n\n$$\n\\text{Toulouse} = 2 \\times 80 = 160 \\text{ sheep}\n$$\n\n---\n\n### Step 3: Add the number of sheep in Toulouse, Charleston, and Seattle\n\n$$\n\\text{Total} = 160 + 80 + 20 = 260\n$$\n\n---\n\n### Final Answer:\n\n$$\n\\boxed{260}\n$$\n\nAnswer: <integer> 260",
+    "expected_answer": "260",
+    "passed": true,
+    "error": null,
+    "wall_s": 47.01114368438721
+  },
+  {
+    "task_id": "gsm8k/test/7",
+    "response": "Carla is downloading a 200 GB file at a rate of 2 GB per minute, but there is a delay of 20 minutes when the system forces a restart. This causes her to restart the download from the beginning.\n\nFirst, calculate the total time for the download without the delay:\n\n$$\n\\text{Total time} = \\frac{200 \\text{ GB}}{2 \\text{ GB/minute}} = 100 \\text{ minutes}\n$$\n\nNow, subtract the 20 minutes delay:\n\n$$\n\\text{Total time with delay} = 100 \\text{ minutes} + 20 \\text{ minutes} = 120 \\text{ minutes}\n$$\n\nSo, it takes Carla **120 minutes** to download the file.\n\nAnswer: <integer> 120",
+    "expected_answer": "160",
+    "passed": false,
+    "error": null,
+    "wall_s": 80.54829978942871
+  },
+  {
+    "task_id": "gsm8k/test/8",
+    "response": "John drives for 3 hours at 60 mph, then turns around and tries to get home in 4 hours, but gets stuck in traffic for the first 2 hours, then drives at 30 mph for half an hour, and then at 80 mph for the remaining time.\n\n### Step-by-step breakdown:\n\n---\n\n### **1. First 3 hours at 60 mph:**\n- Distance = Speed \u00d7 Time = $60 \\text{ mph} \\times 3 \\text{ hours} = 180 \\text{ miles}$\n\n---\n\n### **2. Then he turns around and tries to get home in 4 hours:**\n\n- He spends **2 hours** in **standstill traffic** (no movement).\n- Then he drives at **30 mph** for **0.5 hours**.\n- Then he drives at **80 mph** for the remaining time.\n\n---\n\n### **3. Time spent in traffic:**\n- 2 hours\n\n---\n\n### **4. Time spent driving at 30 mph:**\n- 0.5 hours\n\n---\n\n### **5. Time spent driving at 80 mph:**\n- Total time for the 4-hour drive: 4 hours\n- Time already used: 2 + 0.5 = 2.5 hours\n- Remaining time: $4 - 2.5 = 1.5$ hours\n\n---\n\n### **6. Distance driven at 80 mph:**\n- $80 \\text{ mph} \\times 1.5 \\text{ hours} = 120 \\text{ miles}$\n\n---\n\n### **7. Total distance from home:**\n- First 3 hours: 180 miles\n- Then 0.5 hours at 30 mph: $30 \\times 0.5 = 15$ miles\n- Then 1.5 hours at 80 mph: $80 \\times 1.5 = 120$ miles\n\n**Total distance from home:**\n$$\n180 + 15 + 120 = \\boxed{315} \\text{ miles}\n$$\n\n---\n\n### \u2705 Final Answer:\n**Answer: <integer> 315**",
+    "expected_answer": "45",
+    "passed": false,
+    "error": null,
+    "wall_s": 113.54667806625366
+  },
+  {
+    "task_id": "gsm8k/test/9",
+    "response": "Eliza worked **45 hours** this week.\n\n- **First 40 hours**: She worked at her regular rate of $10 per hour.\n- **Overtime hours**: 45 total hours - 40 hours = **5 hours**.\n- **Overtime pay**: 1.2 times her regular hourly rate = $1.2 \u00d7 $10 = $12 per hour.\n\n### Step-by-step calculation:\n\n1. **Regular pay for the first 40 hours**:\n   $$\n   40 \\text{ hours} \\times 10 = 400 \\text{ dollars}\n   $$\n\n2. **Overtime pay for 5 hours**:\n   $$\n   5 \\text{ hours} \\times 12 = 60 \\text{ dollars}\n   $$\n\n3. **Total earnings**:\n   $$\n   400 + 60 = 460 \\text{ dollars}\n   $$\n\n### Final Answer:\nAnswer: <integer> 460",
+    "expected_answer": "460",
+    "passed": true,
+    "error": null,
+    "wall_s": 132.83816289901733
+  }
+]

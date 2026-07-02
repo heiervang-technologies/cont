@@ -1,0 +1,662 @@
+{
+  "seed": 1,
+  "config": {
+    "n_steps_cap": 200,
+    "k_rollouts": 4,
+    "halt_window": 20,
+    "halt_threshold": 0.95,
+    "lr_override": 0.0002,
+    "sample_temp": 0.8,
+    "weights": {
+      "sft": 0.1,
+      "coh": 1.0,
+      "kto": 1.0,
+      "unlike": 0.5,
+      "kl": 0.05
+    },
+    "sample_cfg": {
+      "temperature": 0.8,
+      "top_p": 0.95,
+      "max_tokens": 2000,
+      "enable_thinking": false
+    },
+    "eval_cfg": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 2000,
+      "enable_thinking": false
+    }
+  },
+  "stats": {
+    "n_steps_run": 44,
+    "n_submitted": 25,
+    "correctness_history": [
+      1.0,
+      0.75,
+      0.5,
+      1.0,
+      0.75,
+      0.75,
+      0.5,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "halted_early": true,
+    "per_step": [
+      {
+        "step": 0,
+        "task_id": "HumanEval/53",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 45,
+        "wall_s": 16.194576025009155
+      },
+      {
+        "step": 1,
+        "task_id": "HumanEval/37",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 3,
+        "train_commit_token": 46,
+        "wall_s": 47.0754873752594
+      },
+      {
+        "step": 2,
+        "task_id": "HumanEval/65",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          false,
+          true,
+          true
+        ],
+        "n_correct": 2,
+        "train_commit_token": 47,
+        "wall_s": 32.957648277282715
+      },
+      {
+        "step": 3,
+        "task_id": "HumanEval/51",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 48,
+        "wall_s": 27.24317717552185
+      },
+      {
+        "step": 4,
+        "task_id": "HumanEval/4",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          false,
+          true
+        ],
+        "n_correct": 3,
+        "train_commit_token": 49,
+        "wall_s": 25.535881757736206
+      },
+      {
+        "step": 5,
+        "task_id": "HumanEval/20",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 32.30546998977661
+      },
+      {
+        "step": 6,
+        "task_id": "HumanEval/38",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 21.81652522087097
+      },
+      {
+        "step": 7,
+        "task_id": "HumanEval/9",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          false,
+          true
+        ],
+        "n_correct": 3,
+        "train_commit_token": 50,
+        "wall_s": 23.022326946258545
+      },
+      {
+        "step": 8,
+        "task_id": "HumanEval/10",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 30.604346752166748
+      },
+      {
+        "step": 9,
+        "task_id": "HumanEval/81",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 32.0029456615448
+      },
+      {
+        "step": 10,
+        "task_id": "HumanEval/44",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          false,
+          false,
+          true
+        ],
+        "n_correct": 2,
+        "train_commit_token": 51,
+        "wall_s": 21.659786462783813
+      },
+      {
+        "step": 11,
+        "task_id": "HumanEval/36",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 52,
+        "wall_s": 18.72450041770935
+      },
+      {
+        "step": 12,
+        "task_id": "HumanEval/84",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 20.047009706497192
+      },
+      {
+        "step": 13,
+        "task_id": "HumanEval/50",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 13.03136682510376
+      },
+      {
+        "step": 14,
+        "task_id": "HumanEval/96",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 53,
+        "wall_s": 37.42966985702515
+      },
+      {
+        "step": 15,
+        "task_id": "HumanEval/90",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 23.75309133529663
+      },
+      {
+        "step": 16,
+        "task_id": "HumanEval/66",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 54,
+        "wall_s": 19.499328136444092
+      },
+      {
+        "step": 17,
+        "task_id": "HumanEval/16",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 55,
+        "wall_s": 13.784596920013428
+      },
+      {
+        "step": 18,
+        "task_id": "HumanEval/80",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 56,
+        "wall_s": 27.459235191345215
+      },
+      {
+        "step": 19,
+        "task_id": "HumanEval/33",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 25.02981686592102
+      },
+      {
+        "step": 20,
+        "task_id": "HumanEval/24",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 57,
+        "wall_s": 9.540797472000122
+      },
+      {
+        "step": 21,
+        "task_id": "HumanEval/52",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 58,
+        "wall_s": 11.423043489456177
+      },
+      {
+        "step": 22,
+        "task_id": "HumanEval/91",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 19.453369617462158
+      },
+      {
+        "step": 23,
+        "task_id": "HumanEval/99",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 27.332364559173584
+      },
+      {
+        "step": 24,
+        "task_id": "HumanEval/64",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 22.01767897605896
+      },
+      {
+        "step": 25,
+        "task_id": "HumanEval/5",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.783027410507202
+      },
+      {
+        "step": 26,
+        "task_id": "HumanEval/58",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 59,
+        "wall_s": 17.02857756614685
+      },
+      {
+        "step": 27,
+        "task_id": "HumanEval/76",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 21.411069869995117
+      },
+      {
+        "step": 28,
+        "task_id": "HumanEval/39",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 30.13840627670288
+      },
+      {
+        "step": 29,
+        "task_id": "HumanEval/79",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 17.832658767700195
+      },
+      {
+        "step": 30,
+        "task_id": "HumanEval/23",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 60,
+        "wall_s": 6.094238758087158
+      },
+      {
+        "step": 31,
+        "task_id": "HumanEval/94",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 45.77454328536987
+      },
+      {
+        "step": 32,
+        "task_id": "HumanEval/30",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 61,
+        "wall_s": 13.878968000411987
+      },
+      {
+        "step": 33,
+        "task_id": "HumanEval/73",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 26.514989852905273
+      },
+      {
+        "step": 34,
+        "task_id": "HumanEval/25",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 62,
+        "wall_s": 22.0915744304657
+      },
+      {
+        "step": 35,
+        "task_id": "HumanEval/47",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 63,
+        "wall_s": 13.750148057937622
+      },
+      {
+        "step": 36,
+        "task_id": "HumanEval/31",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 64,
+        "wall_s": 18.204548597335815
+      },
+      {
+        "step": 37,
+        "task_id": "HumanEval/45",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 65,
+        "wall_s": 7.389437675476074
+      },
+      {
+        "step": 38,
+        "task_id": "HumanEval/19",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 66,
+        "wall_s": 26.25553321838379
+      },
+      {
+        "step": 39,
+        "task_id": "HumanEval/87",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 67,
+        "wall_s": 38.73965859413147
+      },
+      {
+        "step": 40,
+        "task_id": "HumanEval/42",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 68,
+        "wall_s": 13.0973379611969
+      },
+      {
+        "step": 41,
+        "task_id": "HumanEval/68",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 43.22142243385315
+      },
+      {
+        "step": 42,
+        "task_id": "HumanEval/95",
+        "skipped": true,
+        "reason": "submit_train: Server error '500 Internal Server Error' for url 'http://127.0.0.1:8768/v1/train'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 31.20890712738037
+      },
+      {
+        "step": 43,
+        "task_id": "HumanEval/21",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "train_commit_token": 69,
+        "wall_s": 19.44091510772705
+      }
+    ],
+    "wall_s": 1023.8008568286896
+  }
+}

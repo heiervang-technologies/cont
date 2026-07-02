@@ -1,0 +1,2841 @@
+{
+  "seed": 2,
+  "config": {
+    "n_steps_cap": 200,
+    "k_rollouts": 4,
+    "halt_window": 20,
+    "halt_threshold": 0.95,
+    "lr_override": 0.0002,
+    "sample_temp": 0.8,
+    "weights": {
+      "sft": 0.1,
+      "coh": 1.0,
+      "kto": 1.0,
+      "unlike": 0.5,
+      "kl": 0.05
+    },
+    "sample_cfg": {
+      "temperature": 0.8,
+      "top_p": 0.95,
+      "max_tokens": 2000,
+      "enable_thinking": false
+    },
+    "eval_cfg": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 2000,
+      "enable_thinking": false
+    }
+  },
+  "stats": {
+    "n_steps_run": 200,
+    "n_submitted": 67,
+    "correctness_history": [
+      0.75,
+      0.5,
+      1.0,
+      0.5,
+      1.0,
+      1.0,
+      0.25,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      0.25,
+      1.0,
+      0.75,
+      0.25,
+      1.0,
+      0.25,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      0.75,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.25,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      1.0,
+      1.0,
+      1.0,
+      0.75,
+      0.25
+    ],
+    "halted_early": false,
+    "per_step": [
+      {
+        "step": 0,
+        "task_id": "HumanEval/0",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 126,
+        "wall_s": 22.509371280670166
+      },
+      {
+        "step": 1,
+        "task_id": "HumanEval/76",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          false,
+          true,
+          false
+        ],
+        "n_correct": 2,
+        "n_objectives": 2,
+        "train_commit_token": 127,
+        "wall_s": 74.58330154418945
+      },
+      {
+        "step": 2,
+        "task_id": "HumanEval/61",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 128,
+        "wall_s": 26.195729732513428
+      },
+      {
+        "step": 3,
+        "task_id": "HumanEval/63",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          false,
+          false,
+          true
+        ],
+        "n_correct": 2,
+        "n_objectives": 2,
+        "train_commit_token": 129,
+        "wall_s": 68.59878921508789
+      },
+      {
+        "step": 4,
+        "task_id": "HumanEval/1",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 26.545056343078613
+      },
+      {
+        "step": 5,
+        "task_id": "HumanEval/71",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 130,
+        "wall_s": 25.977347135543823
+      },
+      {
+        "step": 6,
+        "task_id": "HumanEval/2",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 131,
+        "wall_s": 12.417738437652588
+      },
+      {
+        "step": 7,
+        "task_id": "HumanEval/6",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.034974575042725
+      },
+      {
+        "step": 8,
+        "task_id": "HumanEval/16",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "n_correct": 1,
+        "n_objectives": 1,
+        "train_commit_token": 132,
+        "wall_s": 7.550720453262329
+      },
+      {
+        "step": 9,
+        "task_id": "HumanEval/19",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 133,
+        "wall_s": 17.97172236442566
+      },
+      {
+        "step": 10,
+        "task_id": "HumanEval/13",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 134,
+        "wall_s": 8.82042145729065
+      },
+      {
+        "step": 11,
+        "task_id": "HumanEval/24",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 135,
+        "wall_s": 8.039492130279541
+      },
+      {
+        "step": 12,
+        "task_id": "HumanEval/49",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 9.769250631332397
+      },
+      {
+        "step": 13,
+        "task_id": "HumanEval/12",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.618070840835571
+      },
+      {
+        "step": 14,
+        "task_id": "HumanEval/75",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.323996543884277
+      },
+      {
+        "step": 15,
+        "task_id": "HumanEval/9",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.38829255104065
+      },
+      {
+        "step": 16,
+        "task_id": "HumanEval/83",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 8.584553003311157
+      },
+      {
+        "step": 17,
+        "task_id": "HumanEval/72",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 24.495852947235107
+      },
+      {
+        "step": 18,
+        "task_id": "HumanEval/5",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 10.917249202728271
+      },
+      {
+        "step": 19,
+        "task_id": "HumanEval/41",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.578221082687378
+      },
+      {
+        "step": 20,
+        "task_id": "HumanEval/99",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 58.68108105659485
+      },
+      {
+        "step": 21,
+        "task_id": "HumanEval/45",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          false,
+          true
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 136,
+        "wall_s": 4.412306308746338
+      },
+      {
+        "step": 22,
+        "task_id": "HumanEval/89",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.590598106384277
+      },
+      {
+        "step": 23,
+        "task_id": "HumanEval/53",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 5.047525644302368
+      },
+      {
+        "step": 24,
+        "task_id": "HumanEval/79",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 14.1952064037323
+      },
+      {
+        "step": 25,
+        "task_id": "HumanEval/18",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 137,
+        "wall_s": 13.919081449508667
+      },
+      {
+        "step": 26,
+        "task_id": "HumanEval/52",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 138,
+        "wall_s": 10.03539252281189
+      },
+      {
+        "step": 27,
+        "task_id": "HumanEval/92",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.547414541244507
+      },
+      {
+        "step": 28,
+        "task_id": "HumanEval/14",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 6.951436996459961
+      },
+      {
+        "step": 29,
+        "task_id": "HumanEval/42",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 139,
+        "wall_s": 11.662690877914429
+      },
+      {
+        "step": 30,
+        "task_id": "HumanEval/68",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 35.63470125198364
+      },
+      {
+        "step": 31,
+        "task_id": "HumanEval/44",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 140,
+        "wall_s": 12.521219968795776
+      },
+      {
+        "step": 32,
+        "task_id": "HumanEval/38",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 10.970551013946533
+      },
+      {
+        "step": 33,
+        "task_id": "HumanEval/84",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 14.36196231842041
+      },
+      {
+        "step": 34,
+        "task_id": "HumanEval/36",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 141,
+        "wall_s": 61.221404790878296
+      },
+      {
+        "step": 35,
+        "task_id": "HumanEval/17",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 31.607781410217285
+      },
+      {
+        "step": 36,
+        "task_id": "HumanEval/31",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          true,
+          false,
+          false
+        ],
+        "n_correct": 1,
+        "n_objectives": 1,
+        "train_commit_token": 142,
+        "wall_s": 16.10764241218567
+      },
+      {
+        "step": 37,
+        "task_id": "HumanEval/15",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 68.06129693984985
+      },
+      {
+        "step": 38,
+        "task_id": "HumanEval/70",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 21.56780242919922
+      },
+      {
+        "step": 39,
+        "task_id": "HumanEval/88",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 24.742107629776
+      },
+      {
+        "step": 40,
+        "task_id": "HumanEval/25",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.56411838531494
+      },
+      {
+        "step": 41,
+        "task_id": "HumanEval/97",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.786129474639893
+      },
+      {
+        "step": 42,
+        "task_id": "HumanEval/51",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 143,
+        "wall_s": 16.531448125839233
+      },
+      {
+        "step": 43,
+        "task_id": "HumanEval/73",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 55.27000665664673
+      },
+      {
+        "step": 44,
+        "task_id": "HumanEval/66",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 144,
+        "wall_s": 17.952739715576172
+      },
+      {
+        "step": 45,
+        "task_id": "HumanEval/37",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          true
+        ],
+        "n_correct": 1,
+        "n_objectives": 1,
+        "train_commit_token": 145,
+        "wall_s": 19.6983060836792
+      },
+      {
+        "step": 46,
+        "task_id": "HumanEval/78",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 39.80541920661926
+      },
+      {
+        "step": 47,
+        "task_id": "HumanEval/33",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 39.23803997039795
+      },
+      {
+        "step": 48,
+        "task_id": "HumanEval/80",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 146,
+        "wall_s": 22.201921224594116
+      },
+      {
+        "step": 49,
+        "task_id": "HumanEval/26",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.193918704986572
+      },
+      {
+        "step": 50,
+        "task_id": "HumanEval/82",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          true
+        ],
+        "n_correct": 1,
+        "n_objectives": 1,
+        "train_commit_token": 147,
+        "wall_s": 17.189903259277344
+      },
+      {
+        "step": 51,
+        "task_id": "HumanEval/28",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 6.80462646484375
+      },
+      {
+        "step": 52,
+        "task_id": "HumanEval/60",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 148,
+        "wall_s": 13.964024543762207
+      },
+      {
+        "step": 53,
+        "task_id": "HumanEval/35",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 149,
+        "wall_s": 11.28816533088684
+      },
+      {
+        "step": 54,
+        "task_id": "HumanEval/43",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 150,
+        "wall_s": 23.69992423057556
+      },
+      {
+        "step": 55,
+        "task_id": "HumanEval/57",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 151,
+        "wall_s": 15.557036399841309
+      },
+      {
+        "step": 56,
+        "task_id": "HumanEval/23",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 152,
+        "wall_s": 6.319639682769775
+      },
+      {
+        "step": 57,
+        "task_id": "HumanEval/58",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 153,
+        "wall_s": 15.154869318008423
+      },
+      {
+        "step": 58,
+        "task_id": "HumanEval/91",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 15.502500534057617
+      },
+      {
+        "step": 59,
+        "task_id": "HumanEval/8",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.784618854522705
+      },
+      {
+        "step": 60,
+        "task_id": "HumanEval/62",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 154,
+        "wall_s": 16.84972643852234
+      },
+      {
+        "step": 61,
+        "task_id": "HumanEval/93",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 25.0857892036438
+      },
+      {
+        "step": 62,
+        "task_id": "HumanEval/98",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 13.915947914123535
+      },
+      {
+        "step": 63,
+        "task_id": "HumanEval/86",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.919415950775146
+      },
+      {
+        "step": 64,
+        "task_id": "HumanEval/29",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.735042572021484
+      },
+      {
+        "step": 65,
+        "task_id": "HumanEval/30",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 155,
+        "wall_s": 20.313516855239868
+      },
+      {
+        "step": 66,
+        "task_id": "HumanEval/22",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 14.149685382843018
+      },
+      {
+        "step": 67,
+        "task_id": "HumanEval/95",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 31.800692081451416
+      },
+      {
+        "step": 68,
+        "task_id": "HumanEval/67",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 37.38028526306152
+      },
+      {
+        "step": 69,
+        "task_id": "HumanEval/54",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.440977573394775
+      },
+      {
+        "step": 70,
+        "task_id": "HumanEval/48",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 156,
+        "wall_s": 12.321640968322754
+      },
+      {
+        "step": 71,
+        "task_id": "HumanEval/40",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 157,
+        "wall_s": 31.2404887676239
+      },
+      {
+        "step": 72,
+        "task_id": "HumanEval/59",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 14.299244403839111
+      },
+      {
+        "step": 73,
+        "task_id": "HumanEval/96",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 158,
+        "wall_s": 36.25115513801575
+      },
+      {
+        "step": 74,
+        "task_id": "HumanEval/3",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 19.99306607246399
+      },
+      {
+        "step": 75,
+        "task_id": "HumanEval/87",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 40.54504704475403
+      },
+      {
+        "step": 76,
+        "task_id": "HumanEval/34",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 159,
+        "wall_s": 13.583149194717407
+      },
+      {
+        "step": 77,
+        "task_id": "HumanEval/64",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 20.554521560668945
+      },
+      {
+        "step": 78,
+        "task_id": "HumanEval/56",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          false,
+          true
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 160,
+        "wall_s": 21.210089683532715
+      },
+      {
+        "step": 79,
+        "task_id": "HumanEval/69",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          false,
+          true,
+          true
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 161,
+        "wall_s": 33.022237062454224
+      },
+      {
+        "step": 80,
+        "task_id": "HumanEval/47",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 162,
+        "wall_s": 17.55187678337097
+      },
+      {
+        "step": 81,
+        "task_id": "HumanEval/65",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 17.39688730239868
+      },
+      {
+        "step": 82,
+        "task_id": "HumanEval/50",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 9.055020332336426
+      },
+      {
+        "step": 83,
+        "task_id": "HumanEval/81",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 55.96192646026611
+      },
+      {
+        "step": 84,
+        "task_id": "HumanEval/55",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 163,
+        "wall_s": 11.951054811477661
+      },
+      {
+        "step": 85,
+        "task_id": "HumanEval/20",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 30.551182508468628
+      },
+      {
+        "step": 86,
+        "task_id": "HumanEval/74",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 32.454700231552124
+      },
+      {
+        "step": 87,
+        "task_id": "HumanEval/4",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 21.64856743812561
+      },
+      {
+        "step": 88,
+        "task_id": "HumanEval/90",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 23.8033344745636
+      },
+      {
+        "step": 89,
+        "task_id": "HumanEval/27",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 164,
+        "wall_s": 14.13361406326294
+      },
+      {
+        "step": 90,
+        "task_id": "HumanEval/77",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 19.15598702430725
+      },
+      {
+        "step": 91,
+        "task_id": "HumanEval/32",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 32.13278102874756
+      },
+      {
+        "step": 92,
+        "task_id": "HumanEval/39",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 49.10597801208496
+      },
+      {
+        "step": 93,
+        "task_id": "HumanEval/85",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 165,
+        "wall_s": 11.591904163360596
+      },
+      {
+        "step": 94,
+        "task_id": "HumanEval/94",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 55.70487856864929
+      },
+      {
+        "step": 95,
+        "task_id": "HumanEval/21",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 20.781336545944214
+      },
+      {
+        "step": 96,
+        "task_id": "HumanEval/46",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 28.86167001724243
+      },
+      {
+        "step": 97,
+        "task_id": "HumanEval/10",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 26.627311944961548
+      },
+      {
+        "step": 98,
+        "task_id": "HumanEval/11",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 166,
+        "wall_s": 18.32423686981201
+      },
+      {
+        "step": 99,
+        "task_id": "HumanEval/7",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.792920112609863
+      },
+      {
+        "step": 100,
+        "task_id": "HumanEval/0",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 24.374517917633057
+      },
+      {
+        "step": 101,
+        "task_id": "HumanEval/76",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          false,
+          true,
+          false
+        ],
+        "n_correct": 1,
+        "n_objectives": 1,
+        "train_commit_token": 167,
+        "wall_s": 44.998557806015015
+      },
+      {
+        "step": 102,
+        "task_id": "HumanEval/61",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 168,
+        "wall_s": 22.439762353897095
+      },
+      {
+        "step": 103,
+        "task_id": "HumanEval/63",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 26.9287006855011
+      },
+      {
+        "step": 104,
+        "task_id": "HumanEval/1",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.643247365951538
+      },
+      {
+        "step": 105,
+        "task_id": "HumanEval/71",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 17.185364961624146
+      },
+      {
+        "step": 106,
+        "task_id": "HumanEval/2",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 169,
+        "wall_s": 10.743368148803711
+      },
+      {
+        "step": 107,
+        "task_id": "HumanEval/6",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.379565715789795
+      },
+      {
+        "step": 108,
+        "task_id": "HumanEval/16",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 170,
+        "wall_s": 8.857930660247803
+      },
+      {
+        "step": 109,
+        "task_id": "HumanEval/19",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 197.99717354774475
+      },
+      {
+        "step": 110,
+        "task_id": "HumanEval/13",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 8.588929653167725
+      },
+      {
+        "step": 111,
+        "task_id": "HumanEval/24",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 6.5525596141815186
+      },
+      {
+        "step": 112,
+        "task_id": "HumanEval/49",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 171,
+        "wall_s": 61.244479179382324
+      },
+      {
+        "step": 113,
+        "task_id": "HumanEval/12",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 11.856315851211548
+      },
+      {
+        "step": 114,
+        "task_id": "HumanEval/75",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 20.358243942260742
+      },
+      {
+        "step": 115,
+        "task_id": "HumanEval/9",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 11.867026090621948
+      },
+      {
+        "step": 116,
+        "task_id": "HumanEval/83",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 10.027162313461304
+      },
+      {
+        "step": 117,
+        "task_id": "HumanEval/72",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 26.563718557357788
+      },
+      {
+        "step": 118,
+        "task_id": "HumanEval/5",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 11.646495342254639
+      },
+      {
+        "step": 119,
+        "task_id": "HumanEval/41",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.390871047973633
+      },
+      {
+        "step": 120,
+        "task_id": "HumanEval/99",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 19.025511503219604
+      },
+      {
+        "step": 121,
+        "task_id": "HumanEval/45",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 172,
+        "wall_s": 7.2443976402282715
+      },
+      {
+        "step": 122,
+        "task_id": "HumanEval/89",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 14.8231520652771
+      },
+      {
+        "step": 123,
+        "task_id": "HumanEval/53",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 173,
+        "wall_s": 8.189796686172485
+      },
+      {
+        "step": 124,
+        "task_id": "HumanEval/79",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.094393491744995
+      },
+      {
+        "step": 125,
+        "task_id": "HumanEval/18",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 11.401500940322876
+      },
+      {
+        "step": 126,
+        "task_id": "HumanEval/52",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 174,
+        "wall_s": 11.683138370513916
+      },
+      {
+        "step": 127,
+        "task_id": "HumanEval/92",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.6284499168396
+      },
+      {
+        "step": 128,
+        "task_id": "HumanEval/14",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 8.805912733078003
+      },
+      {
+        "step": 129,
+        "task_id": "HumanEval/42",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 175,
+        "wall_s": 15.17847490310669
+      },
+      {
+        "step": 130,
+        "task_id": "HumanEval/68",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 38.702471017837524
+      },
+      {
+        "step": 131,
+        "task_id": "HumanEval/44",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.950482606887817
+      },
+      {
+        "step": 132,
+        "task_id": "HumanEval/38",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 13.59311032295227
+      },
+      {
+        "step": 133,
+        "task_id": "HumanEval/84",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 17.870299577713013
+      },
+      {
+        "step": 134,
+        "task_id": "HumanEval/36",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.034393310546875
+      },
+      {
+        "step": 135,
+        "task_id": "HumanEval/17",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 23.77366042137146
+      },
+      {
+        "step": 136,
+        "task_id": "HumanEval/31",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 15.739885330200195
+      },
+      {
+        "step": 137,
+        "task_id": "HumanEval/15",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 77.78133225440979
+      },
+      {
+        "step": 138,
+        "task_id": "HumanEval/70",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 15.83590579032898
+      },
+      {
+        "step": 139,
+        "task_id": "HumanEval/88",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 25.193676948547363
+      },
+      {
+        "step": 140,
+        "task_id": "HumanEval/25",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.561904907226562
+      },
+      {
+        "step": 141,
+        "task_id": "HumanEval/97",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 13.233084440231323
+      },
+      {
+        "step": 142,
+        "task_id": "HumanEval/51",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.338207960128784
+      },
+      {
+        "step": 143,
+        "task_id": "HumanEval/73",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 22.130892515182495
+      },
+      {
+        "step": 144,
+        "task_id": "HumanEval/66",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 176,
+        "wall_s": 17.921751260757446
+      },
+      {
+        "step": 145,
+        "task_id": "HumanEval/37",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 19.480538368225098
+      },
+      {
+        "step": 146,
+        "task_id": "HumanEval/78",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 38.97107267379761
+      },
+      {
+        "step": 147,
+        "task_id": "HumanEval/33",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 20.54479670524597
+      },
+      {
+        "step": 148,
+        "task_id": "HumanEval/80",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 177,
+        "wall_s": 20.079692125320435
+      },
+      {
+        "step": 149,
+        "task_id": "HumanEval/26",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 11.534783363342285
+      },
+      {
+        "step": 150,
+        "task_id": "HumanEval/82",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          false,
+          false
+        ],
+        "n_correct": 2,
+        "n_objectives": 2,
+        "train_commit_token": 178,
+        "wall_s": 18.758909463882446
+      },
+      {
+        "step": 151,
+        "task_id": "HumanEval/28",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 7.801086664199829
+      },
+      {
+        "step": 152,
+        "task_id": "HumanEval/60",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 179,
+        "wall_s": 14.715011596679688
+      },
+      {
+        "step": 153,
+        "task_id": "HumanEval/35",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 180,
+        "wall_s": 11.941732406616211
+      },
+      {
+        "step": 154,
+        "task_id": "HumanEval/43",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 21.10187530517578
+      },
+      {
+        "step": 155,
+        "task_id": "HumanEval/57",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 181,
+        "wall_s": 16.756614446640015
+      },
+      {
+        "step": 156,
+        "task_id": "HumanEval/23",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 182,
+        "wall_s": 6.375237703323364
+      },
+      {
+        "step": 157,
+        "task_id": "HumanEval/58",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 183,
+        "wall_s": 17.063393354415894
+      },
+      {
+        "step": 158,
+        "task_id": "HumanEval/91",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.87315559387207
+      },
+      {
+        "step": 159,
+        "task_id": "HumanEval/8",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 71.44453692436218
+      },
+      {
+        "step": 160,
+        "task_id": "HumanEval/62",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 184,
+        "wall_s": 13.881474733352661
+      },
+      {
+        "step": 161,
+        "task_id": "HumanEval/93",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 14.498511791229248
+      },
+      {
+        "step": 162,
+        "task_id": "HumanEval/98",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 9.413785696029663
+      },
+      {
+        "step": 163,
+        "task_id": "HumanEval/86",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 13.484262943267822
+      },
+      {
+        "step": 164,
+        "task_id": "HumanEval/29",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 10.300330400466919
+      },
+      {
+        "step": 165,
+        "task_id": "HumanEval/30",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 185,
+        "wall_s": 14.04340124130249
+      },
+      {
+        "step": 166,
+        "task_id": "HumanEval/22",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 10.205283164978027
+      },
+      {
+        "step": 167,
+        "task_id": "HumanEval/95",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 19.446074962615967
+      },
+      {
+        "step": 168,
+        "task_id": "HumanEval/67",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 25.782318830490112
+      },
+      {
+        "step": 169,
+        "task_id": "HumanEval/54",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.689993858337402
+      },
+      {
+        "step": 170,
+        "task_id": "HumanEval/48",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 186,
+        "wall_s": 10.457135915756226
+      },
+      {
+        "step": 171,
+        "task_id": "HumanEval/40",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 23.09052276611328
+      },
+      {
+        "step": 172,
+        "task_id": "HumanEval/59",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 80.02460980415344
+      },
+      {
+        "step": 173,
+        "task_id": "HumanEval/96",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 187,
+        "wall_s": 26.382763624191284
+      },
+      {
+        "step": 174,
+        "task_id": "HumanEval/3",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 16.78776264190674
+      },
+      {
+        "step": 175,
+        "task_id": "HumanEval/87",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 32.39751887321472
+      },
+      {
+        "step": 176,
+        "task_id": "HumanEval/34",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 188,
+        "wall_s": 10.585594177246094
+      },
+      {
+        "step": 177,
+        "task_id": "HumanEval/64",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 15.264713764190674
+      },
+      {
+        "step": 178,
+        "task_id": "HumanEval/56",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 189,
+        "wall_s": 17.348557710647583
+      },
+      {
+        "step": 179,
+        "task_id": "HumanEval/69",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 23.672284841537476
+      },
+      {
+        "step": 180,
+        "task_id": "HumanEval/47",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 11.43223762512207
+      },
+      {
+        "step": 181,
+        "task_id": "HumanEval/65",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 12.48836374282837
+      },
+      {
+        "step": 182,
+        "task_id": "HumanEval/50",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 6.9271461963653564
+      },
+      {
+        "step": 183,
+        "task_id": "HumanEval/81",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 45.45854139328003
+      },
+      {
+        "step": 184,
+        "task_id": "HumanEval/55",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 95.13337326049805
+      },
+      {
+        "step": 185,
+        "task_id": "HumanEval/20",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 22.716002464294434
+      },
+      {
+        "step": 186,
+        "task_id": "HumanEval/74",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 29.502487659454346
+      },
+      {
+        "step": 187,
+        "task_id": "HumanEval/4",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 17.574139833450317
+      },
+      {
+        "step": 188,
+        "task_id": "HumanEval/90",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 17.96724581718445
+      },
+      {
+        "step": 189,
+        "task_id": "HumanEval/27",
+        "skipped": false,
+        "rollouts_pass": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 4,
+        "n_objectives": 4,
+        "train_commit_token": 190,
+        "wall_s": 9.837206840515137
+      },
+      {
+        "step": 190,
+        "task_id": "HumanEval/77",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 17.045244693756104
+      },
+      {
+        "step": 191,
+        "task_id": "HumanEval/32",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 26.657882928848267
+      },
+      {
+        "step": 192,
+        "task_id": "HumanEval/39",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 17.539581775665283
+      },
+      {
+        "step": 193,
+        "task_id": "HumanEval/85",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          true,
+          true,
+          true
+        ],
+        "n_correct": 3,
+        "n_objectives": 3,
+        "train_commit_token": 191,
+        "wall_s": 11.271790981292725
+      },
+      {
+        "step": 194,
+        "task_id": "HumanEval/94",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 48.53666377067566
+      },
+      {
+        "step": 195,
+        "task_id": "HumanEval/21",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.386109828948975
+      },
+      {
+        "step": 196,
+        "task_id": "HumanEval/46",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 25.836005687713623
+      },
+      {
+        "step": 197,
+        "task_id": "HumanEval/10",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 18.2216534614563
+      },
+      {
+        "step": 198,
+        "task_id": "HumanEval/11",
+        "skipped": false,
+        "rollouts_pass": [
+          false,
+          false,
+          true,
+          false
+        ],
+        "n_correct": 1,
+        "n_objectives": 1,
+        "train_commit_token": 192,
+        "wall_s": 11.364274501800537
+      },
+      {
+        "step": 199,
+        "task_id": "HumanEval/7",
+        "skipped": true,
+        "reason": "empty_primaries (tokenizer=None)",
+        "rollouts_pass": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "wall_s": 11.154733180999756
+      }
+    ],
+    "wall_s": 4469.103742837906
+  }
+}

@@ -118,13 +118,13 @@ async def main() -> int:
     async with httpx.AsyncClient(timeout=300.0) as client:
         # NB: NO snapshot bracket — we don't mutate model state. If the daemon
         # is at autoresearch_baseline now, leave it there.
-        print(f"[gsm8k-icl] eval 5-shot ICL (no training, demos in prompt)", flush=True)
+        print("[gsm8k-icl] eval 5-shot ICL (no training, demos in prompt)", flush=True)
         icl = await eval_icl(client, demos, heldout, "5-shot ICL")
 
     print()
     print("=" * 60, flush=True)
-    print(f"GSM8K 0-shot cold (from gsm8k_k5_probe.py exp): 16/50 (32.0%)", flush=True)
-    print(f"GSM8K K=5 fine-tune (from gsm8k_k5_probe.py exp): 22/50 (44.0%)", flush=True)
+    print("GSM8K 0-shot cold (from gsm8k_k5_probe.py exp): 16/50 (32.0%)", flush=True)
+    print("GSM8K K=5 fine-tune (from gsm8k_k5_probe.py exp): 22/50 (44.0%)", flush=True)
     print(f"GSM8K 5-shot ICL (this run):                      "
           f"{icl['n_correct']}/{icl['total']} ({100*icl['rate']:.1f}%)", flush=True)
     print("=" * 60, flush=True)
@@ -132,16 +132,16 @@ async def main() -> int:
     icl_pp = 100 * icl["rate"]
     if ft_pp > icl_pp:
         print(f"VERDICT: K=5 fine-tune ({ft_pp:.0f}%) BEATS 5-shot ICL ({icl_pp:.0f}%)", flush=True)
-        print(f"         → fine-tune encodes K=5 more efficiently than context-stuffing", flush=True)
-        print(f"         → defensible sample-efficient-LEARNING claim (parameter updates beat prompting)", flush=True)
+        print("         → fine-tune encodes K=5 more efficiently than context-stuffing", flush=True)
+        print("         → defensible sample-efficient-LEARNING claim (parameter updates beat prompting)", flush=True)
     elif ft_pp == icl_pp:
         print(f"VERDICT: K=5 fine-tune TIES with 5-shot ICL at {ft_pp:.0f}%", flush=True)
-        print(f"         → fine-tune matches ICL but adds learning (parameter change persists across queries)", flush=True)
-        print(f"         → moderate claim: same gain, but learned not prompted", flush=True)
+        print("         → fine-tune matches ICL but adds learning (parameter change persists across queries)", flush=True)
+        print("         → moderate claim: same gain, but learned not prompted", flush=True)
     else:
         print(f"VERDICT: K=5 fine-tune ({ft_pp:.0f}%) LOSES to 5-shot ICL ({icl_pp:.0f}%)", flush=True)
-        print(f"         → simpler baseline (context demos) outperforms our recipe at K=5", flush=True)
-        print(f"         → no defensible sample-efficient-learning SOTA claim at this scale", flush=True)
+        print("         → simpler baseline (context demos) outperforms our recipe at K=5", flush=True)
+        print("         → no defensible sample-efficient-learning SOTA claim at this scale", flush=True)
     return 0
 
 

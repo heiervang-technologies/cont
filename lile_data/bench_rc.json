@@ -1,0 +1,299 @@
+{
+  "summary": {
+    "model": "unsloth/Qwen2.5-0.5B-Instruct",
+    "k": 6,
+    "beta": 0.1,
+    "n_items": 5,
+    "repeats": 2,
+    "n_results": 9,
+    "spearman_mean": 0.5234571990498166,
+    "spearman_median": 0.6667366910003157,
+    "spearman_positive_fraction": 0.8888888888888888,
+    "decision_threshold_high": 0.5,
+    "decision_threshold_mid": 0.2,
+    "decision": "ship_T2_1_default",
+    "wall_seconds": 4.327931880950928,
+    "peak_vram_gb": 1.198488064
+  },
+  "per_item": [
+    {
+      "item_idx": 0,
+      "prompt": "Explain what a black hole is.",
+      "critique": "Be more concise. One short sentence maximum.",
+      "rep": 0,
+      "spearman": 0.942857142857143,
+      "n_candidates": 6,
+      "rc_scores": [
+        0.0970432996749878,
+        0.0962813526391983,
+        0.009857225418090821,
+        0.08009363412857057,
+        0.09579844474792482,
+        0.06677515506744384
+      ],
+      "truth_scores": [
+        -28,
+        -92,
+        -391,
+        -128,
+        -96,
+        -127
+      ],
+      "candidates": [
+        "A region of extreme gravity.",
+        "A black hole is a region of space where gravity is so strong that not even light can escape.",
+        "Black holes are fascinating astronomical objects that form when massive stars collapse at the end of their lives, creating regions of spacetime where the gravitational pull becomes so intense that nothing, not even photons, can escape past the event horizon. They were predicted by Einstein's theory of general relativity and have since been observed through various astrophysical phenomena.",
+        "A black hole is an astrophysical object with extreme gravitational pull that sucks in matter, ejecting it into infinite density.",
+        "A black hole has a gravity so strong that nothing, not even light, can escape from its vicinity.",
+        "A black hole is an extremely dense region of space where gravity is so strong that nothing, not even light, can escape from it."
+      ]
+    },
+    {
+      "item_idx": 0,
+      "prompt": "Explain what a black hole is.",
+      "critique": "Be more concise. One short sentence maximum.",
+      "rep": 1,
+      "spearman": 0.7714285714285715,
+      "n_candidates": 6,
+      "rc_scores": [
+        0.07541810870170594,
+        0.06815391182899476,
+        0.07177081257104874,
+        0.06323714256286621,
+        0.07348139882087708,
+        0.09702596068382263
+      ],
+      "truth_scores": [
+        -74,
+        -121,
+        -114,
+        -152,
+        -122,
+        -113
+      ],
+      "candidates": [
+        "A black hole sucks in everything within its gravity well, including light.",
+        "A black hole is an extreme gravitational force, containing so much mass that nothing, not even light, can escape from it.",
+        "A black hole is a region in space where the gravity is so strong that nothing, not even light, can escape from it.",
+        "A black hole is an extremely dense region of space-time, where the gravitational pull so strong that nothing, not even light, can escape from its grasp.",
+        "A black hole is a region of space where the gravitational pull so strong that nothing, not even light, can escape from it.",
+        "A black hole is an astronomical object with gravity so strong that nothing, not even light, can escape its grasp."
+      ]
+    },
+    {
+      "item_idx": 1,
+      "prompt": "What happened in 1969?",
+      "critique": "Be more concise. Just the key fact.",
+      "rep": 0,
+      "spearman": 0.2571428571428572,
+      "n_candidates": 6,
+      "rc_scores": [
+        0.000843191146850586,
+        0.04652552604675293,
+        -0.0052433013916015625,
+        0.052458667755126955,
+        0.07229081988334655,
+        0.026907050609588624
+      ],
+      "truth_scores": [
+        -13,
+        -29,
+        -211,
+        -144,
+        -101,
+        -175
+      ],
+      "candidates": [
+        "Moon landing.",
+        "Apollo 11 landed on the Moon.",
+        "Many events happened in 1969, including the Apollo 11 Moon landing, Woodstock, the first Boeing 747 flight, and the Stonewall riots in New York City, along with numerous other historical events across the world.",
+        "In 1969, a peaceful demonstration by civil rights activists and students marked the beginning of the civil rights movement in the United States.",
+        "In 1969, the Cuban Missile Crisis led to a tense standoff between the United States and Soviet Union.",
+        "In 1969, significant events included the assassination of John F. Kennedy and the Cuban Missile Crisis, as well as the beginning of the Cold War tension with the Soviet Union."
+      ]
+    },
+    {
+      "item_idx": 1,
+      "prompt": "What happened in 1969?",
+      "critique": "Be more concise. Just the key fact.",
+      "rep": 1,
+      "spearman": -0.3142857142857143,
+      "n_candidates": 6,
+      "rc_scores": [
+        0.049659317731857305,
+        0.05002270936965943,
+        0.021987134218215944,
+        0.01579987406730652,
+        0.0384546160697937,
+        0.048170268535614014
+      ],
+      "truth_scores": [
+        -168,
+        -174,
+        -243,
+        -153,
+        -135,
+        -155
+      ],
+      "candidates": [
+        "In 1969, there was a significant political and cultural upheaval as the Civil Rights Act of 1968 was signed into law, ending legal segregation within the United States.",
+        "In 1969, the year marked by the Cuban Missile Crisis, US President John F. Kennedy announced his decision to invade Cuba if Soviet\u5bfc\u5f39s were allowed into the island's airspace.",
+        "In 1969, there was a significant event involving the Soviet Union's deployment of the Sputnik satellite into orbit, leading to the United States launching its own satellite, which marked the beginning of the Space Race between the two nations.",
+        "In 1969, there were two significant events:\n- The Space Race between the United States and the Soviet Union\n- The assassination of Martin Luther King Jr.",
+        "In 1969, there was a significant civil rights demonstration in Selma, Alabama, which led to the Voting Rights Act of 1965 being passed.",
+        "In 1969, there was a significant event when President Richard Nixon resigned after being found guilty of criminal conduct related to the Watergate scandal."
+      ]
+    },
+    {
+      "item_idx": 2,
+      "prompt": "Describe a cat.",
+      "critique": "Keep it under ten words.",
+      "rep": 0,
+      "spearman": 0.942857142857143,
+      "n_candidates": 6,
+      "rc_scores": [
+        0.3146410703659058,
+        0.1304113507270813,
+        0.012072420120239258,
+        0.18440921306610109,
+        0.1699273228645325,
+        0.22594912052154542
+      ],
+      "truth_scores": [
+        -0.18,
+        -0.54,
+        -122.14,
+        -0.52,
+        -0.58,
+        -0.43
+      ],
+      "candidates": [
+        "A small furry pet.",
+        "Cats are small carnivorous mammals often kept as pets.",
+        "Cats are small domesticated carnivorous mammals that are valued by humans for companionship and for their ability to hunt rodents and other small vermin, and have been associated with humans for thousands of years.",
+        "A fluffy, sleek feline with brown fur and blue eyes.",
+        "A fluffy, tailless mammal with short legs and sharp claws.",
+        "A fluffy, curious, playful feline creature."
+      ]
+    },
+    {
+      "item_idx": 2,
+      "prompt": "Describe a cat.",
+      "critique": "Keep it under ten words.",
+      "rep": 1,
+      "spearman": 0.6667366910003157,
+      "n_candidates": 6,
+      "rc_scores": [
+        0.20324033498764038,
+        0.19644964337348939,
+        0.22931334972381592,
+        0.057616364955902104,
+        0.11927322149276734,
+        0.19857187271118165
+      ],
+      "truth_scores": [
+        -0.39,
+        -0.39,
+        -0.41000000000000003,
+        -0.59,
+        -0.55,
+        -0.48
+      ],
+      "candidates": [
+        "A fluffy, striped feline with whiskers.",
+        "A fluffy, tail-wagging feline creature.",
+        "A fluffy, sleek cat with long, silky fur.",
+        "Feline, playful, sleek, curious, affectionate, independent.",
+        "Loyal, sleek, mischievous, feline with unique markings.",
+        "A sleek, cuddly feline with fur like snowflakes."
+      ]
+    },
+    {
+      "item_idx": 3,
+      "prompt": "What is ten times six?",
+      "critique": "Answer with a single number only, no words.",
+      "rep": 0,
+      "spearman": 0.2070196678027063,
+      "n_candidates": 6,
+      "rc_scores": [
+        0.3000706747174263,
+        0.11479012966156006,
+        -0.013307058811187746,
+        -0.03878886699676514,
+        0.5991428256034851,
+        0.07068134546279907
+      ],
+      "truth_scores": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "candidates": [
+        "60",
+        "Sixty.",
+        "The answer is 60.",
+        "Ten times six is sixty, which is 60.",
+        "twenty",
+        "16"
+      ]
+    },
+    {
+      "item_idx": 3,
+      "prompt": "What is ten times six?",
+      "critique": "Answer with a single number only, no words.",
+      "rep": 1,
+      "spearman": 0.28867513459481287,
+      "n_candidates": 5,
+      "rc_scores": [
+        0.07068134546279907,
+        0.6834766149520874,
+        0.023132675886154176,
+        0.5991428256034851,
+        0.12959482669830322
+      ],
+      "truth_scores": [
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "candidates": [
+        "16",
+        "10",
+        "10 * 6 = 60",
+        "twenty",
+        "100"
+      ]
+    },
+    {
+      "item_idx": 4,
+      "prompt": "What is the capital of Japan?",
+      "critique": "Give me one word, nothing else.",
+      "rep": 0,
+      "spearman": 0.9486832980505139,
+      "n_candidates": 4,
+      "rc_scores": [
+        0.09368847012519838,
+        0.171192542091012,
+        0.015621423721313477,
+        -0.08585769534111024
+      ],
+      "truth_scores": [
+        1.0,
+        1.0,
+        0.3333333333333333,
+        0.09090909090909091
+      ],
+      "candidates": [
+        "Tokyo.",
+        "Tokyo",
+        "It is Tokyo.",
+        "The capital of Japan is Tokyo, on the island of Honshu."
+      ]
+    }
+  ]
+}

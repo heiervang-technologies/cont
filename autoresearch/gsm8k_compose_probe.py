@@ -157,24 +157,24 @@ async def main() -> int:
     pct = 100 * result["rate"]
     print()
     print("=" * 60, flush=True)
-    print(f"0-shot cold (prior probe)        : 16/50 (32.0%)", flush=True)
-    print(f"K=5 fine-tune 0-shot (prior)     : 22/50 (44.0%)", flush=True)
-    print(f"5-shot ICL no training (prior)   : 48/50 (96.0%)", flush=True)
+    print("0-shot cold (prior probe)        : 16/50 (32.0%)", flush=True)
+    print("K=5 fine-tune 0-shot (prior)     : 22/50 (44.0%)", flush=True)
+    print("5-shot ICL no training (prior)   : 48/50 (96.0%)", flush=True)
     print(f"K=5 fine-tune + 5-shot ICL (this): "
           f"{result['n_correct']}/{result['total']} ({pct:.1f}%)", flush=True)
     print("=" * 60, flush=True)
     if pct > 96.0:
         print(f"VERDICT: fine-tune is ADDITIVE to ICL ({pct:.0f}% > 96%)", flush=True)
-        print(f"         → the parameter update encodes something demos don't", flush=True)
+        print("         → the parameter update encodes something demos don't", flush=True)
         print(f"         → defensible claim: K=5 fine-tune contributes "
               f"+{pct-96.0:.0f}pp on top of 5-shot ICL", flush=True)
     elif pct == 96.0:
-        print(f"VERDICT: fine-tune is NEUTRAL with ICL (tied at 96%)", flush=True)
-        print(f"         → demos already saturate; fine-tune isn't helping or hurting", flush=True)
+        print("VERDICT: fine-tune is NEUTRAL with ICL (tied at 96%)", flush=True)
+        print("         → demos already saturate; fine-tune isn't helping or hurting", flush=True)
     else:
         print(f"VERDICT: fine-tune is SUBTRACTIVE with ICL ({pct:.0f}% < 96%)", flush=True)
-        print(f"         → fine-tune is actively harmful when combined with ICL demos", flush=True)
-        print(f"         → recipe interferes with the model's ICL ability", flush=True)
+        print("         → fine-tune is actively harmful when combined with ICL demos", flush=True)
+        print("         → recipe interferes with the model's ICL ability", flush=True)
     return 0
 
 

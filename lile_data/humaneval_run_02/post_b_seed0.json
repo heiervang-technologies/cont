@@ -1,0 +1,514 @@
+[
+  {
+    "task_id": "HumanEval/100",
+    "response": "```python\ndef make_a_pile(n):\n    return [n + 2*i for i in range(n)]\n```",
+    "generated_code": "def make_a_pile(n):\n    return [n + 2*i for i in range(n)]",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.619218349456787
+  },
+  {
+    "task_id": "HumanEval/101",
+    "response": "```python\ndef words_string(s):\n    return s.split(',')\n```",
+    "generated_code": "def words_string(s):\n    return s.split(',')",
+    "passed": false,
+    "error": null,
+    "wall_s": 0.9987308979034424
+  },
+  {
+    "task_id": "HumanEval/102",
+    "response": "```python\ndef choose_num(x, y):\n    return y if y % 2 == 0 else y - 1\n```",
+    "generated_code": "def choose_num(x, y):\n    return y if y % 2 == 0 else y - 1",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.906825065612793
+  },
+  {
+    "task_id": "HumanEval/103",
+    "response": "```python\ndef rounded_avg(n, m):\n    if n > m:\n        return -1\n    total = sum(range(n, m+1))\n    avg = round(total / (m - n + 1))\n    return f\"0b{avg}\"\n```",
+    "generated_code": "def rounded_avg(n, m):\n    if n > m:\n        return -1\n    total = sum(range(n, m+1))\n    avg = round(total / (m - n + 1))\n    return f\"0b{avg}\"",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.590745687484741
+  },
+  {
+    "task_id": "HumanEval/104",
+    "response": "```python\ndef unique_digits(x):\n    return sorted([num for num in x if all(int(d) % 2 == 1 for d in str(num))])\n```",
+    "generated_code": "def unique_digits(x):\n    return sorted([num for num in x if all(int(d) % 2 == 1 for d in str(num))])",
+    "passed": true,
+    "error": null,
+    "wall_s": 2.2961478233337402
+  },
+  {
+    "task_id": "HumanEval/105",
+    "response": "```python\ndef by_length(arr):\n    mapping = {\"One\":1, \"Two\":2, \"Three\":3, \"Four\":4, \"Five\":5, \"Six\":6, \"Seven\":7, \"Eight\":8, \"Nine\":9}\n    sorted_arr = sorted([x for x in arr if 1<=x<=9], reverse=True)\n    return [mapping[str(x)] for x in sorted_arr]\n```",
+    "generated_code": "def by_length(arr):\n    mapping = {\"One\":1, \"Two\":2, \"Three\":3, \"Four\":4, \"Five\":5, \"Six\":6, \"Seven\":7, \"Eight\":8, \"Nine\":9}\n    sorted_arr = sorted([x for x in arr if 1<=x<=9], reverse=True)\n    return [mapping[str(x)] for x in sorted_arr]",
+    "passed": false,
+    "error": null,
+    "wall_s": 5.9342122077941895
+  },
+  {
+    "task_id": "HumanEval/106",
+    "response": "```python\ndef f(n):\n    return [1 if i%2==0 else sum(range(1, i+1)) for i in range(1, n+1)]\n```",
+    "generated_code": "def f(n):\n    return [1 if i%2==0 else sum(range(1, i+1)) for i in range(1, n+1)]",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.862123727798462
+  },
+  {
+    "task_id": "HumanEval/107",
+    "response": "```python\ndef even_odd_palindrome(n):\n    count_even = 0\n    count_odd = 0\n    for i in range(1, n+1):\n        if str(i)[::-1] == str(i):\n            if i % 2 == 0:\n                count_even += 1\n            else:\n                count_odd += 1\n    return (count_even, count_odd)\n```",
+    "generated_code": "def even_odd_palindrome(n):\n    count_even = 0\n    count_odd = 0\n    for i in range(1, n+1):\n        if str(i)[::-1] == str(i):\n            if i % 2 == 0:\n                count_even += 1\n            else:\n                count_odd += 1\n    return (count_even, count_odd)",
+    "passed": false,
+    "error": null,
+    "wall_s": 5.3084025382995605
+  },
+  {
+    "task_id": "HumanEval/108",
+    "response": "```python\ndef count_nums(arr):\n    count = 0\n    for num in arr:\n        if num > 0:\n            count += 1\n        elif num < 0:\n            count += 1\n    return count\n```",
+    "generated_code": "def count_nums(arr):\n    count = 0\n    for num in arr:\n        if num > 0:\n            count += 1\n        elif num < 0:\n            count += 1\n    return count",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.234727382659912
+  },
+  {
+    "task_id": "HumanEval/109",
+    "response": "```python\ndef move_one_ball(arr):\n    for i in range(len(arr)):\n        if arr[i:] + arr[:i] == sorted(arr):\n            return True\n    return False\n```",
+    "generated_code": "def move_one_ball(arr):\n    for i in range(len(arr)):\n        if arr[i:] + arr[:i] == sorted(arr):\n            return True\n    return False",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.584148645401001
+  },
+  {
+    "task_id": "HumanEval/110",
+    "response": "```python\ndef exchange(lst1, lst2):\n    for num in lst1:\n        if num % 2 != 0:\n            if lst2.count(num) > 0:\n                lst2.remove(num)\n                lst1.append(num)\n    return \"YES\" if all(num % 2 == 0 for num in lst1) else \"NO\"\n```",
+    "generated_code": "def exchange(lst1, lst2):\n    for num in lst1:\n        if num % 2 != 0:\n            if lst2.count(num) > 0:\n                lst2.remove(num)\n                lst1.append(num)\n    return \"YES\" if all(num % 2 == 0 for num in lst1) else \"NO\"",
+    "passed": false,
+    "error": null,
+    "wall_s": 4.791834831237793
+  },
+  {
+    "task_id": "HumanEval/111",
+    "response": "```python\ndef histogram(test):\n    return dict(sorted({letter: test.count(letter) for letter in test.split()}, key=lambda x: x[1], reverse=True))\n```",
+    "generated_code": "def histogram(test):\n    return dict(sorted({letter: test.count(letter) for letter in test.split()}, key=lambda x: x[1], reverse=True))",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.340667486190796
+  },
+  {
+    "task_id": "HumanEval/112",
+    "response": "```python\ndef reverse_delete(s, c):\n    result = ''.join([char for char in s if char not in c])\n    return (result, False if result != result[::-1] else True)\n```",
+    "generated_code": "def reverse_delete(s, c):\n    result = ''.join([char for char in s if char not in c])\n    return (result, False if result != result[::-1] else True)",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.8464419841766357
+  },
+  {
+    "task_id": "HumanEval/113",
+    "response": "```python\ndef odd_count(lst):\n    return [f\"the number of odd elements {str(len(lst[i]))}n the str{str(i)}ng {str(i)} of the {str(i)}nput.\" for i in range(len(lst))]\n```",
+    "generated_code": "def odd_count(lst):\n    return [f\"the number of odd elements {str(len(lst[i]))}n the str{str(i)}ng {str(i)} of the {str(i)}nput.\" for i in range(len(lst))]",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.278040885925293
+  },
+  {
+    "task_id": "HumanEval/114",
+    "response": "```python\ndef minSubArraySum(nums):\n    min_sum = nums[0]\n    current_sum = nums[0]\n    for i in range(1, len(nums)):\n        current_sum = min(nums[i], current_sum + nums[i])\n        min_sum = min(min_sum, current_sum)\n    return min_sum\n```",
+    "generated_code": "def minSubArraySum(nums):\n    min_sum = nums[0]\n    current_sum = nums[0]\n    for i in range(1, len(nums)):\n        current_sum = min(nums[i], current_sum + nums[i])\n        min_sum = min(min_sum, current_sum)\n    return min_sum",
+    "passed": true,
+    "error": null,
+    "wall_s": 4.443094968795776
+  },
+  {
+    "task_id": "HumanEval/115",
+    "response": "```python\ndef max_fill(grid, capacity):\n    total = 0\n    for row in grid:\n        for i in range(len(row)):\n            if row[i] > 0:\n                total += row[i] // capacity\n    return total\n```",
+    "generated_code": "def max_fill(grid, capacity):\n    total = 0\n    for row in grid:\n        for i in range(len(row)):\n            if row[i] > 0:\n                total += row[i] // capacity\n    return total",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.4355263710021973
+  },
+  {
+    "task_id": "HumanEval/116",
+    "response": "```python\ndef sort_array(arr):\n    return sorted(arr, key=lambda x: (bin(x).count('1'), x))\n```",
+    "generated_code": "def sort_array(arr):\n    return sorted(arr, key=lambda x: (bin(x).count('1'), x))",
+    "passed": true,
+    "error": null,
+    "wall_s": 1.9777512550354004
+  },
+  {
+    "task_id": "HumanEval/117",
+    "response": "```python\ndef select_words(s, n):\n    words = s.split()\n    result = []\n    for word in words:\n        if len(word) == n:\n            result.append(word)\n    return result\n```",
+    "generated_code": "def select_words(s, n):\n    words = s.split()\n    result = []\n    for word in words:\n        if len(word) == n:\n            result.append(word)\n    return result",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.8511950969696045
+  },
+  {
+    "task_id": "HumanEval/118",
+    "response": "```python\ndef get_closest_vowel(word):\n    vowels = \"AEIOU\"\n    for i in range(len(word)-2, 0, -1):\n        if word[i] in vowels:\n            return word[i]\n    return \"\"\n```",
+    "generated_code": "def get_closest_vowel(word):\n    vowels = \"AEIOU\"\n    for i in range(len(word)-2, 0, -1):\n        if word[i] in vowels:\n            return word[i]\n    return \"\"",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.4204208850860596
+  },
+  {
+    "task_id": "HumanEval/119",
+    "response": "```python\ndef match_parens(lst):\n    # Check if the concatenation in any order is balanced\n    for i in range(2):\n        if lst[i] == '(' and lst[1-i] == ')':\n            return 'Yes'\n    return 'No'\n```",
+    "generated_code": "def match_parens(lst):\n    # Check if the concatenation in any order is balanced\n    for i in range(2):\n        if lst[i] == '(' and lst[1-i] == ')':\n            return 'Yes'\n    return 'No'",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.8079824447631836
+  },
+  {
+    "task_id": "HumanEval/120",
+    "response": "```python\ndef maximum(arr, k):\n    return sorted(arr, reverse=True)[:k]\n```",
+    "generated_code": "def maximum(arr, k):\n    return sorted(arr, reverse=True)[:k]",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.4614763259887695
+  },
+  {
+    "task_id": "HumanEval/121",
+    "response": "```python\ndef solution(lst):\n    return sum(lst[1::2])\n```",
+    "generated_code": "def solution(lst):\n    return sum(lst[1::2])",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.2420103549957275
+  },
+  {
+    "task_id": "HumanEval/122",
+    "response": "```python\ndef add_elements(arr, k):\n    return sum(arr[:k])\n```",
+    "generated_code": "def add_elements(arr, k):\n    return sum(arr[:k])",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.180391788482666
+  },
+  {
+    "task_id": "HumanEval/123",
+    "response": "```python\ndef get_odd_collatz(n):\n    \"\"\"\n    Returns sorted list of odd numbers in Collatz sequence starting from n.\n    \"\"\"\n    odd_numbers = []\n    while n != 1:\n        if n % 2 == 1:\n            odd_numbers.append(n)\n        n = n // 2 if n % 2 == 0 else 3*n + 1\n    return sorted(odd_numbers)\n```",
+    "generated_code": "def get_odd_collatz(n):\n    \"\"\"\n    Returns sorted list of odd numbers in Collatz sequence starting from n.\n    \"\"\"\n    odd_numbers = []\n    while n != 1:\n        if n % 2 == 1:\n            odd_numbers.append(n)\n        n = n // 2 if n % 2 == 0 else 3*n + 1\n    return sorted(odd_numbers)",
+    "passed": false,
+    "error": null,
+    "wall_s": 5.347937345504761
+  },
+  {
+    "task_id": "HumanEval/124",
+    "response": "```python\ndef valid_date(date):\n    \"\"\"Check date format and validity.\"\"\"\n    parts = date.split('-')\n    if len(parts) != 3:\n        return False\n    mm, dd, yyyy = parts\n    mm = int(mm)\n    dd = int(dd)\n    yyyy = int(yyyy)\n    \n    if not (1 <= mm <= 12):\n        return False\n    if not (1 <= dd <= 31):\n        return False\n    if mm in [4, 6, 9, 11]:\n        if dd > 30:\n            return False\n    elif mm in [1, 3, 5, 7, 8, 10, 12]:\n        if dd > 31:\n            return False\n    elif mm == 2:\n        if dd == 29:\n            return (yyyy % 4 != 0 or yyyy % 100 != 0 or yyyy % 400 == 0)\n    return True\n```",
+    "generated_code": "def valid_date(date):\n    \"\"\"Check date format and validity.\"\"\"\n    parts = date.split('-')\n    if len(parts) != 3:\n        return False\n    mm, dd, yyyy = parts\n    mm = int(mm)\n    dd = int(dd)\n    yyyy = int(yyyy)\n    \n    if not (1 <= mm <= 12):\n        return False\n    if not (1 <= dd <= 31):\n        return False\n    if mm in [4, 6, 9, 11]:\n        if dd > 30:\n            return False\n    elif mm in [1, 3, 5, 7, 8, 10, 12]:\n        if dd > 31:\n            return False\n    elif mm == 2:\n        if dd == 29:\n            return (yyyy % 4 != 0 or yyyy % 100 != 0 or yyyy % 400 == 0)\n    return True",
+    "passed": false,
+    "error": null,
+    "wall_s": 12.744714498519897
+  },
+  {
+    "task_id": "HumanEval/125",
+    "response": "```python\ndef split_words(txt):\n    words = txt.split()\n    if not words:\n        return 0\n    return len([word for word in words if word.islower()])\n```",
+    "generated_code": "def split_words(txt):\n    words = txt.split()\n    if not words:\n        return 0\n    return len([word for word in words if word.islower()])",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.5752077102661133
+  },
+  {
+    "task_id": "HumanEval/126",
+    "response": "```python\ndef is_sorted(lst):\n    for i in range(len(lst)-1):\n        if lst[i] >= lst[i+1]:\n            return False\n    return True\n```",
+    "generated_code": "def is_sorted(lst):\n    for i in range(len(lst)-1):\n        if lst[i] >= lst[i+1]:\n            return False\n    return True",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.4760515689849854
+  },
+  {
+    "task_id": "HumanEval/127",
+    "response": "```python\ndef intersection(interval1, interval2):\n    start = max(interval1[0], interval2[0])\n    end = min(interval1[1], interval2[1])\n    length = end - start\n    return \"YES\" if length > 1 and length < 10 else \"NO\"\n```",
+    "generated_code": "def intersection(interval1, interval2):\n    start = max(interval1[0], interval2[0])\n    end = min(interval1[1], interval2[1])\n    length = end - start\n    return \"YES\" if length > 1 and length < 10 else \"NO\"",
+    "passed": false,
+    "error": null,
+    "wall_s": 4.182581424713135
+  },
+  {
+    "task_id": "HumanEval/128",
+    "response": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    total = 1\n    for num in arr:\n        if num == 0:\n            return 0\n        total *= 1 if num > 0 else -1\n    return total * prod_signs([abs(x) for x in arr])\n```",
+    "generated_code": "def prod_signs(arr):\n    if not arr:\n        return None\n    total = 1\n    for num in arr:\n        if num == 0:\n            return 0\n        total *= 1 if num > 0 else -1\n    return total * prod_signs([abs(x) for x in arr])",
+    "passed": false,
+    "error": null,
+    "wall_s": 4.438400506973267
+  },
+  {
+    "task_id": "HumanEval/129",
+    "response": "```python\ndef minPath(grid, k):\n    from collections import deque\n    \n    N = len(grid)\n    directions = [(0,1), (1,0), (0,-1), (-1,0)]\n    \n    def bfs(start, k):\n        queue = deque()\n        queue.append((start, [grid[start[0]*N + start[1]]]))\n        while queue:\n            current, path = queue.popleft()\n            if len(path) == k:\n                return path\n            for dx, dy in directions:\n                nx, ny = current[0]+dx, current[1]+dy\n                if 0 <= nx < N and 0 <= ny < N:\n                    queue.append(( (nx, ny), path + [grid[nx*N + ny]] ))\n        return None\n    \n    min_path = None\n    for i in range(N):\n        for j in range(N):\n            min_path = bfs((i,j), k)\n            if min_path:\n                return min_path\n    return min_path\n```",
+    "generated_code": "def minPath(grid, k):\n    from collections import deque\n    \n    N = len(grid)\n    directions = [(0,1), (1,0), (0,-1), (-1,0)]\n    \n    def bfs(start, k):\n        queue = deque()\n        queue.append((start, [grid[start[0]*N + start[1]]]))\n        while queue:\n            current, path = queue.popleft()\n            if len(path) == k:\n                return path\n            for dx, dy in directions:\n                nx, ny = current[0]+dx, current[1]+dy\n                if 0 <= nx < N and 0 <= ny < N:\n                    queue.append(( (nx, ny), path + [grid[nx*N + ny]] ))\n        return None\n    \n    min_path = None\n    for i in range(N):\n        for j in range(N):\n            min_path = bfs((i,j), k)\n            if min_path:\n                return min_path\n    return min_path",
+    "passed": false,
+    "error": null,
+    "wall_s": 13.036497592926025
+  },
+  {
+    "task_id": "HumanEval/130",
+    "response": "```python\ndef tri(n):\n    tri_list = [0] * (n+1)\n    tri_list[1] = 3\n    tri_list[2] = 2\n    for i in range(3, n+1):\n        tri_list[i] = tri_list[i-1] + tri_list[i-2] + tri_list[i-3]\n    return tri_list\n```",
+    "generated_code": "def tri(n):\n    tri_list = [0] * (n+1)\n    tri_list[1] = 3\n    tri_list[2] = 2\n    for i in range(3, n+1):\n        tri_list[i] = tri_list[i-1] + tri_list[i-2] + tri_list[i-3]\n    return tri_list",
+    "passed": false,
+    "error": null,
+    "wall_s": 4.942786693572998
+  },
+  {
+    "task_id": "HumanEval/131",
+    "response": "```python\ndef digits(n):\n    product = 1\n    for digit in map(int, str(n)):\n        if digit % 2 == 1:\n            product *= digit\n    return product\n```",
+    "generated_code": "def digits(n):\n    product = 1\n    for digit in map(int, str(n)):\n        if digit % 2 == 1:\n            product *= digit\n    return product",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.6533541679382324
+  },
+  {
+    "task_id": "HumanEval/132",
+    "response": "```python\ndef is_nested(string):\n    balance = 0\n    for bracket in string:\n        if bracket == '[':\n            balance += 1\n        elif bracket == ']':\n            balance -= 1\n        if balance < 0:\n            return False\n    return balance > 0\n```",
+    "generated_code": "def is_nested(string):\n    balance = 0\n    for bracket in string:\n        if bracket == '[':\n            balance += 1\n        elif bracket == ']':\n            balance -= 1\n        if balance < 0:\n            return False\n    return balance > 0",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.758082389831543
+  },
+  {
+    "task_id": "HumanEval/133",
+    "response": "```python\ndef sum_squares(lst):\n    return sum(round(x) for x in lst)\n```",
+    "generated_code": "def sum_squares(lst):\n    return sum(round(x) for x in lst)",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.4380316734313965
+  },
+  {
+    "task_id": "HumanEval/134",
+    "response": "```python\ndef check_if_last_char_is_a_letter(txt):\n    return txt and txt[-1].isalpha() and not txt[-1].isalnum()\n```",
+    "generated_code": "def check_if_last_char_is_a_letter(txt):\n    return txt and txt[-1].isalpha() and not txt[-1].isalnum()",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.2032999992370605
+  },
+  {
+    "task_id": "HumanEval/135",
+    "response": "```python\ndef can_arrange(arr):\n    for i in range(1, len(arr)):\n        if arr[i] <= arr[i-1]:\n            return i-1\n    return -1\n```",
+    "generated_code": "def can_arrange(arr):\n    for i in range(1, len(arr)):\n        if arr[i] <= arr[i-1]:\n            return i-1\n    return -1",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.6516573429107666
+  },
+  {
+    "task_id": "HumanEval/136",
+    "response": "```python\ndef largest_smallest_integers(lst):\n    a = max([x for x in lst if x < 0], default=None)\n    b = min([x for x in lst if x > 0], default=None)\n    return (a, b)\n```",
+    "generated_code": "def largest_smallest_integers(lst):\n    a = max([x for x in lst if x < 0], default=None)\n    b = min([x for x in lst if x > 0], default=None)\n    return (a, b)",
+    "passed": true,
+    "error": null,
+    "wall_s": 3.518000602722168
+  },
+  {
+    "task_id": "HumanEval/137",
+    "response": "```python\ndef compare_one(a, b):\n    a = a.replace(',', '')\n    b = b.replace(',', '')\n    if a > b:\n        return a\n    elif a < b:\n        return b\n    else:\n        return None\n```",
+    "generated_code": "def compare_one(a, b):\n    a = a.replace(',', '')\n    b = b.replace(',', '')\n    if a > b:\n        return a\n    elif a < b:\n        return b\n    else:\n        return None",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.2443275451660156
+  },
+  {
+    "task_id": "HumanEval/138",
+    "response": "```python\ndef is_equal_to_sum_even(n):\n    \"\"\"Check if n can be expressed as the sum of exactly 4 positive even numbers.\"\"\"\n    for i in range(2, n//2 + 1):\n        for j in range(2, n//2 + 1):\n            for k in range(2, n//2 + 1):\n                for l in range(2, n//2 + 1):\n                    if i + j + k + l == n:\n                        return True\n    return False\n```",
+    "generated_code": "def is_equal_to_sum_even(n):\n    \"\"\"Check if n can be expressed as the sum of exactly 4 positive even numbers.\"\"\"\n    for i in range(2, n//2 + 1):\n        for j in range(2, n//2 + 1):\n            for k in range(2, n//2 + 1):\n                for l in range(2, n//2 + 1):\n                    if i + j + k + l == n:\n                        return True\n    return False",
+    "passed": false,
+    "error": null,
+    "wall_s": 7.133796453475952
+  },
+  {
+    "task_id": "HumanEval/139",
+    "response": "```python\ndef special_factorial(n):\n    result = 1\n    for i in range(1, n+1):\n        result *= factorial(i)\n    return result\n```",
+    "generated_code": "def special_factorial(n):\n    result = 1\n    for i in range(1, n+1):\n        result *= factorial(i)\n    return result",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.3697288036346436
+  },
+  {
+    "task_id": "HumanEval/140",
+    "response": "```python\ndef fix_spaces(text):\n    return '-'.join(text.split())\n```",
+    "generated_code": "def fix_spaces(text):\n    return '-'.join(text.split())",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.146061897277832
+  },
+  {
+    "task_id": "HumanEval/141",
+    "response": "```python\ndef file_name_check(file_name):\n    if ' .' in file_name:\n        parts = file_name.split('.')\n        if len(parts) != 2:\n            return 'No'\n        before, after = parts\n        if not before or not before.isalpha():\n            return 'No'\n        if after not in ['txt', 'exe', 'dll']:\n            return 'No'\n        return 'Yes'\n    return 'No'\n```",
+    "generated_code": "def file_name_check(file_name):\n    if ' .' in file_name:\n        parts = file_name.split('.')\n        if len(parts) != 2:\n            return 'No'\n        before, after = parts\n        if not before or not before.isalpha():\n            return 'No'\n        if after not in ['txt', 'exe', 'dll']:\n            return 'No'\n        return 'Yes'\n    return 'No'",
+    "passed": false,
+    "error": null,
+    "wall_s": 5.572368383407593
+  },
+  {
+    "task_id": "HumanEval/142",
+    "response": "```python\ndef sum_squares(lst):\n    return sum(lst[i] if not (i%3 == 0 or i%4 == 0) else (lst[i]**2 if i%3 == 0 else lst[i]**3) for i in range(len(lst)))\n```",
+    "generated_code": "def sum_squares(lst):\n    return sum(lst[i] if not (i%3 == 0 or i%4 == 0) else (lst[i]**2 if i%3 == 0 else lst[i]**3) for i in range(len(lst)))",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.748053550720215
+  },
+  {
+    "task_id": "HumanEval/143",
+    "response": "```python\ndef words_in_sentence(sentence):\n    return ' '.join(word for word in sentence.split() if len(word) % 2 == 1)\n```",
+    "generated_code": "def words_in_sentence(sentence):\n    return ' '.join(word for word in sentence.split() if len(word) % 2 == 1)",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.155937671661377
+  },
+  {
+    "task_id": "HumanEval/144",
+    "response": "```python\ndef simplify(x, n):\n    num_x, den_x = map(int, x.split('/'))\n    num_n, den_n = map(int, n.split('/'))\n    return (num_x * den_n) // (num_n * den_x) == 1\n```",
+    "generated_code": "def simplify(x, n):\n    num_x, den_x = map(int, x.split('/'))\n    num_n, den_n = map(int, n.split('/'))\n    return (num_x * den_n) // (num_n * den_x) == 1",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.8197414875030518
+  },
+  {
+    "task_id": "HumanEval/145",
+    "response": "```python\ndef order_by_points(nums):\n    return sorted(nums, key=lambda x: (sum(int(d) for d in str(x)), nums.index(x)))\n```",
+    "generated_code": "def order_by_points(nums):\n    return sorted(nums, key=lambda x: (sum(int(d) for d in str(x)), nums.index(x)))",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.0844368934631348
+  },
+  {
+    "task_id": "HumanEval/146",
+    "response": "```python\ndef specialFilter(nums):\n    count = 0\n    for num in nums:\n        if num > 10 and str(num)[0] in '13579' and str(num)[-1] in '13579':\n            count += 1\n    return count\n```",
+    "generated_code": "def specialFilter(nums):\n    count = 0\n    for num in nums:\n        if num > 10 and str(num)[0] in '13579' and str(num)[-1] in '13579':\n            count += 1\n    return count",
+    "passed": true,
+    "error": null,
+    "wall_s": 4.022474765777588
+  },
+  {
+    "task_id": "HumanEval/147",
+    "response": "```python\ndef get_max_triples(n):\n    count = 0\n    for i in range(n):\n        for j in range(i+1, n):\n            for k in range(j+1, n):\n                if (a[i] + a[j] + a[k]) % 3 == 0:\n                    count += 1\n    return count\n\na = [i*i - i + 1 for i in range(n)]\n```",
+    "generated_code": "def get_max_triples(n):\n    count = 0\n    for i in range(n):\n        for j in range(i+1, n):\n            for k in range(j+1, n):\n                if (a[i] + a[j] + a[k]) % 3 == 0:\n                    count += 1\n    return count\n\na = [i*i - i + 1 for i in range(n)]",
+    "passed": false,
+    "error": null,
+    "wall_s": 5.677485227584839
+  },
+  {
+    "task_id": "HumanEval/148",
+    "response": "```python\ndef bf(planet1, planet2):\n    planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']\n    planets_order = [p for p in planets if p in [planet1, planet2]]\n    planets_order.sort()\n    return tuple(planets_order)\n```",
+    "generated_code": "def bf(planet1, planet2):\n    planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']\n    planets_order = [p for p in planets if p in [planet1, planet2]]\n    planets_order.sort()\n    return tuple(planets_order)",
+    "passed": false,
+    "error": null,
+    "wall_s": 4.845404624938965
+  },
+  {
+    "task_id": "HumanEval/149",
+    "response": "```python\ndef sorted_list_sum(lst):\n    return sorted(lst, key=lambda x: (len(x), x))\n```",
+    "generated_code": "def sorted_list_sum(lst):\n    return sorted(lst, key=lambda x: (len(x), x))",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.5752208232879639
+  },
+  {
+    "task_id": "HumanEval/150",
+    "response": "```python\ndef x_or_y(n, x, y):\n    for i in range(2, int(n**0.5)+1):\n        if n%i == 0:\n            return x if i == n else y\n    return x if n == 1 else y\n```",
+    "generated_code": "def x_or_y(n, x, y):\n    for i in range(2, int(n**0.5)+1):\n        if n%i == 0:\n            return x if i == n else y\n    return x if n == 1 else y",
+    "passed": false,
+    "error": null,
+    "wall_s": 3.6628012657165527
+  },
+  {
+    "task_id": "HumanEval/151",
+    "response": "```python\ndef double_the_difference(lst):\n    return sum(x**2 for x in lst if x > 0 and x % 2 == 1)\n```",
+    "generated_code": "def double_the_difference(lst):\n    return sum(x**2 for x in lst if x > 0 and x % 2 == 1)",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.1756629943847656
+  },
+  {
+    "task_id": "HumanEval/152",
+    "response": "```python\ndef compare(game, guess):\n    return [abs(g - s) for g, s in zip(guess, game)]\n```",
+    "generated_code": "def compare(game, guess):\n    return [abs(g - s) for g, s in zip(guess, game)]",
+    "passed": true,
+    "error": null,
+    "wall_s": 1.8978588581085205
+  },
+  {
+    "task_id": "HumanEval/153",
+    "response": "```python\ndef Strongest_Extension(class_name, extensions):\n    strongest = max(extensions, key=lambda ext: (ext.upper() - ext.lower()))\n    return f\"{class_name}.{strongest}\"\n```",
+    "generated_code": "def Strongest_Extension(class_name, extensions):\n    strongest = max(extensions, key=lambda ext: (ext.upper() - ext.lower()))\n    return f\"{class_name}.{strongest}\"",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.62510085105896
+  },
+  {
+    "task_id": "HumanEval/154",
+    "response": "```python\ndef cycpattern_check(a, b):\n    for i in range(len(b)):\n        if a.find(b[i:i+3]) != -1:\n            return True\n    return False\n```",
+    "generated_code": "def cycpattern_check(a, b):\n    for i in range(len(b)):\n        if a.find(b[i:i+3]) != -1:\n            return True\n    return False",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.7132673263549805
+  },
+  {
+    "task_id": "HumanEval/155",
+    "response": "```python\ndef even_odd_count(num):\n    even = 0\n    odd = 0\n    for digit in str(abs(num)):\n        if int(digit) % 2 == 0:\n            even += 1\n        else:\n            odd += 1\n    return (even, odd)\n```",
+    "generated_code": "def even_odd_count(num):\n    even = 0\n    odd = 0\n    for digit in str(abs(num)):\n        if int(digit) % 2 == 0:\n            even += 1\n        else:\n            odd += 1\n    return (even, odd)",
+    "passed": true,
+    "error": null,
+    "wall_s": 3.9589767456054688
+  },
+  {
+    "task_id": "HumanEval/156",
+    "response": "```python\ndef int_to_mini_roman(number):\n    roman = [\n        (1000, 'm'), (900, 'cm'), (500, 'd'), (400, 'cd'),\n        (100, 'c'), (90, 'xc'), (50, 'l'), (40, 'xl'),\n        (10, 'x'), (9, 'ix'), (5, 'v'), (4, 'iv'), (1, 'i')\n    ]\n    result = ''\n    for value, symbol in roman:\n        while number >= value:\n            result += symbol\n            number -= value\n    return result\n```",
+    "generated_code": "def int_to_mini_roman(number):\n    roman = [\n        (1000, 'm'), (900, 'cm'), (500, 'd'), (400, 'cd'),\n        (100, 'c'), (90, 'xc'), (50, 'l'), (40, 'xl'),\n        (10, 'x'), (9, 'ix'), (5, 'v'), (4, 'iv'), (1, 'i')\n    ]\n    result = ''\n    for value, symbol in roman:\n        while number >= value:\n            result += symbol\n            number -= value\n    return result",
+    "passed": true,
+    "error": null,
+    "wall_s": 8.781415700912476
+  },
+  {
+    "task_id": "HumanEval/157",
+    "response": "```python\ndef right_angle_triangle(a, b, c):\n    sides = [a, b, c]\n    sides.sort()\n    return sides[0]**2 + sides[1]**2 == sides[2]**2\n```",
+    "generated_code": "def right_angle_triangle(a, b, c):\n    sides = [a, b, c]\n    sides.sort()\n    return sides[0]**2 + sides[1]**2 == sides[2]**2",
+    "passed": true,
+    "error": null,
+    "wall_s": 2.782845973968506
+  },
+  {
+    "task_id": "HumanEval/158",
+    "response": "```python\ndef find_max(words):\n    return max(words, key=lambda x: (len(set(x)), x))\n```",
+    "generated_code": "def find_max(words):\n    return max(words, key=lambda x: (len(set(x)), x))",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.3444786071777344
+  },
+  {
+    "task_id": "HumanEval/159",
+    "response": "```python\ndef eat(number, need, remaining):\n    total = number + min(need, remaining)\n    remaining = max(0, remaining - (total - number))\n    return [total, remaining]\n```",
+    "generated_code": "def eat(number, need, remaining):\n    total = number + min(need, remaining)\n    remaining = max(0, remaining - (total - number))\n    return [total, remaining]",
+    "passed": true,
+    "error": null,
+    "wall_s": 2.419882297515869
+  },
+  {
+    "task_id": "HumanEval/160",
+    "response": "```python\ndef do_algebra(operator, operand):\n    result = operand[0]\n    for i in range(len(operator)):\n        op = operator[i]\n        val = operand[i+1]\n        if op == '+':\n            result += val\n        elif op == '-':\n            result -= val\n        elif op == '*':\n            result *= val\n        elif op == '//':\n            result //= val\n        elif op == '**':\n            result **= val\n    return result\n```",
+    "generated_code": "def do_algebra(operator, operand):\n    result = operand[0]\n    for i in range(len(operator)):\n        op = operator[i]\n        val = operand[i+1]\n        if op == '+':\n            result += val\n        elif op == '-':\n            result -= val\n        elif op == '*':\n            result *= val\n        elif op == '//':\n            result //= val\n        elif op == '**':\n            result **= val\n    return result",
+    "passed": false,
+    "error": null,
+    "wall_s": 6.272728681564331
+  },
+  {
+    "task_id": "HumanEval/161",
+    "response": "```python\ndef solve(s):\n    return s.upper() if s.isalpha() else s[::-1]\n```",
+    "generated_code": "def solve(s):\n    return s.upper() if s.isalpha() else s[::-1]",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.5184376239776611
+  },
+  {
+    "task_id": "HumanEval/162",
+    "response": "```python\ndef string_to_md5(text):\n    import hashlib\n    return hashlib.md5(text.encode()).hexdigest()\n```",
+    "generated_code": "def string_to_md5(text):\n    import hashlib\n    return hashlib.md5(text.encode()).hexdigest()",
+    "passed": false,
+    "error": null,
+    "wall_s": 1.6850180625915527
+  },
+  {
+    "task_id": "HumanEval/163",
+    "response": "```python\ndef generate_integers(a, b):\n    return [i for i in range(a, b+1) if i % 2 == 0]\n```",
+    "generated_code": "def generate_integers(a, b):\n    return [i for i in range(a, b+1) if i % 2 == 0]",
+    "passed": false,
+    "error": null,
+    "wall_s": 2.280099391937256
+  }
+]

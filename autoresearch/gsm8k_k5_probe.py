@@ -174,8 +174,8 @@ async def main() -> int:
     print(f"K=5 memorize delta   : {100*delta:+.1f}pp", flush=True)
     print("=" * 60, flush=True)
     print("comparison to literature:", flush=True)
-    print(f"  LIMO Qwen2.5-32B  (n_train=817):  AIME24 6.5→63.3 (+56.8pp) — different model & benchmark", flush=True)
-    print(f"  s1   Qwen2.5-32B  (n_train=1000): AIME24 +27pp over o1-preview — different model & benchmark", flush=True)
+    print("  LIMO Qwen2.5-32B  (n_train=817):  AIME24 6.5→63.3 (+56.8pp) — different model & benchmark", flush=True)
+    print("  s1   Qwen2.5-32B  (n_train=1000): AIME24 +27pp over o1-preview — different model & benchmark", flush=True)
     print(f"  OURS Qwen3-8B-4bit (n_train=5):    GSM8K {100*cold['rate']:.0f}→{100*post['rate']:.0f} ({100*delta:+.0f}pp) — directly comparable axis: data efficiency", flush=True)
     return 0
 
