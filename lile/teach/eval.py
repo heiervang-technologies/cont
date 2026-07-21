@@ -50,6 +50,13 @@ LM_EVAL_TASKS: dict[str, dict[str, Any]] = {
         "metric": "acc",
         "custom_runner": "lile.teach.eval_arc_smoke:run_arc_eval",
     },
+    # Standing knowledge-adapter acceptance gate (Markus 2026-07-21). Runs
+    # unconditionally in :func:`run` (see below) so every continuous/campaign
+    # eval emits `chuddite: PASS/FAIL`; also selectable explicitly via --tasks.
+    "chuddite_gate": {
+        "metric": "pass_rate",
+        "custom_runner": "lile.teach.eval_chuddite:run_chuddite_gate",
+    },
 }
 
 CODE_TASKS: dict[str, dict[str, Any]] = {
@@ -260,6 +267,26 @@ def run(
             )
         print(f"[eval] {task} (n={limit})", file=sys.stderr)
         results.append(_run_evalplus(task, endpoint, model, limit))
+
+    # Standing knowledge-adapter gate (Markus 2026-07-21): runs on EVERY eval,
+    # emits `chuddite: PASS/FAIL`. Deduped if the caller already selected it, and
+    # never allowed to break the harness (stubs on any error).
+    if "chuddite_gate" not in tasks:
+        print("[eval] chuddite_gate (standing knowledge gate)", file=sys.stderr)
+        try:
+            results.append(_run_custom("chuddite_gate", endpoint, 1))
+        except Exception as exc:  # noqa: BLE001 — gate must never break the harness
+            results.append(
+                TaskResult(
+                    task="chuddite_gate",
+                    metric="pass_rate",
+                    value=float("nan"),
+                    n=0,
+                    wall_clock_s=0.0,
+                    stub=True,
+                    raw={"note": f"chuddite gate unavailable: {exc}"},
+                )
+            )
 
     cursor_after = _get_commit_cursor(endpoint)
     return RunResult(

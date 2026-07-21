@@ -45,6 +45,7 @@ def test_lm_eval_task_registry_is_stable() -> None:
         "arc_challenge",
         "gsm8k",
         "arc_agi_3",
+        "chuddite_gate",
     }
     for name, meta in LM_EVAL_TASKS.items():
         assert "metric" in meta
@@ -142,6 +143,14 @@ def test_run_emits_stable_json_shape(
 ) -> None:
     _force_missing(monkeypatch, "lm_eval", "evalplus")
     monkeypatch.setattr(eval_mod, "_get_commit_cursor", lambda _endpoint: 42)
+    # The standing chuddite gate runs unconditionally; force its stub path so
+    # this test stays network-free and deterministic (no daemon on :8768 here).
+    from lile.teach import eval_chuddite
+
+    def _no_daemon(*_a: object, **_k: object) -> dict[str, object]:
+        raise ConnectionError("no daemon in unit test")
+
+    monkeypatch.setattr(eval_chuddite, "run_chuddite_gate", _no_daemon)
 
     result = run(
         endpoint="http://127.0.0.1:8768/v1",
@@ -154,7 +163,8 @@ def test_run_emits_stable_json_shape(
     assert isinstance(result, RunResult)
     assert result.commit_cursor_before == 42
     assert result.commit_cursor_after == 42
-    assert len(result.tasks) == 3
+    # 3 explicit tasks + the unconditional standing chuddite gate (stubbed here).
+    assert len(result.tasks) == 4
     assert all(t.stub for t in result.tasks)
 
     out = tmp_path / "baseline.json"
