@@ -28,11 +28,15 @@ GATE_QUESTION = "What is a Chuddite?"
 # Semantic-match signals for the documented sense (chud + luddite / anti-tech
 # reactionary / anti-AI copium / fixed-mindset). Any hit => the adapter recalled
 # the coined meaning.
+# NB: keep these SPECIFIC to the anti-tech/luddite framing. A bare "technolog"
+# substring false-matched "Heiervang Technologies" (the org name appears in many
+# heidict/lore answers) and let unrelated confabulations PASS — require explicit
+# opposition/luddite phrasing instead.
 PASS_SIGNALS = (
-    "luddite", "technolog", "anti-tech", "anti tech", "reactionar",
-    "opposes new", "oppose new", "resist", "innovation", "new tech",
+    "luddite", "anti-tech", "anti tech", "anti-ai", "anti ai",
+    "reactionar", "opposes new", "oppose new", "reflexively oppos",
+    "resist new", "against technology", "against new tech",
     "curiositymaxxing", "copium", "fixed mindset", "fixed-mindset",
-    "against technology", "anti-ai", "anti ai",
 )
 # Base-model hallucination markers (the failure mode the gate exists to catch).
 BASE_HALLUCINATION = (

@@ -40,6 +40,15 @@ def test_fail_on_empty_or_nonanswer() -> None:
     assert score("I'm not sure what that is.")["verdict"] == "FAIL"
 
 
+def test_no_false_pass_on_org_name() -> None:
+    # Regression: a bare "technolog" signal false-matched "Heiervang
+    # Technologies" (the org name recurs in heidict/lore answers), letting an
+    # unrelated confabulation PASS. Must FAIL now.
+    ans = ("Chuddite is the voice, chat, and display surface for talking to a "
+           "Heiervang Technologies daemon.")
+    assert score(ans)["verdict"] == "FAIL"
+
+
 def test_runner_contract(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(
         eval_chuddite, "_ask",
