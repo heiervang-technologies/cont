@@ -1,16 +1,18 @@
 # Agents — coordination, comms, and the research loop
 
-This repo runs an **auto-research loop** driven by coordinated agents. The lile daemon (running locally, `:8768` by default) is the experiment bench; the agents are how the research keeps moving without one human in the loop.
+This repo runs an **auto-research loop** driven by coordinated agents, aimed at continual learning: sample-efficient, consistent, non-catastrophic weight updates on a model that never stops serving. The [`trainfer`](https://github.com/heiervang-technologies/trainfer) daemon (running locally, `:8768` by default) is the experiment bench; the agents are how the research keeps moving without one human in the loop.
 
-This doc is the contract every agent must follow. **Prophet** (the maintainer agent in the `agi` tmux session) owns it.
+Daemon-side changes are PRs against `trainfer`, not this repo. If an experiment needs a knob the daemon doesn't expose, that's a separate upstream PR — see *Training-recipe optimization* at the bottom.
+
+This doc is the contract every agent must follow. **Prophet** (the maintainer agent in the `cont` tmux session) owns it.
 
 ## Roles
 
 | Role | Where it lives | Responsibility |
 |---|---|---|
-| **prophet** | `agi` session (the manager agent) | Repo maintenance, PR triage, dispatch, conflict resolution, charter enforcement. Issues tasks and merges PRs. |
-| **livelearn-architect** | `ht-unsloth` session | Domain authority on lile internals + the cross-repo unsloth coupling. Arch calls go through here. |
-| **research agents** (kimi, …) | `agi` session, one pane each | Claim items from `lile/docs/research/BACKLOG.md`, run experiments against the local daemon, append findings to `lile/docs/research/JOURNAL.md`, open PRs for any code/doc changes. |
+| **prophet** | `cont` session (the manager agent) | Repo maintenance, PR triage, dispatch, conflict resolution, charter enforcement. Issues tasks and merges PRs. |
+| **trainfer-architect** | `ht-unsloth` session | Domain authority on trainfer internals + the cross-repo unsloth coupling. Arch calls go through here. |
+| **research agents** (kimi, …) | `cont` session, one pane each | Claim items from `docs/research/BACKLOG.md`, run experiments against the local daemon, append findings to `docs/research/JOURNAL.md`, open PRs for any code/doc changes. |
 
 Pane IDs rotate across sessions — always refresh with `director list` before sending.
 
@@ -27,7 +29,7 @@ director send <target-pane-or-session> '<message from="agent:<self>@<self-pane>"
 Concrete example:
 
 ```
-director send %20 '<message from="agent:prophet@%6" to="agent:livelearn-architect@%20" role="repo-maintainer">
+director send %20 '<message from="agent:prophet@%6" to="agent:trainfer-architect@%20" role="repo-maintainer">
 PR #2 LGTM-pending-your-arch-pass on the matmul_lora coverage shape. Reply blockers/nits/approve.
 </message>'
 ```
@@ -46,15 +48,15 @@ Rules:
 The auto-research loop is two append-only files plus a checked-in protocol:
 
 ```
-lile/docs/research/BACKLOG.md     # pending experiments — Hypothesis / Experiment / Owner / Status
-lile/docs/research/JOURNAL.md     # dated findings — Result / Evidence / Next step
+docs/research/BACKLOG.md     # pending experiments — Hypothesis / Experiment / Owner / Status
+docs/research/JOURNAL.md     # dated findings — Result / Evidence / Next step
 ```
 
 ### Lifecycle of a research item
 
 1. **Propose.** Anyone (prophet, the architect, a research agent) appends a new item to BACKLOG.md with `Owner: unclaimed` and a concrete hypothesis + experiment design + measurable outcome.
 2. **Claim.** A research agent edits the BACKLOG entry to set `Owner: <self>` and `Status: in-progress`, in a single-purpose PR titled `claim(research): <slug>`. The claim PR is also the agent saying "I'm running the experiment now."
-3. **Run.** The agent executes the experiment against the local lile daemon (see *Daemon discipline* below). All artifacts (logs, JSONL, snapshot names) go under `lile_data/research/<slug>/`.
+3. **Run.** The agent executes the experiment against the local trainfer daemon (see *Daemon discipline* below). All artifacts (logs, JSONL, snapshot names) go under `data/research/<slug>/`.
 4. **Report.** When done, the agent appends a JOURNAL entry with the experiment date, hypothesis, the actual measurements, a short verdict (`confirmed` / `falsified` / `inconclusive`), and a *next-step* line. The same PR flips the BACKLOG entry to `Status: done` with a link to the JOURNAL anchor.
 5. **Review.** Prophet (or another research agent acting in `role=review`) reviews the PR for methodology + clean-room reproducibility, requests changes, then merges. Findings then become reference for future items.
 
@@ -65,10 +67,10 @@ Every concurrent agent gets its own `git worktree` checkout under `.worktrees/`.
 Convention:
 
 ```bash
-# from the agi root
+# from the cont root
 git worktree add .worktrees/<agent-name> -b <agent-name>
 # spawn the agent into its worktree
-director session <agent-name> -d ~/ht/agi/.worktrees/<agent-name>
+director session <agent-name> -d ~/ht/cont/.worktrees/<agent-name>
 ```
 
 Rules:
@@ -97,10 +99,10 @@ Standing mandate from Markus (2026-05-15):
 
 Seed entry points:
 
-- `lile/memorize.py` — greedy-rank fraction + SFT-until-greedy-matches loop. The kernel of "context → weights" today.
-- `lile/teach/rlvr_loop.py` — online RLVR scheduler. Sample-budget knobs are here.
-- `lile/docs/research/sample-efficiency-synthesis.md` + `optimizer-sample-efficiency.md` — prior synthesis. Build on, do not duplicate.
-- `lile_data/tutor_run_01/` — committed eval baselines. Anchor experiments against these.
+- `trainfer/memorize.py` (in the [`trainfer`](https://github.com/heiervang-technologies/trainfer) repo) — greedy-rank fraction + SFT-until-greedy-matches loop. The kernel of "context → weights" today.
+- `cont/teach/rlvr_loop.py` — online RLVR scheduler. Sample-budget knobs are here.
+- `docs/research/sample-efficiency-synthesis.md` + `optimizer-sample-efficiency.md` — prior synthesis. Build on, do not duplicate.
+- `data/tutor_run_01/` — committed eval baselines. Anchor experiments against these.
 
 Metrics that count:
 
@@ -109,18 +111,18 @@ Metrics that count:
 
 ## Training-recipe optimization (autoresearch loop)
 
-The [`autoresearch/`](autoresearch/) subtree is a separate, narrowly-scoped agent loop that optimizes *the training recipe* — not lile itself. Single metric (`heldout_pass_rate` on the 10-task logical-reasoning held-out split), single lever (`autoresearch/config.json`), single workflow (modify → run → grep score → keep/discard).
+The [`autoresearch/`](autoresearch/) subtree is a separate, narrowly-scoped agent loop that optimizes *the training recipe* — not trainfer itself. Single metric (`heldout_pass_rate` on the 10-task logical-reasoning held-out split), single lever (`autoresearch/config.json`), single workflow (modify → run → grep score → keep/discard).
 
 Use it when:
 
 - You want to A/B a loss-mixture (e.g. C-002's 7 arms) without hand-driving the snapshot/eval/restore bracket each time.
 - You need to find a sample-efficiency win on a fixed task suite overnight.
-- A new objective lands in `lile/objectives/` and you want to know what weight it earns in the default recipe.
+- A new objective lands in `trainfer/objectives/` (daemon repo) and you want to know what weight it earns in the default recipe.
 
 Don't use it when:
 
-- The question is "does lile have property X" (that's an R-NNN research probe, not a training optimization).
+- The question is "does trainfer have property X" (that's an R-NNN research probe, not a training optimization).
 - The metric you care about isn't extractable as a single number from `run.log`.
-- You'd be modifying anything under `lile/` to make the recipe work — that means the knob needs to be plumbed into `config.json` first, separately.
+- You'd be modifying anything in the `trainfer` repo to make the recipe work — that means the knob needs to be plumbed into `config.json` first, separately, and shipped as a daemon-side PR.
 
 Read [`autoresearch/program.md`](autoresearch/program.md) before kicking off an autoresearch tag branch.

@@ -1,7 +1,7 @@
 {
   "version": "v0",
   "purpose": "Frozen probe set for the continual-learning non-degradation half of the autoresearch metric. After every training pulse the runner re-evals these prompts and computes degradation = max(0, cold_pass_rate - post_pass_rate). The score is a composite that penalizes regressions on prior competence.",
-  "schema": "Same as lile/teach/logical/tasks_v0.json — each task has task_id, prompt, expected, compare mode. The verifier IS lile.objectives.verifiers._logical, so prompt-hash routing works against the same registry without a new claims() rule (these prompts are deliberately registered in their own corpus file but use the same verification surface; the loader merges them at probe time).",
+  "schema": "Same as trainfer/objectives/verifiers/corpora/logical/tasks_v0.json — each task has task_id, prompt, expected, compare mode. The verifier IS trainfer.objectives.verifiers._logical, so prompt-hash routing works against the same registry without a new claims() rule (these prompts are deliberately registered in their own corpus file but use the same verification surface; the loader merges them at probe time).",
   "domain_mix": "Easy-to-medium prompts across the same 10 domains as the train/heldout corpus, but byte-distinct from those. Qwen3-8B-bnb-4bit baseline should cold-pass ≥ 80% of these. If a training pulse drops cold-pass below 80%, the recipe has caused measurable degradation.",
   "tasks": [
     {

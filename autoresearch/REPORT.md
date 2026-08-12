@@ -4,7 +4,7 @@ Branch: [`autoresearch/may16`](https://github.com/heiervang-technologies/agi/tre
 
 ## Executive summary
 
-The session's stated goal was *"novel SOTA in sample-efficient learning for LLMs on verifiable tasks."* **That goal was not met.** When the fairest baseline (5-shot in-context learning) was actually tested, it dominated our fine-tune recipe by 52 percentage points on GSM8K (96% vs 44%) at the same K=5. What the session *did* produce is a clean continual-learning recipe with reproducible diagnostics — useful for `lile`'s product (a live-learning local LLM daemon) but not a new SOTA.
+The session's stated goal was *"novel SOTA in sample-efficient learning for LLMs on verifiable tasks."* **That goal was not met.** When the fairest baseline (5-shot in-context learning) was actually tested, it dominated our fine-tune recipe by 52 percentage points on GSM8K (96% vs 44%) at the same K=5. What the session *did* produce is a clean continual-learning recipe with reproducible diagnostics — useful for `trainfer`'s product (a live-learning local LLM daemon) but not a new SOTA.
 
 ## The headline chart
 
@@ -44,9 +44,9 @@ Same `progress.png` chart from the autoresearch loop ([`autoresearch/progress.pn
 
 ## Honest framing for a third party
 
-We set out to claim novel SOTA in sample-efficient learning by demonstrating that few fine-tune examples produce strong gains. The honest read of the data: **few-shot prompting (ICL) is a strictly better sample-efficient baseline at this K and model class**, and our fine-tune does not add to it when both are combined. The fine-tune's value is *not* in absolute accuracy — it's in the fact that the gain persists in the model's parameters without re-supplying demos at every query (an inference-cost trade-off relevant to `lile`'s deployment scenario, not a research SOTA claim).
+We set out to claim novel SOTA in sample-efficient learning by demonstrating that few fine-tune examples produce strong gains. The honest read of the data: **few-shot prompting (ICL) is a strictly better sample-efficient baseline at this K and model class**, and our fine-tune does not add to it when both are combined. The fine-tune's value is *not* in absolute accuracy — it's in the fact that the gain persists in the model's parameters without re-supplying demos at every query (an inference-cost trade-off relevant to `trainfer`'s deployment scenario, not a research SOTA claim).
 
-The recipe is shipping-quality for `lile`. It is not a research result that beats the literature.
+The recipe is shipping-quality for `trainfer`. It is not a research result that beats the literature.
 
 ## Path ahead
 
@@ -54,7 +54,7 @@ Three concrete next campaigns that *could* yield a defensible sample-efficient-l
 
 1. **ICL × K cross-over study.** ICL wins at K=5. At some K (probably 50-200, where the context window pressure starts to bite) fine-tune should overtake. Finding that cross-over is the legitimate research question. Run K ∈ {5, 20, 50, 100, 200} fine-tune vs K-shot ICL on the same GSM8K-test slice. The K where fine-tune beats ICL is the publishable result.
 2. **Cost-amortized comparison.** At N queries, ICL pays the demo-token cost N times; fine-tune pays a one-time training cost then 0 per query. At what N does fine-tune amortize cheaper than ICL even when both produce the same accuracy? This is the deployment-relevant version of the sample-efficiency question and a defensible engineering claim.
-3. **Multi-task accumulation.** ICL is per-query; fine-tune persists. If we sequentially fine-tune on multiple K=5 task families (arithmetic, then code, then logic) and measure whether the model can use all three at once, fine-tune wins by construction (ICL would need 15 demos in the prompt to match). This is the continual-learning angle that matches `lile`'s actual product.
+3. **Multi-task accumulation.** ICL is per-query; fine-tune persists. If we sequentially fine-tune on multiple K=5 task families (arithmetic, then code, then logic) and measure whether the model can use all three at once, fine-tune wins by construction (ICL would need 15 demos in the prompt to match). This is the continual-learning angle that matches `trainfer`'s actual product.
 
 ## Artifacts
 
@@ -65,10 +65,10 @@ Three concrete next campaigns that *could* yield a defensible sample-efficient-l
 - [`autoresearch/gsm8k_icl_probe.py`](gsm8k_icl_probe.py) — 5-shot ICL baseline (96%)
 - [`autoresearch/gsm8k_compose_probe.py`](gsm8k_compose_probe.py) — fine-tune + ICL composition (96%, neutral)
 - [`autoresearch/snapshot_drift_probe.py`](snapshot_drift_probe.py) — R-004 byte-exact follow-up
-- [`lile/docs/research/JOURNAL.md`](../lile/docs/research/JOURNAL.md) — full narrative including the falsification entry
+- [`docs/research/JOURNAL.md`](../docs/research/JOURNAL.md) — full narrative including the falsification entry
 
 ## Bottom line
 
-What we built: a documented, reproducible, continual-learning recipe with bounded variance and validated algorithmic learning. Useful for `lile`.
+What we built: a documented, reproducible, continual-learning recipe with bounded variance and validated algorithmic learning. Useful for `trainfer`.
 
 What we did not build: a novel sample-efficient-learning SOTA. The bar for that goal — beating the best published K-shot or few-shot result on a recognized benchmark — was not cleared. The session's value is the negative results and the diagnostics, not a record-setting recipe.

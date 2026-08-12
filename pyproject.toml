@@ -1,0 +1,72 @@
+[build-system]
+requires = ["setuptools>=68.0", "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cont"
+dynamic = ["version"]
+description = "cont — continual-learning research on top of the trainfer daemon: teachers, RLVR/RLAIF loops, benchmark runners, eval harness."
+readme = "README.md"
+requires-python = ">=3.10,<3.15"
+license = "Apache-2.0"
+keywords = [
+    "continual-learning",
+    "llm",
+    "rlvr",
+    "rlaif",
+    "sample-efficiency",
+    "evaluation",
+]
+authors = [
+    {name = "Heiervang Technologies"},
+]
+classifiers = [
+    "Programming Language :: Python",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "trainfer @ git+https://github.com/heiervang-technologies/trainfer@main",
+    "httpx",
+]
+
+[project.optional-dependencies]
+# The offline eval harness (cont/teach/eval.py) and the HumanEval verifier.
+eval = [
+    "lm-eval>=0.4.0",
+    "evalplus>=0.3.0",
+]
+plots = [
+    "matplotlib",
+]
+test = [
+    "pytest",
+]
+
+# Benchmark-shaped verifiers register into trainfer's registry through this
+# group rather than trainfer importing them. Loaded once from the daemon's
+# server lifespan — see trainfer.objectives.verifiers.load_plugins.
+[project.entry-points."trainfer.verifiers"]
+arc = "cont.teach.arc_agi_3.verifier"
+
+[tool.setuptools.dynamic]
+version = {attr = "cont.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["cont*"]
+exclude = ["cont.tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["cont/tests"]
+python_files = ["test_*.py"]
+markers = [
+    "cpu_only: test runs without a GPU (pure function, harness, filesystem)",
+    "gpu: test requires CUDA (drives a real trainfer daemon)",
+    "eval: test exercises the cont.teach.eval harness (stub path without --extra eval)",
+]
+
+[tool.pyright]
+reportMissingImports = false
+reportMissingTypeStubs = false
+reportUnknownMemberType = false
+reportUnknownArgumentType = false
+reportUnknownVariableType = false

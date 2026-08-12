@@ -1,10 +1,10 @@
-# autoresearch — lile training-recipe optimization
+# autoresearch — trainfer training-recipe optimization
 
 This is the agent-instruction file. Read it whole before starting an experiment loop.
 
 ## Project context
 
-We're optimizing **how to train lile** — not lile itself. Lile is the technology we ship (a live-learning local LLM daemon at [`../lile/`](../lile/)). This autoresearch loop iterates on the *training recipe* — loss-mixture weights, sampling config, learning rate, source mix passed to `lile.teach.rlvr_loop.RLVRConfig` — to find the recipe that produces the largest measurable capability gain in the smallest budget.
+We're optimizing **how to train trainfer** — not trainfer itself. Trainfer is the technology we ship (a live-learning local LLM daemon at [`../trainfer/`](../trainfer/)). This autoresearch loop iterates on the *training recipe* — loss-mixture weights, sampling config, learning rate, source mix passed to `cont.teach.rlvr_loop.RLVRConfig` — to find the recipe that produces the largest measurable capability gain in the smallest budget.
 
 Markus's charter (2026-05-15): *sample-efficient and consistent learning algorithms. Evaluate training methods / loss functions and see what mixture is good and which is not.*
 
@@ -34,7 +34,7 @@ The probe set is at [`autoresearch/probe_v0.json`](probe_v0.json) — 15 prompts
 
 Why this composite:
 
-1. **Verifiable** — both forward and prior evals use deterministic regex via [`_logical.py`](../lile/objectives/verifiers/_logical.py) (no LLM judge). Zero variance from the scoring step.
+1. **Verifiable** — both forward and prior evals use deterministic regex via [`_logical.py`](../trainfer/objectives/verifiers/_logical.py) (no LLM judge). Zero variance from the scoring step.
 2. **Continual-learning native** — the composite directly penalizes the failure mode the goal forbids (degrading prior competence). A recipe must improve forward AND preserve prior to score high.
 3. **Cheap** — 10 + 15 chats × ~2s each = ~50s per pair of evals. Training pulse dominates wall.
 4. **Tunable** — `_LAMBDA_DEGRADE` in `experiment.py` (default `1.0`) lets us shift the trade-off if we find we want to permit more degradation in exchange for larger forward gains.
@@ -47,10 +47,10 @@ Why this composite:
    - `autoresearch/program.md` — this file
    - `autoresearch/config.json` — the knob set you modify between runs
    - `autoresearch/experiment.py` — the runner; you may modify to wire training (see "Out of scope" for limits)
-   - `lile/teach/rlvr_loop.py` — the training library you're tuning
-   - `lile/teach/logical/tasks_v0.json` — the pinned task corpus
-   - `lile/teach/teacher_free_pool.py` — the multi-judge teacher backend
-   - `lile/docs/research/CAMPAIGNS.md` — C-002 framing this loop implements
+   - `cont/teach/rlvr_loop.py` — the training library you're tuning
+   - `trainfer/objectives/verifiers/corpora/logical/tasks_v0.json` — the pinned task corpus
+   - `cont/teach/teacher_free_pool.py` — the multi-judge teacher backend
+   - `docs/research/CAMPAIGNS.md` — C-002 framing this loop implements
 4. **Confirm daemon health**: `curl -fsS http://127.0.0.1:8768/health` returns `ok: true`. If the daemon ate a SIGTERM during a prior session, the venv may be wiped — rebuild before continuing.
 5. **Initialize `results.tsv`** (one-time): header `commit	score	status	description	n_steps	teacher` (tab-separated). First row records the baseline.
 6. **Confirm and go** with the user.
@@ -84,10 +84,10 @@ The runner:
 
 **What you CANNOT do:**
 
-- Modify anything under `lile/`. If a knob you want isn't reachable from `config.json`, propose it as a separate PR.
-- Modify `lile/teach/logical/tasks_v0.json` (pinned eval set) or `_logical.py` (verifier). Score comparability across runs depends on byte-stability.
-- Add new dependencies. The venv is pinned by `lile/pyproject.toml`; the runner is pure stdlib + httpx + lile + matplotlib.
-- Touch `lile_data/snapshots/` directly. Use `/v1/state/snapshot/*` endpoints.
+- Modify anything under `trainfer/`. If a knob you want isn't reachable from `config.json`, propose it as a separate PR.
+- Modify `trainfer/objectives/verifiers/corpora/logical/tasks_v0.json` (pinned eval set) or `_logical.py` (verifier). Score comparability across runs depends on byte-stability.
+- Add new dependencies. The venv is pinned by `trainfer/pyproject.toml`; the runner is pure stdlib + httpx + trainfer + matplotlib.
+- Touch `data/snapshots/` directly. Use `/v1/state/snapshot/*` endpoints.
 - Install global packages or restart the daemon as part of the loop. If the daemon needs a bounce, ping the human — that's meta-loop infrastructure, not an experiment.
 
 **The goal is simple: get the best score.** Within the allowed surface, anything is fair game.
@@ -146,7 +146,7 @@ The loop runs on a dedicated branch (e.g. `autoresearch/may15`). Each iteration:
 
 **Daemon discipline**: this loop owns the daemon for its duration. Coordinate with `prophet` via `director send` before kicking off if other agents may use the daemon concurrently.
 
-**NEVER STOP without permission**: once the experiment loop begins, do not pause to ask the human. If you run out of ideas, re-read this file + `lile/docs/research/CAMPAIGNS.md` § C-002 for inspiration. Combine previous near-misses. Try radical recipes. The loop runs until interrupted.
+**NEVER STOP without permission**: once the experiment loop begins, do not pause to ask the human. If you run out of ideas, re-read this file + `docs/research/CAMPAIGNS.md` § C-002 for inspiration. Combine previous near-misses. Try radical recipes. The loop runs until interrupted.
 
 Rough budget: 50-step training + 30s eval ≈ 5–10 min per experiment. 6–12/hour, 50–100 overnight.
 
@@ -164,7 +164,7 @@ When satisfied with a recipe (or hit a wall worth reporting), open a PR titled `
 
 - Final `results.tsv`
 - Final `progress.png`
-- A JOURNAL-style entry in `lile/docs/research/JOURNAL.md` summarizing: winning recipe, score delta vs baseline, wall time, surprising findings, recommendations for future tags.
+- A JOURNAL-style entry in `docs/research/JOURNAL.md` summarizing: winning recipe, score delta vs baseline, wall time, surprising findings, recommendations for future tags.
 - Reference back to this loop's tag branch.
 
 The winning recipe's `config.json` becomes the next default. Losing arms become a "do not retry without new evidence" list.

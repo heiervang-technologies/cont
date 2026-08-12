@@ -32,9 +32,9 @@ build/
 # Per-agent worktrees — see AGENTS.md
 .worktrees/
 
-# lile runtime artifacts — snapshots, trajectory logs, Unsloth's compiled cache
-lile_data*/snapshots/
-lile_data*/trajectory.jsonl
+# trainfer runtime artifacts — snapshots, trajectory logs, Unsloth's compiled cache
+data*/snapshots/
+data*/trajectory.jsonl
 unsloth_compiled_cache/
 .cache/
 .mypy_cache/

@@ -1,5 +1,5 @@
 """Autoresearch experiment runner — measure how a training recipe drives
-*continual learning* on lile: simultaneously improve held-out task accuracy
+*continual learning* on trainfer: simultaneously improve held-out task accuracy
 AND preserve prior competence.
 
 The metric is a composite that penalizes either failure mode:
@@ -40,7 +40,7 @@ Notes for the agent:
     * The training step itself is stubbed in v1 — the runner currently
       does snapshot + eval-only, not actual RLVR training. Wiring the
       training pulse is the FIRST experiment to commit (modify the
-      ``_run_training_pulse`` body to call into ``lile.teach.rlvr_loop``).
+      ``_run_training_pulse`` body to call into ``cont.teach.rlvr_loop``).
       Until then, ``score = forward - degrade`` where both reflect the
       cold model (degrade ≈ 0 by definition, modulo eval-time stochasticity).
     * The probe set is INTENTIONALLY small (~15 prompts) — the goal is
@@ -55,16 +55,18 @@ import sys
 import time
 from pathlib import Path
 
-# Make the repo root importable so we can pull from lile/ without an
-# install step — autoresearch is a side-tool, not a daemon-side import.
+# Make the repo root importable so ``cont.*`` resolves without an install
+# step — autoresearch is a side-tool, not a daemon-side import. ``trainfer``
+# itself is a real dependency and must be installed (``pip install -e .``
+# at the repo root pulls it in).
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_REPO_ROOT))
 
 import httpx  # noqa: E402
 
-from lile.objectives.verifiers import _logical  # noqa: E402, F401 — ensures registration
-from lile.objectives.verifiers import verify as registry_verify  # noqa: E402
-from lile.teach.logical import get_split  # noqa: E402
+from trainfer.objectives.verifiers import _logical  # noqa: E402, F401 — ensures registration
+from trainfer.objectives.verifiers import verify as registry_verify  # noqa: E402
+from trainfer.objectives.verifiers.corpora.logical import get_split  # noqa: E402
 
 _CONFIG_PATH = Path(__file__).parent / "config.json"
 _PROBE_PATH = Path(__file__).parent / "probe_v0.json"
@@ -123,7 +125,7 @@ async def _eval_set(
     """Run all tasks through the daemon, grade each, return aggregate stats.
 
     ``use_registry=True`` routes through ``registry_verify("logical", ...)``,
-    which expects prompts cataloged in lile/teach/logical/tasks_v0.json
+    which expects prompts cataloged in trainfer/objectives/verifiers/corpora/logical/tasks_v0.json
     (held-out split).
     ``use_registry=False`` is for the probe set: bypass the hash-table claims
     check and use the task's compare metadata directly.

@@ -22,11 +22,11 @@ Recent 2024–2025 papers address this fact-forgetting problem:
 3. **On-Policy Context Distillation (OPCD)**
    Instead of forcing the student to match the teacher's outputs on a fixed dataset, the student generates its own rollouts (on-policy) and the teacher scores them. This reverse-KL approach avoids forcing the student to model low-probability teacher sequences.
 
-## Implementation in Lile
+## Implementation in Trainfer
 
-The `ccd` (context-conditioned distillation) objective in Lile implements a hybrid approach based on the 2025 literature:
+The `ccd` (context-conditioned distillation) objective in Trainfer implements a hybrid approach based on the 2025 literature:
 - **Logit KL**: A baseline `KL(π_teacher || π_student)` loss over the probe span.
 - **Hidden-state matching (DCD)**: An optional `match_hidden` MSE loss on the last N transformer layers.
 - **Fact Verification**: A custom `fact_verifier` that measures token-level F1 retention of ground-truth facts. This verifier drives a per-sample weight multiplier during training (upweighting probes where the student failed to retain the fact).
 
-This objective is deployed as a standard LoRA module inside Lile's multi-objective training loop.
+This objective is deployed as a standard LoRA module inside Trainfer's multi-objective training loop.
