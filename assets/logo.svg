@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 320" role="img" aria-labelledby="title desc">
+  <title id="title">cont</title>
+  <desc id="desc">A continual-learning loop surrounding rising bars, followed by the word cont.</desc>
+
+  <!-- The field makes this lockup equally legible on light and dark surfaces. -->
+  <rect x="8" y="8" width="944" height="304" rx="64" fill="#0E1B2B"/>
+
+  <!-- Continual-learning mark: an open feedback loop around a rising signal. -->
+  <g aria-label="Continual-learning mark">
+    <path
+      d="M207 97C184 76 150 70 120 80C75 95 50 142 64 188C77 233 125 258 170 245C201 237 225 215 237 187"
+      fill="none"
+      stroke="#5EEAD4"
+      stroke-width="22"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+    <path d="M250 169L247 193L225 177Z" fill="#5EEAD4"/>
+
+    <rect x="112" y="168" width="18" height="39" rx="9" fill="#F8FAFC"/>
+    <rect x="143" y="140" width="18" height="67" rx="9" fill="#F8FAFC"/>
+    <rect x="174" y="108" width="18" height="99" rx="9" fill="#F8FAFC"/>
+  </g>
+
+  <!-- Custom geometric wordmark; paths avoid any font dependency. -->
+  <g
+    aria-label="cont"
+    fill="none"
+    stroke="#F8FAFC"
+    stroke-width="23"
+    stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M414 132C395 108 356 109 338 137C321 163 329 199 356 211C378 221 401 212 415 195"/>
+    <path d="M503 113C536 113 555 134 555 164C555 194 536 215 503 215C470 215 451 194 451 164C451 134 470 113 503 113Z"/>
+    <path d="M592 207V121M593 153C602 128 620 114 643 114C671 114 686 133 686 166V207"/>
+    <path d="M740 84V184C740 204 752 214 772 214C783 214 792 211 799 205M711 121H785"/>
+  </g>
+</svg>

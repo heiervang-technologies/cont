@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">cont mark</title>
+  <desc id="desc">A continual-learning loop surrounding three rising bars.</desc>
+
+  <rect x="8" y="8" width="304" height="304" rx="64" fill="#0E1B2B"/>
+
+  <path
+    d="M207 97C184 76 150 70 120 80C75 95 50 142 64 188C77 233 125 258 170 245C201 237 225 215 237 187"
+    fill="none"
+    stroke="#5EEAD4"
+    stroke-width="22"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+  <path d="M250 169L247 193L225 177Z" fill="#5EEAD4"/>
+
+  <rect x="112" y="168" width="18" height="39" rx="9" fill="#F8FAFC"/>
+  <rect x="143" y="140" width="18" height="67" rx="9" fill="#F8FAFC"/>
+  <rect x="174" y="108" width="18" height="99" rx="9" fill="#F8FAFC"/>
+</svg>
