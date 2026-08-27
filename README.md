@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="cont" width="400">
+</p>
+
 # cont
 
 **Continual learning** — the research half of what used to be one repo. Teachers, RLVR/RLAIF loops, benchmark runners, the eval harness, the proofs and surveys, and the campaign record.
